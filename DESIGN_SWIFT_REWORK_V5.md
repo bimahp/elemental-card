@@ -27,9 +27,9 @@ Wins through:
 
 Fantasy:
 - Bears
-- Strength
-- Claws
-- Roars
+- Cute
+- Chunky
+- Funny
 - Frontline combat
 
 Important design constraint:
@@ -55,6 +55,41 @@ Siege Volley
 
 Cost 4
 Deal 2 damage to two random enemy minions.
+
+### Locked Mighty Card Names
+
+#### Monsters
+
+Reckless Brute
+→ Bonk Bear
+
+Bastion Defender
+→ Chubby Bear
+
+Warbound Raider
+→ Grumpy Bear
+
+#### Actions
+
+Execute
+→ Big Bonk
+
+Shield Wall
+→ Extra Fluffy
+
+Cleave
+→ Double Swipe
+
+#### Equipment-style Actions
+
+Iron Warmaul
+→ Bonk Hammer
+
+Titan's Warplate
+→ Mega Helmet
+
+Design goal:
+Cute mascot-first naming. Cards should feel playful and memorable rather than intimidating or epic.
 
 ---
 
