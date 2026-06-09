@@ -4,104 +4,155 @@
 
 ## v0.4 Card Catalog (current — 2026-06-09)
 
-32 unique cards. All decks are 30 cards (2× each identity card + 2× each neutral pool card). No Trainer or Equipment card type — equip effects live on action cards (`buff_friendly_minion` effect type).
+32 unique cards across 3 archetypes + a shared neutral pool. All decks are 30 cards (2× each identity card + 2× each neutral pool card selected for that archetype). No Trainer or Equipment card type — equip effects live on action cards (`buff_friendly_minion` effect type).
+
+> **Combo** (SWIFT mechanic): you've played at least one other card this turn before this one. With SWIFT Invoker tier 3, your very first card of the turn also counts as Combo.  
+> **Siphon** (VITAL mechanic): any heal-on-damage or direct heal effect. VITAL Invoker tiers amplify all Siphon by a flat bonus.  
+> **Armor** (MIGHTY mechanic): absorbs incoming damage before HP. No cap, no decay.
+
+---
 
 ### Neutral Pool (9 cards)
 
-Shared across decks. Each archetype draws a subset of 7–8 for its pool.
+Each archetype uses a subset of 7–8 neutrals. No neutral card currently has Taunt (intentionally removed from Riverbank Croc and Cragheart Behemoth, which previously had it — neutral Taunt was warping tempo trades across all matchups).
 
-| Card | Cost | Stats | Effect |
-|---|---|---|---|
-| Scrappy Squire | 1 | 2/2 | — |
-| Riverbank Croc | 2 | 2/4 | — |
-| Quickfoot Skitterling | 2 | 3/2 | — |
-| Bramblewood Scout | 3 | 3/3 | Battlecry: look at top of deck, draw it |
-| Wandering Blade | 3 | 3/4 | — |
-| Ironclad Sentinel | 4 | 4/5 | **Taunt** |
-| Frostmane Hexer | 4 | 3/4 | Deathrattle: deal 2 dmg to a random enemy minion |
-| Skyreach Wyrm | 5 | 5/5 | — |
-| Cragheart Behemoth | 6 | 6/7 | — |
+| Card | ID | Cost | Stats | Keywords | Effect |
+|---|---|---|---|---|---|
+| Scrappy Squire | `scrappy_squire` | 1 | 2/2 | — | — |
+| Riverbank Croc | `riverbank_croc` | 2 | 2/4 | — | — |
+| Quickfoot Skitterling | `quickfoot_skitterling` | 2 | 3/2 | — | — |
+| Bramblewood Scout | `bramblewood_scout` | 3 | 3/3 | — | Battlecry: look at the top card of your deck and draw it |
+| Wandering Blade | `stonehide_yearling` | 3 | 3/4 | — | — |
+| Ironclad Sentinel | `ironclad_sentinel` | 4 | 4/5 | **Taunt** | — |
+| Frostmane Hexer | `frostmane_hexer` | 4 | 3/4 | — | Deathrattle: deal 2 damage to a random enemy minion |
+| Skyreach Wyrm | `skyreach_wyrm` | 5 | 5/5 | — | — |
+| Cragheart Behemoth | `cragheart_behemoth` | 6 | 6/7 | — | — |
 
-Taunt was intentionally removed from Croc and Behemoth — neutral Taunt was warping tempo trades across all matchups.
+> ⚠️ **Stale ID note:** `stonehide_yearling` is the internal ID for the card currently named "Wandering Blade." The ID was not updated when the card was renamed. Non-breaking (ID is used internally only) but worth cleaning up.
 
 ---
 
-### MIGHTY Deck (8 identity cards × 2 + 7 neutrals × 2 = 30)
+### MIGHTY Deck — 30 cards
 
-**Identity:** Armor, direct removal, equip buffs. Invoker passives: effect damage +1/+2/+3; on-kill face damage 2/3 (tier 6/9).
+**Identity:** Armor generation, direct removal, equip buffs that snowball a single threat.  
+**Neutral pool (7):** Scrappy Squire, Riverbank Croc, Bramblewood Scout, Wandering Blade, Ironclad Sentinel, Skyreach Wyrm, Cragheart Behemoth
 
-**Neutral pool:** Squire, Croc, Scout, Wandering Blade, Sentinel, Wyrmling, Behemoth
+#### Monsters (3)
 
-| Card | Type | Cost | Stats | Effect |
+| Card | ID | Cost | Stats | Keywords | Effect |
+|---|---|---|---|---|---|
+| Reckless Brute | `reckless_brute` | 2 | 3/2 | — | — |
+| Bastion Defender | `bastion_defender` | 3 | 2/4 | **Taunt** | Battlecry: gain 2 Armor |
+| Warbound Raider | `warbound_raider` | 4 | 4/4 | — | Battlecry: deal 2 damage to an enemy minion |
+
+#### Actions (5)
+
+| Card | ID | Cost | Effect |
+|---|---|---|---|
+| Execute | `execute` | 2 | Destroy a damaged enemy minion |
+| Shield Wall | `shield_wall` | 3 | Gain 5 Armor |
+| Iron Warmaul | `warpath_roar` | 3 | Give a friendly minion +3 Attack / +2 HP |
+| Siege Volley | `siege_volley` | 4 | Deal 4 damage split randomly among enemies (face if board empty) |
+| Titan's Warplate | `beheading_strike` | 5 | Give a friendly minion +5 Attack / +2 HP |
+
+> ⚠️ **Stale ID notes:** `warpath_roar` is Iron Warmaul (renamed from Warpath Roar); `beheading_strike` is Titan's Warplate (renamed from Beheading Strike, which was a destroy effect). Both IDs are legacy from before the effect redesign.
+
+#### Invoker thresholds (MIGHTY)
+
+| Tally | Passive bonus |
+|---|---|
+| 3 | Damage dealt by your cards' effects is increased by 1 |
+| 6 | Effect damage +2 (total); destroying an enemy minion also deals 2 damage to the enemy hero |
+| 9 | Effect damage +3 (total); on-kill face damage 3 (total) |
+
+---
+
+### SWIFT Deck — 30 cards
+
+**Identity:** Card draw, tempo, Combo payoffs. Plays multiple cheap cards per turn to trigger and scale Combo bonuses.  
+**Neutral pool (8):** Scrappy Squire, Riverbank Croc, Quickfoot Skitterling, Bramblewood Scout, Wandering Blade, Ironclad Sentinel, Frostmane Hexer, Skyreach Wyrm
+
+> ⚠️ **Balance concern:** SWIFT has zero identity monsters — all board presence comes from the neutral pool. The archetype has never had a SWIFT-typed minion designed. Sim results (SWIFT 41.7% win rate) flag this as the primary weakness: SWIFT cannot threaten enough face damage to race VITAL's healing, and its combo payoffs are too small to close games. See `DESIGN_BALANCE.md` → v0.4 Investigation.
+
+#### Actions (7 — all SWIFT identity cards are actions)
+
+| Card | ID | Cost | Effect |
+|---|---|---|---|
+| Quick Slice | `quick_slice` | 1 | Deal 2 damage to a minion; **Combo:** also draw 1 card |
+| Smoke Bomb | `smoke_bomb` | 1 | Give a friendly minion Stealth until its next attack |
+| Calculated Strike | `calculated_strike` | 2 | Deal 1 damage to a minion; **Combo:** deal 4 instead |
+| Rapid Reflexes | `rapid_reflexes` | 2 | Draw 2 cards |
+| Vanishing Act | `vanishing_act` | 3 | Return an enemy minion to their hand |
+| Coordinated Strike | `coordinated_strike` | 4 | Deal 4 damage split randomly among enemies; **Combo:** deal 6 instead |
+| Master Thief's Gambit | `master_thiefs_gambit` | 6 | Destroy an enemy minion; **Combo:** add a copy of it to your hand |
+
+#### Invoker thresholds (SWIFT)
+
+| Tally | Passive bonus |
+|---|---|
+| 3 | The Combo condition counts the card about to resolve — your first card of the turn already triggers Combo |
+| 6 | Combo-triggered bonus values/effects are increased by 50% |
+| 9 | Combo-triggered bonus values/effects are increased by 100% (total) |
+
+---
+
+### VITAL Deck — 30 cards
+
+**Identity:** Sustain, Siphon (heal-on-damage), conditional removal via "damaged" targeting.  
+**Neutral pool (7):** Scrappy Squire, Quickfoot Skitterling, Bramblewood Scout, Ironclad Sentinel, Frostmane Hexer, Skyreach Wyrm, Cragheart Behemoth
+
+#### Monsters (4)
+
+| Card | ID | Cost | Stats | Effect |
 |---|---|---|---|---|
-| Reckless Brute | Monster | 2 | 3/2 | — |
-| Bastion Defender | Monster | 3 | 2/4 | **Taunt**; Battlecry: gain 2 Armor |
-| Warbound Raider | Monster | 4 | 4/4 | Battlecry: deal 2 dmg to a minion |
-| Shield Wall | Action | 3 | — | Gain 5 Armor |
-| Execute | Action | 2 | — | Destroy a damaged enemy minion |
-| Iron Warmaul | Action | 3 | — | Give a friendly minion +3 Atk / +2 HP |
-| Siege Volley | Action | 4 | — | Deal 4 damage, split randomly among enemies |
-| Titan's Warplate | Action | 5 | — | Give a friendly minion +5 Atk / +2 HP |
+| Soulsipper | `soulsipper` | 1 | 1/3 | Whenever this minion deals damage, restore that much Health to your hero (Siphon) |
+| Marrow Gleaner | `marrow_gleaner` | 2 | 2/4 | Whenever a friendly minion dies, restore 2 Health to your hero (Siphon) |
+| Husk Reclaimer | `husk_reclaimer` | 3 | 3/3 | Battlecry: destroy a damaged enemy minion |
+| Wraithbound Cleric | `wraithbound_cleric` | 4 | 3/6 | Battlecry: restore 6 Health to your hero (Siphon) |
 
-*Note: Iron Warmaul was formerly "Warpath Roar" (3-dmg burn); Titan's Warplate was formerly "Beheading Strike" (destroy). Both converted to equip effects to reduce MIGHTY's removal density.*
+#### Actions (4)
 
----
-
-### SWIFT Deck (7 identity cards × 2 + 8 neutrals × 2 = 30)
-
-**Identity:** Draw, combo, tempo. Invoker passives: combo triggers on 1st card (tier 3); combo bonus ×1.5/×2 (tier 6/9).  
-**Combo** = you've played at least one other card this turn before this one.
-
-**Neutral pool:** Squire, Croc, Skitterling, Scout, Wandering Blade, Sentinel, Hexer, Wyrm
-
-| Card | Type | Cost | Effect |
+| Card | ID | Cost | Effect |
 |---|---|---|---|
-| Quick Slice | Action | 1 | Deal 2 dmg to a minion; Combo: also draw 1 |
-| Smoke Bomb | Action | 1 | Give a friendly minion Stealth until it attacks |
-| Calculated Strike | Action | 2 | Deal 1 dmg to a minion; Combo: deal 4 instead |
-| Rapid Reflexes | Action | 2 | Draw 2 cards |
-| Vanishing Act | Action | 3 | Return an enemy minion to their hand |
-| Coordinated Strike | Action | 4 | Deal 4 dmg split randomly; Combo: deal 6 instead |
-| Master Thief's Gambit | Action | 6 | Destroy an enemy minion; Combo: add a copy to your hand |
+| Soothing Balm | `soothing_balm` | 1 | Restore 4 Health to your hero or your most-damaged minion (Siphon) |
+| Drain Essence | `drain_essence` | 1 | Deal 2 damage to an enemy minion; restore 2 Health to your hero (Siphon) |
+| Mass Mending | `mass_mending` | 3 | Restore 3 Health to your hero and all friendly minions (Siphon) |
+| Domination Rite | `domination_rite` | 4 | Take control of a damaged enemy minion |
 
-⚠️ **Balance concern (open):** SWIFT has zero identity minions — its entire board presence comes from the neutral pool. No SWIFT-specific body has ever been designed. This is a known weakness identified in sim results (SWIFT 41.7% win rate).
+#### Invoker thresholds (VITAL)
 
----
-
-### VITAL Deck (8 identity cards × 2 + 7 neutrals × 2 = 30)
-
-**Identity:** Healing, Siphon (heal-on-damage), conditional removal. Invoker passives: Siphon +1/+2/+3; on-kill heal 2 (tier 6); on-ally-death heal 1 (tier 9).
-
-**Neutral pool:** Squire, Skitterling, Scout, Sentinel, Hexer, Wyrm, Behemoth
-
-| Card | Type | Cost | Stats | Effect |
-|---|---|---|---|---|
-| Soulsipper | Monster | 1 | 1/3 | Whenever this deals damage, restore that much Health to your hero |
-| Marrow Gleaner | Monster | 2 | 2/4 | Whenever a friendly minion dies, restore 2 Health to your hero |
-| Husk Reclaimer | Monster | 3 | 3/3 | Battlecry: destroy a damaged enemy minion |
-| Wraithbound Cleric | Monster | 4 | 3/6 | Battlecry: restore 6 Health to your hero |
-| Drain Essence | Action | 1 | — | Deal 2 dmg to a minion; restore 2 Health to your hero |
-| Soothing Balm | Action | 1 | — | Restore 4 Health to your hero or your most-damaged minion |
-| Mass Mending | Action | 3 | — | Restore 3 Health to your hero and all friendly minions |
-| Domination Rite | Action | 4 | — | Take control of a damaged enemy minion |
+| Tally | Passive bonus |
+|---|---|
+| 3 | All Siphon effects restore +1 Health |
+| 6 | Siphon restores +2 Health (total); destroying a minion also restores 2 Health to your hero |
+| 9 | Siphon restores +3 Health (total); whenever a friendly minion dies, also restore 1 Health to your hero |
 
 ---
 
-## Invoker Thresholds Reference
+## Deck Composition Summary
 
-| Archetype | Tier 3 | Tier 6 | Tier 9 |
+| Archetype | Identity cards (unique) | Neutral pool cards (unique) | Total |
 |---|---|---|---|
-| MIGHTY | Effect damage +1 | Effect damage +2; killing a minion deals 2 face dmg | Effect damage +3; face dmg 3 |
-| SWIFT | Combo triggers on your 1st card of the turn | Combo bonus values ×1.5 | Combo bonus values ×2.0 |
-| VITAL | Siphon heals +1 | Siphon heals +2; killing a minion restores 2 Health | Siphon heals +3; on-ally-death restore 1 Health |
-
-Tally cap: 9. Tally increments on every card of that battleType played (monsters and actions).
+| MIGHTY | 8 (3 monsters, 5 actions) | 7 | 30 |
+| SWIFT | 7 (0 monsters, 7 actions) | 8 | 30 |
+| VITAL | 8 (4 monsters, 4 actions) | 7 | 30 |
 
 ---
 
-> **⚠️ v0.2 catalog below — SUPERSEDED 2026-06-07.** Every card below is being
-> redesigned around the v0.4 ruleset. Kept for historical/flavor reference only —
-> stats, costs, and skills are no longer valid.
+## Open Design Issues (v0.4)
+
+| Issue | Priority | Notes |
+|---|---|---|
+| SWIFT has no identity monsters | 🔴 High | Zero SWIFT-typed minions exist. Board = neutral pool only. Primary cause of SWIFT's 41.7% win rate. |
+| SWIFT damage can't threaten face | 🔴 High | All damage targets minions or splits randomly. No direct hero pressure against VITAL's healing. |
+| Smoke Bomb utility | 🟡 Medium | Stealth on a friendly minion is rarely impactful — VITAL/MIGHTY removal is condition-based (damaged), not targeted. |
+| VITAL dominant (61.7%) | 🟡 Medium | Healing + conditional removal may be over-tuned, or the "damaged" condition is too easy to meet. |
+| First-mover advantage in mirrors | 🟡 Medium | MIGHTY/SWIFT mirrors ~80% first-seat wins. Coin (+1 energy) insufficient. VITAL mirror healthy (53%). |
+| Stale internal IDs | 🟢 Low | `stonehide_yearling`, `warpath_roar`, `beheading_strike` don't match current display names. |
+
+---
+
+> **⚠️ v0.2 catalog below — SUPERSEDED 2026-06-07.** Kept for historical reference only. Stats, costs, and mechanics are no longer valid.
 
 ## System Notes
 
