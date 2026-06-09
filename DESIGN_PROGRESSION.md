@@ -65,24 +65,31 @@ Player level is separate from monster mastery. Player EXP tracks overall account
 Monsters gain mastery through use during battles.
 
 ### What Mastery Does NOT Do
-- It does NOT increase HP or ATK
-- It does NOT make the card stronger numerically
+- It does NOT increase HP (HP is fixed at card design time)
+- It does NOT change base stats numerically
 
 ### What Mastery Unlocks
-- Alternative active skills
-- Alternative passive builds
-- Cosmetic upgrades (card border, art variants, animations)
-- New strategic options for deckbuilding
+- **Skill 2 slot** — the primary mastery reward. Each monster's Skill 2 is locked until Mastery 1 is reached.
+- Additional skills added to the card's skill pool at higher mastery levels (future)
+- Cosmetic upgrades: card border, art variants, animations (future)
+
+Mastery unlocks feed into the **deck settings** screen where players configure which 2 skill slots are active. A player with Mastery 1 on Baby Dragon can now choose between Fire Breath and Inferno for their skill slots.
 
 ### Mastery Example
 
 ```
 Baby Dragon — Mastery Track
 
-Mastery 1: Unlocks Fire Breath (alternative active skill)
-Mastery 2: Unlocks Magma Armor (alternative passive build)
-Mastery 3: Unlocks Inferno (alternative active skill — high cost, high power)
-Mastery 4+: Cosmetic upgrades (TBD)
+Mastery 0 (base):     Skill pool: [Fire Breath]
+                      Skill 1 slot: Fire Breath (only option)
+                      Skill 2 slot: locked
+
+Mastery 1:            Skill pool: [Fire Breath, Inferno]
+                      Skill 1 slot: Fire Breath or Inferno (player chooses in deck settings)
+                      Skill 2 slot: Fire Breath or Inferno (the other)
+
+Mastery 2+ (future):  Additional skills added to pool
+                      Cosmetic unlocks
 ```
 
 ### Mastery Tracking

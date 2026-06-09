@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "C:\\Users\\bmala\\AppData\\Roaming\\Claude\\Claude Extensions\\local.mcpb.blender-lab.blender\\.venv\\Scripts\\blender-mcp.exe",
+      "args": []
+    }
+  }
+}
