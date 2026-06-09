@@ -29,24 +29,15 @@ Fantasy:
 - Bears
 - Cute
 - Chunky
-- Funny
+- Playful
 - Frontline combat
 
 Important design constraint:
 
 Armor is defensive only.
 
-Previous testing showed that combining:
-- High attack output
-- Frequent armor generation
-- Armor-to-damage conversion
-
-creates an overpowered archetype.
-
-Avoid:
-- Shield Slam style scaling
-- Armor as a primary resource
-- Heavy Enrage packages
+Do NOT introduce Shield Slam style mechanics.
+Do NOT convert Armor into damage.
 
 Locked card change:
 
@@ -59,37 +50,26 @@ Deal 2 damage to two random enemy minions.
 ### Locked Mighty Card Names
 
 #### Monsters
+Reckless Brute → Bonk Bear
 
-Reckless Brute
-→ Bonk Bear
+Bastion Defender → Chubby Bear
 
-Bastion Defender
-→ Chubby Bear
-
-Warbound Raider
-→ Grumpy Bear
+Warbound Raider → Grumpy Bear
 
 #### Actions
+Execute → Big Bonk
 
-Execute
-→ Big Bonk
+Shield Wall → Extra Fluffy
 
-Shield Wall
-→ Extra Fluffy
+Cleave → Double Swipe
 
-Cleave
-→ Double Swipe
+#### Equipment
+Iron Warmaul → Bonk Hammer
 
-#### Equipment-style Actions
-
-Iron Warmaul
-→ Bonk Hammer
-
-Titan's Warplate
-→ Mega Helmet
+Titan's Warplate → Mega Helmet
 
 Design goal:
-Cute mascot-first naming. Cards should feel playful and memorable rather than intimidating or epic.
+Cute mascot-first naming. Not epic fantasy.
 
 ---
 
@@ -97,22 +77,52 @@ Cute mascot-first naming. Cards should feel playful and memorable rather than in
 
 Wins through:
 - Tempo
-- Flexibility
 - Stealth
 - Bounce
 - Theft
 - Temporary Energy generation
 
 Fantasy:
-- Cats
-- Trickery
-- Agility
-- Ambushes
-- Hit and run tactics
+- Sneaky Cats
+- Clever Cats
+- Agile Cats
+- Opportunistic Cats
+
+Important design direction:
+
+Move away from Combo-focused identity.
+Move toward Rogue-style tempo.
 
 SWIFT bends the rules of Energy and positioning to gain short-term advantages.
 
-The archetype should feel closer to Hearthstone Rogue than a Combo deck.
+Avoid combining card draw and Energy cheating on the same card.
+
+### Locked Swift Naming Table
+
+Quick Slice → Quick Scratch
+
+Smoke Bomb → Hide and Sneak
+
+Calculated Strike → Surprise Pounce
+
+Rapid Reflexes → Cat Nap
+
+Vanishing Act → Hide and Seek
+
+Coordinated Strike → Sharp Claws
+
+Master Thief's Gambit → Cat Burglar
+
+Future minion naming examples:
+- Sneaky Kitten
+- Alley Cat
+- Bush Prowler
+
+Naming goal:
+Sneaky cats.
+Clever cats.
+Not ninja cats.
+Not meme cats.
 
 ---
 
@@ -143,56 +153,15 @@ Avoid emphasizing:
 
 ---
 
-# SWIFT Mechanics
-
-## Ambush
-
-Ambush: gains a bonus the first time it attacks.
-
-Example:
-
-Shadowblade Stalker
-Cost 2
-2/2
-Ambush: Gain +2 Attack when attacking for the first time.
-
----
-
-## Preparation
-
-Preparation cards reduce the cost of future Actions.
-
-Example:
-
-Preparation
-Cost 1
-Your next Action costs 2 less this turn.
-
----
-
-## Opportunist
-
-Rewards efficient sequencing.
-
-Example:
-
-Opportunist Cutpurse
-2/3
-Whenever you play your second card each turn, gain 1 temporary Energy.
-
----
-
 # Signature Mechanics
 
 ## MIGHTY
-
 - Removal
 - Combat superiority
 - Buffs
 - Armor
 
 ## SWIFT
-
 - Bounce
 - Stealth
 - Theft
@@ -201,7 +170,6 @@ Whenever you play your second card each turn, gain 1 temporary Energy.
 SWIFT should be the only archetype that regularly gains temporary Energy.
 
 ## VITAL
-
 - Healing
 - Protection
 - Spirit generation
@@ -247,19 +215,6 @@ Purpose:
 
 ---
 
-# Invoker Direction
-
-## SWIFT Tier 3
-First Action played each turn costs 1 less.
-
-## SWIFT Tier 6
-The first time each turn you play two cards, gain 1 temporary Energy.
-
-## SWIFT Tier 9
-The first Action each turn costs 2 less.
-
----
-
 # Matchup Expectations
 
 SWIFT vs MIGHTY
@@ -277,7 +232,7 @@ No archetype should consistently exceed roughly 53% overall win rate.
 
 ---
 
-# Future Theme Direction
+# Mascot Direction
 
 MIGHTY
 - Bears
@@ -288,7 +243,7 @@ SWIFT
 VITAL
 - Frogs
 
-Neutral cards
+Neutral
 - Treants
 - Golems
 
