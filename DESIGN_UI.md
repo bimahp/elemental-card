@@ -2,19 +2,13 @@
 
 ## Overview
 
-The game uses a hybrid 3D/2D presentation. The 3D world shows the social store environment and table setup. The 2D ScreenGui overlay shows battle information and the player's hand during a duel.
+Hybrid 3D/2D presentation. The 3D world shows the card shop and table setup. A 2D ScreenGui overlay handles all battle information during a duel.
 
 ---
 
 ## Pre-Battle: Table Interaction
 
-### Setup
-- A table is placed in the world with two chairs (one per player/NPC)
-- The NPC (Noob humanoid) is already seated on their chair
-- The player approaches the table
-
-### Proximity Prompt
-When the player is close enough to the player-side chair, a prompt appears:
+The player approaches a DuelTable. A ProximityPrompt appears on the tabletop:
 
 ```
 [E] Sit Down
@@ -26,52 +20,49 @@ Once seated, two buttons appear:
 [Challenge]    [Leave]
 ```
 
-- **Challenge** — starts the duel, locks the player in the chair, opens the Battle UI
-- **Leave** — player stands up and walks away, no duel started
+- **Challenge** — locks the player in the chair, starts the duel, opens Battle UI
+- **Leave** — player stands up, no duel
 
-The player cannot move while seated (character is locked to seat).
+Player cannot move while seated.
 
 ---
 
-## Battle UI Layout (Screen Space)
+## Battle UI Layout
 
-The Battle UI is a full ScreenGui overlay that appears when a duel begins.
+Full ScreenGui overlay active during a duel. Two anchored sections split the screen.
 
-### Top Section — Enemy State
+### Top — Enemy State
 
 ```
 ┌─────────────────────────────────────────────┐
-│  [Enemy Core: 20 HP]                        │
-│  Energy: 3   Fire: 2                        │
+│  [Enemy Core: 30 HP]          Energy: 4/4   │
+│  Invoker: ████░░░░░ (5)                     │
 │                                             │
-│  [Bench 1] [Bench 2] [Bench 3]              │
-│       [Active Monster]                      │
+│  [Slot 1]   [Slot 2]   [Slot 3]             │
 └─────────────────────────────────────────────┘
 ```
 
-Enemy hand is hidden (card backs shown or hidden entirely — TBD).
+Enemy hand shown as card backs (count visible, contents hidden).
 
-### Middle Section — Battle Log / Action Area
+### Middle — Battle Log
 
 ```
 ┌─────────────────────────────────────────────┐
+│  "Bonk Bear attacked for 3 damage."         │
+│  "Enemy played Extra Fluffy — +5 Armor."    │
 │                                             │
-│  "Fire Imp attacked for 1 damage."          │
-│  "You played Fireball — dealt 2 damage."    │
-│                                             │
-│            [End Turn]                       │
+│                  [End Turn]                 │
 └─────────────────────────────────────────────┘
 ```
 
-### Bottom Section — Player State
+### Bottom — Player State
 
 ```
 ┌─────────────────────────────────────────────┐
-│       [Active Monster]                      │
-│  [Bench 1] [Bench 2] [Bench 3]              │
+│  [Slot 1]   [Slot 2]   [Slot 3]             │
 │                                             │
-│  Energy: 2   Fire: 3                        │
-│  [My Core: 20 HP]                           │
+│  [My Core: 30 HP]             Energy: 3/4   │
+│  Invoker: ██░░░░░░░ (2)                     │
 │                                             │
 │  Hand: [Card] [Card] [Card] [Card] [Card]   │
 └─────────────────────────────────────────────┘
@@ -81,106 +72,132 @@ Enemy hand is hidden (card backs shown or hidden entirely — TBD).
 
 ## Monster Card Display (On Board)
 
-Each monster slot on the board shows:
+Each board slot shows:
 
 ```
 ┌──────────┐
 │  [ART]   │
 │  Name    │
-│  HP: 5   │
-│  ATK: 2  │
-│  🔥 +1   │
+│  3 / 4   │  ← ATK / HP
+│ [Taunt]  │  ← keyword badge if applicable
 └──────────┘
 ```
 
-- Click a monster to see full card text (passive, skill, cost)
-- Equipment attached to a monster shows as an icon overlay
+- Click a monster to see full card text (effect, keywords)
+- Armor value shown as a separate badge when active: `[A: 5]`
+- Stealth shown as a visual overlay (dimmed/translucent)
+- Taunt shown as a shield border around the card
 
 ---
 
 ## Hand Card Display
 
-Cards in the player's hand are displayed at the bottom of the screen as a fan or horizontal row.
-
-Each card shows:
-- Card artwork (large, intentionally prominent)
+Cards displayed as a horizontal row at the bottom. Each shows:
+- Card artwork (large — art is the centerpiece)
 - Card name
-- Cost (Energy + Element)
-- Card type icon (Monster / Skill / Support / Equipment)
+- Cost (Energy)
+- Card type badge (Monster / Action)
 
-Hovering a card expands it to show full text.
+Hovering or clicking a card expands it to show full effect text.
 
-### Playing a Card
-- **Monster:** Click card → choose board slot (Active or Bench) → confirm
-- **Skill/Support:** Click card → choose target (if required) → confirm
-- **Equipment:** Click card → choose monster to equip → confirm
-
-Cards with no valid target are grayed out.
+Cards that cannot be played (insufficient Energy, no valid target) are grayed out.
 
 ---
 
-## Attack Interaction
+## Playing a Card
 
-During the Attack Phase:
+Cards are played by dragging them out of the hand. Valid drop zones
+highlight green while dragging, with a hint banner naming the target:
 
-1. Player clicks their Active Monster
-2. Active Monster highlights
-3. Enemy Active Monster is highlighted as the target
-4. A prompt appears: `[Attack] [Cancel]`
-5. Confirming deals damage to both Active Monsters
+- **Monster** / **buff-friendly-minion Action:** drag onto a highlighted
+  board slot (open slots for monsters, your own minions for buffs)
+- **Enemy-targeted Action** (damage, destroy, bounce-to-enemy, take
+  control, etc.): drag onto the highlighted enemy area
+- **Other Action** (self-buff, heal, draw, etc.): drag onto your hero
+  portrait
 
-If there is no enemy Active Monster, Core is highlighted as the target.
+Releasing outside a valid zone, or pressing ESC/right-click, cancels and
+returns the card to the hand.
+
+---
+
+## Attacking
+
+Drag one of your monsters that can still attack toward an enemy target:
+
+1. Press and drag a monster that hasn't attacked this turn, isn't
+   summoning-sick, and has ATK > 0
+2. Valid enemy targets highlight red as you drag — enemy minions (unless
+   Stealthed) and the enemy hero portrait
+3. If the enemy controls a non-Stealthed Taunt minion, only that minion is
+   a valid target
+4. Release over a highlighted target — attack resolves immediately, both
+   sides deal damage simultaneously, including full retaliation damage
+   even if it kills the attacker
+
+If a monster has already attacked this turn or is summoning-sick (and
+lacks Charge), dragging it does nothing.
+
+---
+
+## Energy Display
+
+Single Energy bar per side showing **current / max**. No types.
+
+Example: `Energy: 3 / 5` — 3 remaining, 5 max this turn.
+
+Coin card is shown in hand before turn 1 for the second player.
+
+---
+
+## Invoker Display
+
+A tally bar per player showing progress toward the next threshold (3 / 6 / 9). Active threshold bonuses shown as a small icon or tooltip.
 
 ---
 
 ## Post-Battle Screen
 
-After the duel ends:
-
 ```
 ┌────────────────────────────────┐
-│        YOU WON!                │
+│         YOU WON!               │
 │                                │
 │  +50 EXP                       │
 │  +25 Gold                      │
 │                                │
 │  Card Drop:                    │
-│  [Baby Dragon]                 │
+│  [Bonk Bear]                   │
 │                                │
-│     [Continue]                 │
+│       [Continue]               │
 └────────────────────────────────┘
 ```
 
-Or:
+Or on loss:
 
 ```
 ┌────────────────────────────────┐
-│        YOU LOST.               │
+│         YOU LOST.              │
 │                                │
-│     [Continue]                 │
+│       [Continue]               │
 └────────────────────────────────┘
 ```
 
-Clicking Continue closes the Battle UI and returns the player to the world. The player stands up from the chair automatically.
+Continue closes the Battle UI and returns the player to the world.
 
 ---
 
-## Spectator View (Planned, Not v0.1)
+## Visual Style
 
-Players not in a duel can walk up to a table and observe.
+- Card artwork is large and prominent — the art is what sells the card
+- Card text hidden by default, shown on hover/click
+- Board state must be readable at a glance: ATK, HP, keywords visible without interaction
+- Avoid clutter — status badges (Armor, Taunt, Stealth) use iconography, not text spam
 
-Visible from the 3D world (no UI required):
-- Active Monster on each side (card displayed on table surface)
-- Bench Monsters (smaller display)
+---
+
+## Spectator View (Planned)
+
+Players not in a duel can observe from outside the table area. Visible from the 3D world without UI:
+- Board monsters (cards displayed on the table surface)
 - Core HP bars above each player's seat
-
-Detailed card text requires the spectator to click the card.
-
----
-
-## Visual Style Notes
-
-- Card artwork is intentionally large — the art is the centerpiece
-- Card text is hidden until the card is clicked or hovered
-- Readable board state from a distance is a priority
-- Avoid clutter: show only HP, ATK, and element generation at a glance
+- Full card text visible on click
