@@ -8,22 +8,31 @@ Hybrid 3D/2D presentation. The 3D world shows the card shop and table setup. A 2
 
 ## Pre-Battle: Table Interaction
 
-The player approaches a DuelTable. A ProximityPrompt appears on the tabletop:
+Two entry flows (server-owned tables — see `PLAN_BACKEND.md` A3):
+
+**PvE (talk to the Noob NPC).** A `[E] Talk` ProximityPrompt sits on the Noob.
+Triggering it requests the server-owned table flow: seat the player at a free
+Battle Table, seat a cloned NPC opponent on the opposite chair, and **auto-start**
+the duel — no Challenge button. A `BattleLoading` remote exists for a
+"Finding Table..." overlay, but the client overlay is still pending Phase 2.1.
+
+**PVP (sit at a table).** Each Battle Table has one `[E] Sit` ProximityPrompt (server
+picks the empty chair). On sitting, a bottom **SeatedOverlay** appears:
 
 ```
-[E] Sit Down
+   Seated (chair N) — waiting for opponent…
+   [ Ready ]            [ Leave Seat ]
 ```
 
-Once seated, two buttons appear:
+- **Ready** — marks this player ready; the duel starts once both players are ready.
+- **Leave Seat** — stands the player up, no duel.
 
-```
-[Challenge]    [Leave]
-```
-
-- **Challenge** — locks the player in the chair, starts the duel, opens Battle UI
-- **Leave** — player stands up, no duel
-
-Player cannot move while seated.
+There is **no "Stand Up" prompt** — the seated player uses Leave Seat. The player
+is **not anchored**: the chair's SeatWeld holds position (anchoring fights client
+physics ownership). The server locks WalkSpeed/Jump while seated. Full seated
+ControlModule lock and local prompt suppression are Phase 2.1 cleanup items.
+Controls are restored after unseating or post-battle Continue. The battle camera
+teardown is guarded so it can't re-arm after the duel ends.
 
 ---
 
@@ -31,12 +40,13 @@ Player cannot move while seated.
 
 Full ScreenGui overlay active during a duel. Two anchored sections split the screen.
 
+**ScreenGui configuration:** `IgnoreGuiInset = true`, `ScreenInsets = DeviceSafeInsets` (UI lives within the device safe area; per-element margins handle notches), and `ZIndexBehavior = Sibling`. `ClipToDeviceSafeArea` is left **off**: Roblox does not clip rotated GuiObjects, so an enabled safe-area clip would crop only the un-rotated center card of an odd fan (centerOff = 0) while sparing its tilted neighbors. The reported `AbsoluteSize` can be ~1px short of the physical screen due to Windows display-scaling being folded into Roblox's logical units; this is engine behavior, not a layout bug.
+
 ### Top — Enemy State
 
 ```
 ┌─────────────────────────────────────────────┐
 │  [Enemy Core: 30 HP]          Energy: 4/4   │
-│  Invoker: ████░░░░░ (5)                     │
 │                                             │
 │  [Slot 1]   [Slot 2]   [Slot 3]             │
 └─────────────────────────────────────────────┘
@@ -62,7 +72,6 @@ Enemy hand shown as card backs (count visible, contents hidden).
 │  [Slot 1]   [Slot 2]   [Slot 3]             │
 │                                             │
 │  [My Core: 30 HP]             Energy: 3/4   │
-│  Invoker: ██░░░░░░░ (2)                     │
 │                                             │
 │  Hand: [Card] [Card] [Card] [Card] [Card]   │
 └─────────────────────────────────────────────┘
@@ -91,12 +100,18 @@ stats are overlaid on top of it rather than boxed in separate strips.
   positioned so it overlaps the bottom of the artwork and the top of the
   description panel (50/50).
 - **Stat cluster**: Energy / Attack / Health emblems stacked along the
-  card's upper-right edge, each overlapping the right edge slightly so the
+  card's upper-left edge, each overlapping the left edge slightly so the
   group reads as one unit (see Stat Cluster below).
-- **Type badge**: pill-shaped, top-left corner, archetype-colored —
-  **full mode only** (omitted on board cards as secondary decoration). White
-  border, Fredoka One label showing the archetype name (MIGHTY / SWIFT /
-  VITAL / NEUTRAL — no separate "Action" label).
+- **Type badge**: pill-shaped, **bottom-center** with a slight overflow past
+  the bottom edge, archetype-colored — **full mode only** (omitted on board
+  cards). White border, Fredoka One label showing the card's **race** for
+  creatures (BEAR / CAT / FROG / TREANT / GOLEM …) or **SPELL** for spells.
+- **Spell circle**: spell cards render their art inside a **circular frame**
+  (ringed in the archetype color) in the upper-center, with the card's default
+  archetype background behind it; the name, description, and stat emblems sit
+  in front of the circle. Creatures keep body-filling art and have no circle —
+  this gives an at-a-glance creature-vs-spell read (reinforcing that spells
+  carry no Attack/Health emblems). Full mode only.
 - **Description panel**: light panel below the name bar showing the card's
   ability name and text — **full mode only**.
 - **Card border**: 4px outline colored by the card's archetype (see Type
@@ -106,18 +121,22 @@ stats are overlaid on top of it rather than boxed in separate strips.
 ### Stat Cluster
 
 Three circular emblems — Energy (cost), Attack, Health — stacked vertically
-along the card's upper-right edge, anchored to the same right-edge offset so
+along the card's upper-left edge, anchored to the same left-edge offset so
 they read as one grouped component. Each emblem is an icon with its value
 overlaid on top (centered, Fredoka One, scaled text). Attack and Health
 values are white with a dark outline; the Energy value is gold/yellow
-(`RGB(255,224,70)`) with a dark outline, matching the HUD energy badge.
+(`RGB(255,224,70)`) with a dark outline, matching the HUD energy badge. On
+**hand** cards the Energy value recolors to flag cost mods — green when the
+effective cost is below the card's base cost, red when above, gold otherwise —
+mirroring the Attack/Health buff/debuff coloring (driven by the `costMods` sent
+in the state broadcast).
 
 - **Full mode** (hand, deck, graveyard): all three emblems shown,
   Energy → Attack → Health from top to bottom. Each emblem is 0.15 of the
-  card's width/height, anchored at `x = 1.05` (overlapping the right edge).
+  card's width/height, anchored at `x = -0.05` (overlapping the left edge).
 - **Compact mode** (board slots): only Attack and Health are shown (the
   Energy/cost emblem is hidden — irrelevant once a card is on the board).
-  Each emblem is 0.2 of the card's width/height, anchored at `x = 0.97`.
+  Each emblem is 0.2 of the card's width/height, anchored at `x = 0.03`.
 - Both modes use a 0.03 top inset and a 0.03 gap between stacked emblems
   (fractions of card height).
 
@@ -128,8 +147,8 @@ Icon assets: Energy `rbxassetid://114305689596215`, Attack
 
 Each card's archetype (`battleType`: MIGHTY / SWIFT / VITAL / NEUTRAL) maps
 to a single main color, used for the card border, the type badge's gradient
-fill, board minion borders, combat-target highlight strokes, and the Invoker
-panel swatches/labels — one palette, used everywhere.
+fill, board minion borders, and combat-target highlight strokes — one palette,
+used everywhere.
 
 | Archetype | Main Color |
 |---|---|
@@ -143,18 +162,19 @@ The type badge's fill is a subtle vertical gradient: the main color lightened
 
 ### Two modes, one silhouette
 
-- **Full mode** (hand, deck, graveyard): artwork fills the top **68%** of the
-  card; the description panel occupies the bottom area.
-- **Compact mode** (board slots): artwork fills the top **85%** of the card
-  (no description panel or element badge), giving board cards a taller,
-  art-dominant look while keeping the same name/cost/stat layout.
+- **Full mode** (hand, deck, graveyard): artwork fills the top **62%** of the
+  card (`artPct`); the description panel sits directly below, covering the
+  remaining ~34% (with a small bottom margin).
+- **Compact mode** (board slots): artwork fills the **entire card** (no
+  description panel, name bar, or type badge), giving board cards an
+  art-dominant look while keeping the same cost/stat emblem layout.
 
 ### Sizes
 
 | | Desktop | Mobile |
 |---|---|---|
 | Hand | 132×178 | 112×152 |
-| Board | 96×130 | 80×108 |
+| Board | 96×130 | dynamic — scales to 30% of viewport height |
 | Deck / Graveyard | 86×116 | 70×95 |
 
 ### Card Back
@@ -181,7 +201,8 @@ size):
   never shows this (it's never summoning-sick).
 - **Attacked this turn** — the whole card is dimmed (lighter than Stealth's
   dim).
-- Click a monster to see full card text (effect, keywords).
+- Hover (desktop) or tap-and-hold (mobile) a board minion to preview its full
+  card — see [Board Card Preview](#board-card-preview).
 
 ---
 
@@ -211,14 +232,17 @@ Both hands are arranged as a horizontal fan, anchored to the bottom (player) or 
 ## Playing a Card
 
 Cards are played by dragging them out of the hand. Valid drop zones
-highlight green while dragging, with a hint banner naming the target:
+highlight green while dragging, with a hint banner naming the target. Zones are
+driven by `CardData.targetClass(card)` — the same logic on desktop and mobile:
 
-- **Monster** / **buff-friendly-minion Action:** drag onto a highlighted
-  board slot (open slots for monsters, your own minions for buffs)
-- **Enemy-targeted Action** (damage, destroy, bounce-to-enemy, take
-  control, etc.): drag onto the highlighted enemy area
-- **Other Action** (self-buff, heal, draw, etc.): drag onto your hero
-  portrait
+- **Creature:** drag onto a highlighted open board slot
+- **Friendly-target spell** (buff / heal / grant a friendly creature): drag
+  onto one of your minions
+- **Enemy-target spell** (damage / destroy / bounce an enemy creature; burn
+  may also hit the enemy hero): drag onto a highlighted enemy minion, or the
+  enemy hero where allowed
+- **Untargeted spell** (self-buff, heal hero, draw, armor, board-wide buff):
+  drag onto your hero portrait
 
 Releasing outside a valid zone, or pressing ESC/right-click, cancels and
 returns the card to the hand.
@@ -242,6 +266,41 @@ Drag one of your monsters that can still attack toward an enemy target:
 If a monster has already attacked this turn or is summoning-sick (and
 lacks Charge), dragging it does nothing.
 
+On **mobile**, the attack is a tap-drag: press a friendly minion and drag past
+a small threshold to begin (a brief *stationary* hold instead opens the card
+preview — see Board Card Preview), then release over a highlighted target. The
+targeting arrow and hint render in an always-visible overlay (`TargetingOverlay`)
+so they appear in both desktop and mobile layouts, and the system targets the
+active layout's board frames (`UXMode`-driven). Board-card preview is suppressed
+while any card-play or attack drag is in progress.
+
+---
+
+## Rejected Actions — Warning Toast
+
+When the server refuses an action — not enough Energy; an illegal attack
+(Taunt / Stealth / summoning sickness); or a spell whose prerequisite isn't met
+(no valid target, or an unmet condition such as *No Wounded Ally*) — the reason
+appears as a brief red toast near screen-center, then fades. The card stays in
+hand and its Energy is kept. The toast renders on the always-on-top
+`TargetingOverlay`, so it shows in both desktop and mobile layouts.
+
+---
+
+## Board Card Preview
+
+Inspecting a board minion shows an enlarged copy of its full card (1.7× scale)
+placed just to the **left** of the slot, so a cursor or finger resting on the
+card doesn't cover it. For the left-most slots, where a left-side preview would
+run off the screen's left edge, it auto-flips to the card's right.
+
+- **Desktop:** hover a board card for 0.5s; the preview hides instantly when the
+  cursor leaves the card.
+- **Mobile:** tap-and-hold a board card for 0.5s without dragging; the preview
+  hides when the finger is released. Dragging a friendly minion instead starts
+  an attack.
+- The preview is suppressed while any card-play or attack drag is in progress.
+
 ---
 
 ## Energy Display
@@ -258,9 +317,11 @@ Coin card is shown in hand before turn 1 for the second player.
 
 ---
 
-## Invoker Display
+## Legacy Invoker UI Residue
 
-A tally bar per player showing progress toward the next threshold (3 / 6 / 9). Active threshold bonuses shown as a small icon or tooltip.
+Invoker is cut from the current ruleset. Any remaining Invoker cells/panels in
+`BattleUIController` are legacy visual residue and should be removed or repurposed
+during UI cleanup.
 
 ---
 
@@ -300,6 +361,40 @@ Continue closes the Battle UI and returns the player to the world.
 - Card text hidden by default, shown on hover/click
 - Board state must be readable at a glance: ATK, HP, keywords visible without interaction
 - Avoid clutter — status badges (Armor, Taunt, Stealth) use iconography, not text spam
+
+---
+
+## Mobile Battle Layout
+
+Mobile mode activates when viewport width < 800px or input type is Touch. `main` (desktop Frame) is hidden; `mobileRoot` (a sibling Frame filling the ScreenGui) is shown.
+
+### 4-Row Vertical Grid
+
+| Row | Height | Contents |
+|---|---|---|
+| EnemyHandRow | 20% | Face-down card backs, fanned (mirrors the player hand's curve), ~46px of each visible |
+| EnemyBoardRow | 30% | 3 slots + hero, card sizes scale to row height |
+| PlayerBoardRow | 30% | Same structure as enemy |
+| PlayerHandRow | 20% collapsed / 35% expanded | Player's playable hand |
+
+Rows are straight percentages of the full screen height; the two board rows are
+equal and centered so the board pair sits at vertical screen center. The
+enemy-hand peek (46px) and the collapsed player-hand peek (46px) are matched so
+the gap above each board row is symmetric.
+
+`mobileRoot` also contains a scrim (`ZIndex=15`, full-screen, visible when hand expanded), a grave button (bottom-left, 44×44, with discard count badge), and a HUD cluster — Energy badge, Deck count, End Turn, Forfeit, stacked vertically — docked to the **bottom-right** corner.
+
+### Mobile Player Hand
+
+**Collapsed** (default): Row sits at the bottom, height=20%. Cards fan slightly (16°/(n-1) angle step), showing only the top 46px (`COLLAPSED_VISIBLE`) of each card above the row.
+
+**Expanded**: Tapping any card when collapsed triggers a 0.18s tween to Y=65%, height=35%. Cards re-layout with a tighter 8°/(n-1) fan and full spacing.
+
+**Drag to play**: Dragging a card ≥25px lifts it to `mobileRoot` at ZIndex=100, collapses the hand, and highlights valid zones with a green UIStroke. Releasing over a zone fires `PlayCard` to the server; releasing elsewhere returns the card.
+
+**ZIndex**: cards are ordered `25 + i` (left-most = lowest, right-most = highest), matching deck-draw direction.
+
+**`isDraggingMobileCard` flag**: set true at drag start, prevents hand InputBegan from triggering expand/collapse while a drag is in progress.
 
 ---
 

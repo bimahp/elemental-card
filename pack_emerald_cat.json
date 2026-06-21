@@ -1,0 +1,466 @@
+{
+  "pack": {
+    "id": "emerald_cat_pack",
+    "name": "Emerald Cat Pack",
+    "battleType": "SWIFT",
+    "theme": "Emerald Crystal Cats",
+    "cards": [
+      {
+        "id": "emerald_cub",
+        "name": "Emerald Cub",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 2,
+        "hp": 1,
+        "keywords": [
+          "charge"
+        ],
+        "image_prompt": "A small sleek emerald cat cub, lean and quick, faceted emerald crystal accents in its short fur, caught mid-pounce, eager and energetic. Emerald-green palette, green speed motion trails. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "jade_cub",
+        "name": "Jade Cub",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A curious jade-furred kitten with glowing green crystal eyes and small jade crystal shards along its tail, playful and clever. Emerald-green palette, soft green glow. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "verdant_prowler",
+        "name": "Verdant Prowler",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 3,
+        "hp": 2,
+        "keywords": [
+          "quickstrike"
+        ],
+        "image_prompt": "A lean prowling emerald cat low to the ground, emerald crystal claws bared, body blurring with first-strike speed, stalking forward. Emerald-green palette, sharp green speed trails. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "emerald_lynx",
+        "name": "Emerald Lynx",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 3,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "chain",
+            "action": "buff",
+            "target": "self",
+            "atk": 2
+          }
+        ],
+        "image_prompt": "An agile emerald lynx with tufted ears and faceted emerald crystal whiskers, leaping mid-air trailing green speed streaks. Emerald-green palette, vivid green motion. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "crystal_sabercat",
+        "name": "Crystal Sabercat",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 2,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "bounce",
+            "target": "random_enemy"
+          }
+        ],
+        "image_prompt": "A sleek crystal saber-toothed cat with long translucent emerald crystal fangs, shadowy, swift and poised to strike. Emerald-green palette, glassy green crystal fangs. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "jade_stalker",
+        "name": "Jade Stalker",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 4,
+        "atk": 4,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "chain",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A sleek dark-green panther stalker with a jade crystal sheen across its coat and glowing green eyes, prowling silently through shadow. Emerald-green palette, subtle green crystal glints. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "emerald_huntmaster",
+        "name": "Emerald Huntmaster",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 5,
+        "atk": 5,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "reduce_cost",
+            "target": "hand",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A noble veteran emerald huntmaster cat with a flowing emerald crystal mane and old scars, commanding, alert and swift. Emerald-green palette, regal green crystal accents. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "ancient_sabercat",
+        "name": "Ancient Sabercat",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "epic",
+        "cost": 7,
+        "atk": 7,
+        "hp": 5,
+        "keywords": [
+          "charge"
+        ],
+        "effects": [
+          {
+            "trigger": "chain",
+            "action": "draw_card",
+            "value": 2
+          }
+        ],
+        "image_prompt": "An ancient massive emerald sabercat with enormous emerald crystal fangs and a vast crystalline mane, fierce and legendary, mid-charge with explosive green speed trails. Emerald-green palette, radiant green crystal aura. Premium painterly TCG creature art, large expressive eyes, powerful dynamic silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "quick_step",
+        "name": "Quick Step",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 0,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "value": 2,
+            "condition": {
+              "type": "target_undamaged"
+            }
+          }
+        ],
+        "image_prompt": "A streak of emerald speed energy, a blurring green dash trail with scattered faceted emerald crystal shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green speed trails, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "cat_reflexes",
+        "name": "Cat Reflexes",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "quickstrike"
+          }
+        ],
+        "image_prompt": "Emerald crystal energy sharpening into swift reflex lines, green afterimages and faceted shards crackling with quickness. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green crystal motion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "pouncing_strike",
+        "name": "Pouncing Strike",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 2
+          }
+        ],
+        "image_prompt": "An emerald crystal claw-strike pouncing forward in a sharp green slash of energy with flying crystal shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green slash, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "emerald_claws",
+        "name": "Emerald Claws",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 2
+          }
+        ],
+        "image_prompt": "Glowing emerald crystal claws extending and sharpening, vivid green energy crackling along the faceted blades. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green crystal claws, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ambush",
+        "name": "Ambush",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "all",
+            "value": 1
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A sudden emerald ambush burst, a volley of green crystal shards raining out of the shadows across several targets. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering green shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "swipe",
+        "name": "Swipe",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A wide emerald crystal claw swipe carving a sweeping green energy arc with flying faceted shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green arc, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "hunting_instinct",
+        "name": "Hunting Instinct",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1,
+            "filter": {
+              "race": "CAT"
+            }
+          }
+        ],
+        "image_prompt": "Glowing green hunting-vision energy with emerald crystal pawprints and tracking lines lighting up a dark path. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green tracking energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "shadow_smoke",
+        "name": "Shadow Smoke",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "bounce",
+            "target": "random_enemy"
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A swirling veil of emerald-tinted shadow smoke flecked with glowing green crystal motes, a vanishing dark-green mist. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green smoke, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "combo_strike",
+        "name": "Combo Strike",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 4
+          },
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 2,
+            "condition": {
+              "type": "chain"
+            }
+          }
+        ],
+        "image_prompt": "A rapid double emerald crystal strike, two crossing green slashing energy arcs bursting with bright shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, twin green slashes, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "feline_agility",
+        "name": "Feline Agility",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 2,
+            "hp": 2
+          }
+        ],
+        "image_prompt": "Emerald crystal energy swirling into agile motion lines, green speed spirals and faceted shards spinning upward. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green agility energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "emerald_rush",
+        "name": "Emerald Rush",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A rushing surge of glowing emerald crystal cards and green speed streaks pouring forward. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green rush, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "pack_tactics",
+        "name": "Pack Tactics",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1,
+            "filter": {
+              "race": "CAT"
+            }
+          },
+          {
+            "trigger": "cast",
+            "action": "set_cost",
+            "target": "drawn_cards",
+            "value": 1
+          }
+        ],
+        "image_prompt": "Multiple glowing green emerald pawprints converging into a coordinated pack-tactics surge of crystal energy. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, converging green energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "emerald_dagger",
+        "name": "Emerald Dagger",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature"
+          }
+        ],
+        "image_prompt": "A gleaming faceted emerald crystal dagger plunging forward in a precise green strike, shards flying from the point. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sharp green crystal strike, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "predators_assault",
+        "name": "Predator\u0027s Assault",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "area": "all",
+            "atk": 2
+          }
+        ],
+        "image_prompt": "A sweeping wave of emerald crystal energy empowering rows of claws across the field, a surging green war-charge. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping green energy wave, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "nine_lives",
+        "name": "Nine Lives",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A radiant burst of nine glowing green emerald crystal cat-spirit wisps swirling upward in a spiral. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green spirit wisps, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "apex_hunt",
+        "name": "Apex Hunt",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "rarity": "epic",
+        "cost": 8,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature"
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2
+          }
+        ],
+        "image_prompt": "An apex predator\u0027s emerald crystal killing-strike, a massive green slash of energy obliterating its target in an explosion of emerald shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, explosive green crystal strike, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      }
+    ]
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "pack": {
+    "id": "stonebark_pack",
+    "name": "Stonebark Pack",
+    "battleType": "NEUTRAL",
+    "theme": "Treants \u0026 Crystal Golems",
+    "cards": [
+      {
+        "id": "rootling",
+        "name": "Rootling",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 2,
+        "image_prompt": "A tiny sprouting treant seedling, a small wooden body with white quartz crystal buds and a single leaf, cute and earnest. White-and-clear quartz crystal formations, prismatic light, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "crystal_sapling",
+        "name": "Crystal Sapling",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 2,
+        "hp": 1,
+        "image_prompt": "A young sapling treant with crystal-clear quartz leaves and a slender bark body, glowing faintly with prismatic light. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "young_treant",
+        "name": "Young Treant",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 3,
+        "image_prompt": "A young treant with bark skin, leafy arms and white quartz crystal growths along its limbs, sturdy and earnest. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "quartz_worker",
+        "name": "Quartz Worker",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 3,
+        "hp": 2,
+        "image_prompt": "A small quartz crystal golem worker, a geometric faceted white-crystal body with a simple glowing core, diligent and blocky. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, bold readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "ancient_sapkeeper",
+        "name": "Ancient Sapkeeper",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 2,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "An old wise treant sapkeeper with a mossy bark face, glowing white quartz crystal veins, cradling luminous sap, gentle and ancient. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "quartz_guardian",
+        "name": "Quartz Guardian",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 3,
+        "hp": 4,
+        "image_prompt": "A solid quartz crystal golem guardian, a blocky faceted white-crystal body with a steady glowing core, steadfast stance. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, bold readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "crystal_sentinel",
+        "name": "Crystal Sentinel",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 4,
+        "hp": 5,
+        "keywords": [
+          "taunt"
+        ],
+        "image_prompt": "A tall quartz crystal sentinel golem with a broad shielding white-crystal body and glowing core, planted in a firm defensive stance. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, imposing readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "grove_guardian",
+        "name": "Grove Guardian",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "common",
+        "cost": 5,
+        "atk": 5,
+        "hp": 5,
+        "image_prompt": "A large grove guardian treant with thick bark, a broad leafy canopy and white quartz crystal growths, calm and protective. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, broad readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "elder_treant",
+        "name": "Elder Treant",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "TREANT",
+        "rarity": "epic",
+        "cost": 6,
+        "atk": 6,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "summon",
+            "cardId": "young_treant",
+            "count": 1
+          }
+        ],
+        "image_prompt": "An ancient elder treant, a massive gnarled bark body crowned with glowing white quartz crystals and dense foliage, wise and immense. White-and-clear quartz crystal, earthy palette, prismatic glow. Premium painterly TCG creature art, large expressive eyes, majestic readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "stone_golem",
+        "name": "Stone Golem",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "common",
+        "cost": 6,
+        "atk": 6,
+        "hp": 7,
+        "image_prompt": "A massive stone-and-quartz golem, a heavy rocky body veined with white crystal and a glowing core, powerful and looming. White-and-clear quartz crystal, stone palette. Premium painterly TCG creature art, a glowing expressive core, massive readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "amber_golem",
+        "name": "Amber Golem",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "rare",
+        "cost": 8,
+        "atk": 4,
+        "hp": 10,
+        "image_prompt": "A huge amber-and-quartz golem, a translucent amber crystalline body studded with white quartz facets and a warm glowing core, immense and tanky. Amber and white quartz crystal, warm glow. Premium painterly TCG creature art, a glowing expressive core, towering readable silhouette, focal high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "crystal_fragment",
+        "name": "Crystal Fragment",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A glowing white quartz crystal fragment splitting and shimmering with prismatic rainbow light. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing prismatic crystal shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crystal_bolt",
+        "name": "Crystal Bolt",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A sharp white quartz crystal bolt streaking forward with prismatic energy and trailing shards. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, streaking crystal bolt, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crystal_shard",
+        "name": "Crystal Shard",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 1
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A white quartz crystal shard bursting forward, prismatic splinters scattering outward in a sharp spray. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering prismatic shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "barkskin_blessing",
+        "name": "Barkskin Blessing",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "taunt"
+          }
+        ],
+        "image_prompt": "Protective bark and white quartz crystal plating forming a defensive shell, prismatic glow wrapping around it. White-and-clear quartz palette, earthy accents. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, protective crystal-bark shell, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crystal_reinforcement",
+        "name": "Crystal Reinforcement",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 1,
+            "hp": 1
+          }
+        ],
+        "image_prompt": "White quartz crystal energy reinforcing and strengthening a form, prismatic crystalline growth surging upward. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, reinforcing crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ancient_archive",
+        "name": "Ancient Archive",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2
+          },
+          {
+            "trigger": "cast",
+            "action": "reduce_cost",
+            "target": "drawn_cards",
+            "value": 1
+          }
+        ],
+        "image_prompt": "An ancient floating quartz crystal archive, glowing white runic pages and prismatic knowledge light swirling around a crystalline tome. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling prismatic archive energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crystal_growth",
+        "name": "Crystal Growth",
+        "battleType": "NEUTRAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 2,
+            "hp": 2
+          }
+        ],
+        "image_prompt": "A surge of white quartz crystal growth erupting upward, large prismatic faceted crystals expanding and interlocking. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, erupting crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "starting_decks": {
+    "mighty": {
+      "name": "Ruby Bear Starter",
+      "battleType": "MIGHTY",
+      "cards": [
+        { "id": "ruby_cub", "count": 2 },
+        { "id": "emberpaw_cub", "count": 2 },
+        { "id": "ruby_mauler", "count": 2 },
+        { "id": "rubyhide_bear", "count": 2 },
+
+        { "id": "rubyskin", "count": 2 },
+        { "id": "ruby_slam", "count": 2 },
+        { "id": "ironfur_training", "count": 2 },
+        { "id": "defiant_roar", "count": 2 },
+        { "id": "mountain_roar", "count": 2 },
+
+        { "id": "bear_lore", "count": 2 },
+        { "id": "rally_the_clan", "count": 2 },
+
+        { "id": "rootling", "count": 2 },
+        { "id": "young_treant", "count": 2 },
+        { "id": "quartz_worker", "count": 2 },
+        { "id": "crystal_fragment", "count": 2 }
+      ]
+    },
+
+    "swift": {
+      "name": "Emerald Cat Starter",
+      "battleType": "SWIFT",
+      "cards": [
+        { "id": "emerald_cub", "count": 2 },
+        { "id": "jade_cub", "count": 2 },
+        { "id": "verdant_prowler", "count": 2 },
+        { "id": "emerald_lynx", "count": 2 },
+
+        { "id": "quick_step", "count": 2 },
+        { "id": "cat_reflexes", "count": 2 },
+        { "id": "pouncing_strike", "count": 2 },
+        { "id": "emerald_claws", "count": 2 },
+        { "id": "ambush", "count": 2 },
+
+        { "id": "swipe", "count": 2 },
+        { "id": "shadow_smoke", "count": 2 },
+
+        { "id": "rootling", "count": 2 },
+        { "id": "crystal_sapling", "count": 2 },
+        { "id": "young_treant", "count": 2 },
+        { "id": "crystal_fragment", "count": 2 }
+      ]
+    },
+
+    "vital": {
+      "name": "Sapphire Frog Starter",
+      "battleType": "VITAL",
+      "cards": [
+        { "id": "sapphire_tadpole", "count": 2 },
+        { "id": "moonpool_tadpole", "count": 2 },
+        { "id": "dewcaller_frog", "count": 2 },
+        { "id": "spiritpond_frog", "count": 2 },
+
+        { "id": "healing_mist", "count": 2 },
+        { "id": "spirit_touch", "count": 2 },
+        { "id": "leech_life", "count": 2 },
+        { "id": "spirit_crush", "count": 2 },
+        { "id": "moonpool_blessing", "count": 2 },
+
+        { "id": "renew", "count": 2 },
+        { "id": "memory_fragment", "count": 2 },
+
+        { "id": "rootling", "count": 2 },
+        { "id": "young_treant", "count": 2 },
+        { "id": "ancient_sapkeeper", "count": 2 },
+        { "id": "crystal_fragment", "count": 2 }
+      ]
+    }
+  }
+}

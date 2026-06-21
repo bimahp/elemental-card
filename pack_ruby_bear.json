@@ -1,0 +1,439 @@
+{
+  "pack": {
+    "id": "ruby_bear_pack",
+    "name": "Ruby Bear Pack",
+    "battleType": "MIGHTY",
+    "theme": "Ruby Crystal Bears",
+    "cards": [
+      {
+        "id": "ruby_cub",
+        "name": "Ruby Cub",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 2,
+        "image_prompt": "A small chunky ruby bear cub, round and fluffy, tiny ruby crystal nubs growing through its crimson-tinted fur, curious and brave, sitting upright. Deep ruby-red palette, glowing crimson crystal accents. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal-powered fantasy world, no humans."
+      },
+      {
+        "id": "emberpaw_cub",
+        "name": "Emberpaw Cub",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 1,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "gain_armor",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A tiny ruby bear cub with glowing ember-red paws and small smoking ruby crystal claws, sparks of heat rising from its pads, playful and fierce. Deep ruby-red palette, crimson ember glow. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "ruby_mauler",
+        "name": "Ruby Mauler",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 3,
+        "hp": 2,
+        "image_prompt": "A lean aggressive young ruby bear baring its claws, jagged ruby crystal spikes along its forearms, snarling in an attacking lunge. Deep ruby-red palette, crimson crystal shards. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "cragfur_bear",
+        "name": "Cragfur Bear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 1,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "buff",
+            "target": "random_friendly",
+            "atk": 1
+          }
+        ],
+        "image_prompt": "A rugged sturdy bear with craggy rock-like fur studded with jagged ruby crystals, weathered and calm, a steadfast guardian. Deep ruby-red and stone palette, glowing red crystal veins. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "rubyhide_bear",
+        "name": "Rubyhide Bear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 2,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A thick-set bear armored in overlapping ruby crystal plates that grow like natural armor across its hide, broad and defensive stance. Deep ruby-red palette, faceted crimson crystal plating. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "emberclaw_bear",
+        "name": "Emberclaw Bear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 4,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "damage",
+            "target": "enemy_creature",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A powerful bear mid-roar with massive glowing ruby claws wreathed in ember sparks, crimson energy radiating from its paws. Deep ruby-red palette, intense crimson glow. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "stoneguard_bear",
+        "name": "Stoneguard Bear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 5,
+        "atk": 3,
+        "hp": 7,
+        "keywords": [
+          "taunt"
+        ],
+        "image_prompt": "A huge stalwart guardian bear with a shield-like ruby crystal carapace across its back and shoulders, planted firmly in a protective defensive pose. Deep ruby-red palette, heavy faceted crimson crystal armor. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "ancient_ruby_bear",
+        "name": "Ancient Ruby Bear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "epic",
+        "cost": 7,
+        "atk": 5,
+        "hp": 9,
+        "effects": [
+          {
+            "trigger": "attacked",
+            "action": "buff",
+            "target": "self",
+            "atk": 2
+          }
+        ],
+        "image_prompt": "An ancient colossal bear elder with an enormous mane of giant ruby crystal formations erupting from its back, glowing crimson eyes, majestic and battle-scarred, towering and regal. Deep ruby-red palette, radiant crimson crystal aura. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "rubyskin",
+        "name": "Rubyskin",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "gain_armor",
+            "value": 3
+          }
+        ],
+        "image_prompt": "Ruby crystal armor plating snapping into place in mid-air, faceted red crystalline shards locking together into a protective layer, crimson glow. Premium painterly TCG spell art, the magical effect fills 60-80 percent of a center-weighted frame, energetic ruby crystal shards and energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "battle_scar",
+        "name": "Battle Scar",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "own_hero",
+            "value": 1
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "Three glowing crimson ruby-crystal claw-slash marks tearing across the frame, sharp red energy and scattered ruby shards. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic crystal energy trails, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ruby_slam",
+        "name": "Ruby Slam",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A massive ruby crystal fist of energy slamming down with a violent crimson shockwave, red crystal fragments bursting outward on impact. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic shards and shockwaves, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crushing_blow",
+        "name": "Crushing Blow",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "damaged"
+            }
+          }
+        ],
+        "image_prompt": "An enormous ruby crystal warhammer of light crashing down and obliterating its target in an explosion of red crystal fragments and crimson sparks. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, explosive crystal motion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ironfur_training",
+        "name": "Ironfur Training",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 1,
+            "hp": 2
+          }
+        ],
+        "image_prompt": "Ruby crystal energy hardening fur into spiky armored plates, crimson crystalline growth surging upward with strength and power. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic ruby crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "defiant_roar",
+        "name": "Defiant Roar",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2,
+            "condition": {
+              "type": "friendly_damaged_exists"
+            }
+          }
+        ],
+        "image_prompt": "A thunderous roar visualized as expanding concentric crimson sound-wave rings filled with ruby crystal shards radiating outward. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic shockwave rings, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "mountain_roar",
+        "name": "Mountain Roar",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "all",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A mountainous crimson shockwave erupting across a battlefield with rows of jagged ruby crystal spikes bursting up from the ground. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping crystal eruption, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ancient_endurance",
+        "name": "Ancient Endurance",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "gain_armor",
+            "value": 8
+          }
+        ],
+        "image_prompt": "A towering ancient wall of deep ruby crystal rising into a massive protective barrier, glowing with steady crimson light and weathered runes. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, monumental crystal formation, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "war_banner",
+        "name": "War Banner",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "area": "all",
+            "atk": 1,
+            "hp": 1
+          }
+        ],
+        "image_prompt": "A glowing ruby crystal war banner planted firmly, radiating waves of crimson rallying energy over a misty battlefield. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant rally energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "bear_lore",
+        "name": "Bear Lore",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2
+          }
+        ],
+        "image_prompt": "Ancient ruby crystal runes and glowing red lore-pages swirling in the air around a faceted ruby tome, knowledge energy spiraling upward. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling arcane crystal energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "stonehide_ritual",
+        "name": "Stonehide Ritual",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "hp": 4
+          }
+        ],
+        "image_prompt": "A ritual of ruby crystal plates growing and encasing a form in protective armor, ringed by glowing crimson runic circles. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, ritual crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "clan_reserves",
+        "name": "Clan Reserves",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 3
+          }
+        ],
+        "image_prompt": "Several glowing ruby crystal cards and ember sparks emerging from an opening red reserve cache, crimson light pouring out. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic crystal draw, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "rally_the_clan",
+        "name": "Rally the Clan",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1,
+            "filter": {
+              "race": "BEAR"
+            }
+          },
+          {
+            "trigger": "cast",
+            "action": "set_cost",
+            "target": "drawn_cards",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A rallying surge of ruby crystal energy with crimson banners and glowing red bear pawprints, the bear clan summoned in a wave of red light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging rally energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "crystal_rampart",
+        "name": "Crystal Rampart",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "gain_armor",
+            "value": 12
+          }
+        ],
+        "image_prompt": "An enormous fortified rampart of ruby crystal walls erupting upward into an impenetrable crimson barrier, glowing red battlements. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, towering crystal walls, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "avalanche",
+        "name": "Avalanche",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 6,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "attack_gte",
+              "value": 6
+            }
+          }
+        ],
+        "image_prompt": "A catastrophic avalanche of giant ruby crystal boulders thundering down a slope in a crashing crimson cascade of shards and dust. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, massive crystal landslide, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "last_stand",
+        "name": "Last Stand",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "rarity": "epic",
+        "cost": 8,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "all",
+            "value": 4
+          }
+        ],
+        "image_prompt": "A final defiant detonation of ruby crystal energy radiating destruction in every direction, a massive crimson blast wave of shattering red crystal. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, apocalyptic crystal explosion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      }
+    ]
+  }
+}

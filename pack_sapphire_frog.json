@@ -1,0 +1,473 @@
+{
+  "pack": {
+    "id": "sapphire_frog_pack",
+    "name": "Sapphire Frog Pack",
+    "battleType": "VITAL",
+    "theme": "Sapphire Crystal Frogs",
+    "cards": [
+      {
+        "id": "sapphire_tadpole",
+        "name": "Sapphire Tadpole",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 2,
+        "image_prompt": "A tiny round sapphire tadpole with a glowing blue crystal tail, bioluminescent and cute, drifting in water. Sapphire-blue palette, soft rounded form, bioluminescent blue glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "moonpool_tadpole",
+        "name": "Moonpool Tadpole",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 1,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A small luminous tadpole glowing with soft moonlit blue light and sapphire crystal speckles, peaceful. Sapphire-blue palette, gentle bioluminescent glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "dewcaller_frog",
+        "name": "Dewcaller Frog",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A gentle round frog with dewy sapphire crystal skin, glowing blue water droplets rising and orbiting it, a serene healer. Sapphire-blue palette, soft blue glow, water motifs. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "spiritpond_frog",
+        "name": "Spiritpond Frog",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 3,
+        "hp": 4,
+        "keywords": [
+          "lifesteal"
+        ],
+        "image_prompt": "A mystical frog with translucent sapphire crystal skin and glowing inner blue light, wisps of life-draining lifesteal energy swirling around it. Sapphire-blue palette, ethereal blue glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "sapphire_guardian",
+        "name": "Sapphire Guardian",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 2,
+        "hp": 6,
+        "keywords": [
+          "taunt"
+        ],
+        "image_prompt": "A large sturdy guardian frog with a thick faceted sapphire crystal shell on its back, planted in a protective defensive stance. Sapphire-blue palette, heavy blue crystal shell. Premium painterly TCG creature art, large gentle expressive eyes, sturdy readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "lifebloom_frog",
+        "name": "Lifebloom Frog",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 5,
+        "atk": 4,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A serene frog covered in blooming sapphire crystal flowers and lily pads, radiating a gentle blue healing glow. Sapphire-blue palette, blooming crystal flora, soft blue light. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "ancient_tidefrog",
+        "name": "Ancient Tidefrog",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "epic",
+        "cost": 6,
+        "atk": 6,
+        "hp": 6,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 6
+          }
+        ],
+        "image_prompt": "An ancient massive tide frog with cascading sapphire crystal growths flowing like waterfalls down its back, deep blue glow, wise and immense. Sapphire-blue palette, radiant blue crystal cascades, water motifs. Premium painterly TCG creature art, large gentle expressive eyes, majestic readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "sapphire_elder",
+        "name": "Sapphire Elder",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "epic",
+        "cost": 8,
+        "atk": 6,
+        "hp": 8,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "return_from_graveyard",
+            "target": "random"
+          }
+        ],
+        "image_prompt": "An ancient frog elder shaman with a crown of sapphire crystals and glowing blue spirit-light, a mystical resurrection aura swirling around it, wise and powerful. Sapphire-blue palette, radiant blue spirit glow. Premium painterly TCG creature art, large gentle expressive eyes, regal readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+      },
+      {
+        "id": "healing_mist",
+        "name": "Healing Mist",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A soft sapphire-blue healing mist with glowing crystal droplets and gentle restorative light spreading outward. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing blue mist and crystal droplets, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "spirit_touch",
+        "name": "Spirit Touch",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 1,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "friendly_creature",
+            "value": 3
+          }
+        ],
+        "image_prompt": "A gentle sapphire crystal touch of glowing blue restorative energy mending a wound, soft blue light radiating. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, gentle blue healing energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "leech_life",
+        "name": "Leech Life",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 2
+          },
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A sapphire crystal drain effect, blue life-energy siphoning along a glowing crystalline tendril from one point to another. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, blue siphon energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "spirit_crush",
+        "name": "Spirit Crush",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "attack_lte",
+              "value": 3
+            }
+          }
+        ],
+        "image_prompt": "A sapphire crystal spirit-shatter, a fragile blue spectral form crushed in a burst of blue crystal shards and fading light. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, shattering blue crystal, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "moonpool_blessing",
+        "name": "Moonpool Blessing",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 1,
+            "hp": 2
+          }
+        ],
+        "image_prompt": "A blessing of sapphire moonpool water, glowing blue crystal droplets and soft empowering light rising in a gentle column. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing blue blessing energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "renew",
+        "name": "Renew",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          },
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A renewing swirl of sapphire crystal energy and glowing blue life-droplets cycling upward in a gentle spiral. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, cycling blue renewal energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "spirit_bloom",
+        "name": "Spirit Bloom",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "friendly_creature",
+            "value": 2
+          },
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "lifesteal"
+          }
+        ],
+        "image_prompt": "A blooming sapphire crystal lotus radiating blue healing light and lifesteal energy, petals of glowing crystal unfurling. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, blooming blue crystal flower, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "memory_fragment",
+        "name": "Memory Fragment",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "split",
+            "value": 4,
+            "lifesteal": true
+          }
+        ],
+        "image_prompt": "Drifting sapphire crystal memory fragments shimmering with blue light, splintering and streaking toward several targets. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering blue crystal fragments, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "sapphire_waters",
+        "name": "Sapphire Waters",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 3,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 2
+          }
+        ],
+        "image_prompt": "A surging wave of sapphire healing waters with glowing blue crystal foam washing restoratively across the frame. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging blue healing wave, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "soul_recovery",
+        "name": "Soul Recovery",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 4,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 2
+          },
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 4
+          }
+        ],
+        "image_prompt": "A gentle recovery of glowing blue soul-light and sapphire crystal cards rising from a calm pool of water. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, rising blue soul energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "grave_call",
+        "name": "Grave Call",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "return_from_graveyard",
+            "target": "random"
+          },
+          {
+            "trigger": "cast",
+            "action": "set_cost",
+            "target": "returned_card",
+            "value": 1
+          }
+        ],
+        "image_prompt": "A sapphire crystal grave-call, a glowing blue spirit rising out of a crystalline pool and drawn back, ghostly and serene. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, rising blue spirit, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "moonpool_ritual",
+        "name": "Moonpool Ritual",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 8
+          }
+        ],
+        "image_prompt": "A grand sapphire moonpool ritual, a radiant circular pool of blue crystal water glowing with a massive surge of healing light. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue healing pool, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "spirit_harvest",
+        "name": "Spirit Harvest",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "common",
+        "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "all",
+            "value": 2,
+            "lifesteal": true
+          }
+        ],
+        "image_prompt": "A sweeping sapphire crystal harvest of blue spirit energy draining across a row of enemies, lifesteal wisps flowing back. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping blue siphon energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "ancient_staff",
+        "name": "Ancient Staff",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 6,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 5,
+            "hp": 5
+          },
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "lifesteal"
+          }
+        ],
+        "image_prompt": "An ancient sapphire crystal staff held upright, radiating powerful blue empowering and lifesteal energy in glowing rings. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue staff energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "essence_tide",
+        "name": "Essence Tide",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "rare",
+        "cost": 6,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          },
+          {
+            "trigger": "cast",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "split",
+            "valueFrom": "drawn_card_cost",
+            "lifesteal": true
+          }
+        ],
+        "image_prompt": "A surging tide of sapphire crystal essence, blue energy drawn inward then unleashed in a wave across enemies, lifesteal wisps trailing back. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging blue essence tide, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      },
+      {
+        "id": "eternal_rebirth",
+        "name": "Eternal Rebirth",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "rarity": "epic",
+        "cost": 8,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "area": "all",
+            "keyword": "rebirth"
+          }
+        ],
+        "image_prompt": "A radiant sapphire crystal rebirth bloom, glowing blue resurrection light enveloping the field as crystalline spirits rise renewed. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue resurrection energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+      }
+    ]
+  }
+}
