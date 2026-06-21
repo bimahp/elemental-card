@@ -8,7 +8,14 @@ Progression is built around monster mastery and incremental collection. No stat 
 
 ## Battle Rewards
 
-Awarded to the **winning player** after a completed duel.
+Rewards are produced by a backend reward policy module. The policy receives the
+battle mode (`pve` or `pvp`), winner seat, recipient seat, and battle context, then
+returns a display/persistence payload. Phase 3 owns the policy shape; Phase 4 owns
+saving the payload to ProfileStore.
+
+### PvE Rewards
+
+Awarded to the **human winning player** after a completed PvE duel.
 
 | Reward | Amount |
 |---|---|
@@ -16,7 +23,14 @@ Awarded to the **winning player** after a completed duel.
 | Gold | 25 |
 | Card Drop | 1 card, randomly drawn from the NPC's deck pool |
 
-Losing player receives nothing in v0.1. Consolation rewards planned for a later version.
+The losing human receives nothing in v0.1. The NPC seat never receives rewards.
+Consolation rewards are planned for a later version.
+
+### PVP Rewards
+
+PVP reward contents are intentionally separated from PvE before persistence lands.
+Phase 3 should return explicit placeholder payloads for PVP winner/loser outcomes
+so tuning PVP rewards later does not require changing battle cleanup or turn flow.
 
 ---
 

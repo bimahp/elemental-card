@@ -31,13 +31,15 @@ ReplicatedStorage/
   Definitions/
     Cards                 ← 90 cards across 4 packs (id-keyed Lua map, effects[] schema)
     Decks                 ← 3 starter decks expanded from deck_starter.json
+    CrystalCores          ← 6 alpha deck-bound Core definitions + scaling
   Modules/
     CardSchema            ← Validator: fields, trigger/action/target vocabs, deck ids
     CardText              ← getAbilityDisplay(cardId), targetClass(card), canHitFace(card)
   Remotes/
-    PlayCard, DeclareAttack, EndTurn, Forfeit, StandUp, ReadyUp
+    PlayCard, DeclareAttack, EndTurn, Forfeit, StandUp, ReadyUp, UseCore
+    GetDecks, CreateDeck, SaveDeckCards, RenameDeck, DeleteDeck, SetActiveDeck
     UpdateBattleState, BattleOver, BattleSeated, BattleUnseated, BattleLoading
-    (StartDuel orphaned)
+    (StartDuel, UseSkill, UsePlayerSkill orphaned migration artifacts)
 
 ServerScriptService/
   Modules/
@@ -51,28 +53,39 @@ ServerScriptService/
     BattleLogic           ← State, turn flow, combat; delegates effects to Effects/
     NpcAI                 ← effects[]-aware NPC scoring and targeting
     BattleRegistry        ← Battles[battleId], reverse index, perspective relabel
-    DuelSession           ← Per-battle turn loop (human + NPC seats)
+    DuelSession           ← Per-battle turn loop, human/NPC handoff, turn timers
+    RewardService         ← Mode-aware reward payload policy (persistence-free)
     TableManager          ← Table/seat ownership, chained seating, PvE NPC bench
-  BattleController        ← Thin remote-wiring → Registry/Session/TableManager (v5)
+    SaveService           ← ProfileStore wrapper: profile lifecycle, schema v1.2, decks/active deck, migration, autosave
+  Packages/
+    ProfileStore          ← vendored session-locked DataStore lib (loleris, pinned 45c9847)
+  BattleController        ← Thin remote-wiring → Registry/Session/TableManager + SaveService (v5)
+  InventoryService        ← GetInventory RemoteFunction → player's saved collection
+  DeckService             ← Deck remotes → create/save/rename/delete/set-active validation
   NpcSit                  ← retired (Disabled)
 
 StarterPlayer/
   StarterPlayerScripts/
-    ChairInteraction      ← retired (Disabled) — seating moved to TableManager
+    ChairInteraction      ← retired/removed — seating moved to TableManager
 
 StarterGui/
   BattleUI/
-    BattleUIController    ← Board render, hand, camera, post-battle screen
+    BattleUIController    ← Board render, Core panel/preview/drag, hand, camera, post-battle screen
     Modules/
       CardVisuals         ← buildCardFrame / updateCardFrame; spell circle; left emblems
       CardPreviewController ← Board card hover/hold preview
-      TargetingSystem     ← Drag-to-play and drag-to-attack; drop zone highlights
+      TargetingSystem     ← Drag-to-play, drag-to-attack, and Core targeting highlights
       GraveLogPanel       ← Discard history
       UXMode              ← Desktop/Mobile reactive toggle
+  Hud/                    ← world HUD (top-right icon anchor; hidden in battle)
+    HudController         ← anchor visibility per battle state
+    TopRightAnchor        ← hosts world icons (Inventory icon = layered outline)
+  InventoryUI/           ← Card Library page stack: Home, My Cards, Deck List, Core Select, Deck Editor
+    InventoryController   ← collection browser + deck builder client
 
 Workspace/
   Battle Tables/
-    Battle Table 1, 2     ← each: Chair 1/Seat, Chair 2/Seat, surface TablePrompt
+    Battle Table 1, 2     ← each: Chair 1/Seat, Chair 2/Seat, runtime surface TablePrompt
   Noob                    ← standing PvE NPC (anchored); TalkPrompt
   (BenchNpc)              ← transient Noob clone seated opposite during a PvE battle
 ```

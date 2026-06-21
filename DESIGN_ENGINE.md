@@ -8,10 +8,11 @@
 
 ## Locked decisions (alpha)
 
-- **Invoker is cut.** No per-archetype tally / thresholds. Card power lives in the
-  cards (`chain`, `lifesteal`). Engine-side Invoker helpers are removed. Any
-  remaining Invoker UI is legacy visual residue tracked for cleanup. May return
-  later as a card-driven mechanic.
+- **Invoker is cut and replaced by Crystal Core.** There is no passive 3/6/9
+  Invoker power track. Each battle side has one deck-bound active Core, a 2-Energy
+  once-per-own-turn skill that scales from per-Battle-Type cards-played counters
+  at 5/10/15 thresholds. Core activation is explicit, target-validated, and
+  server-resolved.
 - **`lifesteal` is the canonical term.** "Siphon" is retired everywhere. Lifesteal
   = your hero heals for the damage this deals — applies to **combat** (the keyword
   on a creature) and **effects** (`lifesteal = true` on a `damage` entry).
@@ -51,6 +52,7 @@ ReplicatedStorage/
   Definitions/
     Cards.lua        ← all pack cards as one id-keyed map (canonical)
     Decks.lua        ← starter decks (from deck_starter.json)
+    CrystalCores.lua ← six alpha Core definitions, scaling, supported deck types
   Modules/
     CardSchema       ← validates Cards.lua on load (fields, known triggers/actions/targets)
     CardText         ← renders ability text from effects[] (replaces in-data EFFECT_TEXT)
@@ -93,8 +95,9 @@ instance so buffs/granted keywords never mutate the shared definition.
 ```
 
 Removed from state: `invoker`, `discounts` (→ Costs), `usedComboExtraAttackThisTurn`
-(Invoker combo extra-attack is gone). Kept: `deadAllies` (graveyard recursion),
-`tempKeywordGrants`, fatigue, etc.
+(Invoker combo extra-attack is gone). Added for Crystal Core: `coreId`,
+`coreUsedThisTurn`, and `coreCounters = {MIGHTY, SWIFT, VITAL}` on each side.
+Kept: `deadAllies` (graveyard recursion), `tempKeywordGrants`, fatigue, etc.
 
 ---
 
@@ -158,12 +161,14 @@ DESIGN_DATABASE.)
 and Hearthstone convention. `self`, `own_hero`, `all_*`, `random_*`, and `area:all`
 need no pick and resolve server-side.
 
-- Client sends the chosen slot via the existing drag-to-target flow (`PlayCard`
-  already carries `targetSlot`; extend to carry target side where needed —
-  `enemy_target` can hit a creature or the enemy hero).
-- Server **always re-validates** the chosen target against `target`/`condition`
-  (anti-cheat + legality). Illegal/again-empty → reject the play.
-- `random_*` and `area` are resolved entirely server-side.
+- Client sends the chosen target through the existing drag-to-target flow:
+  `PlayCard(cardId, {target={side="npc", slot=N}})` from the client's perspective;
+  `slot=0` means hero for `enemy_target` burn.
+- Server remaps that descriptor from client perspective to canonical battle seats,
+  then **always re-validates** it against the card's target class and descriptor
+  shape before battle logic runs. Malformed or illegal targets reject without throwing.
+- `Effects.Targeting` also guards chosen descriptors before use. `random_*`,
+  `area`, and legal fallback targets are resolved entirely server-side.
 
 This replaces the current auto-pick (`lowest_hp`, random) for player-facing
 targeted effects.
@@ -228,7 +233,7 @@ code path in `dealDamage*`.
 
 ## Open items
 
-- **Starter deck sizes inconsistent**: MIGHTY 36, SWIFT 37, VITAL 34 — none are the 30 DESIGN_CORE specifies; skews draw/fatigue in sims. Normalize before competitive balance work.
-- **Deck model TBD** — starter decks are a playtest stopgap, not the final construction system.
-- **Balance**: VITAL 24%, MIGHTY 71% (n=40/matchup sim). Naive AI doesn't pilot sustain; MIGHTY armor+removal snowballs. Needs card tuning + smarter AI (see DESIGN_CARDS known issues).
+- **Balance**: Core values and card values are alpha numbers. Previous starter sims showed MIGHTY overperforming and VITAL underperforming; rerun balance sims now that NPC Core AI is enabled.
+- **Manual PVP smoke**: run a full 2-player Local Server pass with active decks and Cores.
+- **Core art**: generated Crystal Core art is deferred; current UI uses placeholder crystal-circle treatment around player/NPC portraits.
 - **Rebirth + board full**: creature died into a freed slot, so the slot is always available. Edge case already handled by design.

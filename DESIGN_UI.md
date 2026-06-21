@@ -13,8 +13,11 @@ Two entry flows (server-owned tables — see `PLAN_BACKEND.md` A3):
 **PvE (talk to the Noob NPC).** A `[E] Talk` ProximityPrompt sits on the Noob.
 Triggering it requests the server-owned table flow: seat the player at a free
 Battle Table, seat a cloned NPC opponent on the opposite chair, and **auto-start**
-the duel — no Challenge button. A `BattleLoading` remote exists for a
-"Finding Table..." overlay, but the client overlay is still pending Phase 2.1.
+the duel — no Challenge button. `BattleLoading` shows an input-blocking
+"Finding Table..." overlay while seating/bench setup is in progress, then clears
+on battle state, unseat/abort, battle over, timeout, or respawn. The client also
+shows this overlay optimistically when the local Noob `TalkPrompt` triggers, while
+the server remote remains the authoritative entry signal and cleanup path.
 
 **PVP (sit at a table).** Each Battle Table has one `[E] Sit` ProximityPrompt (server
 picks the empty chair). On sitting, a bottom **SeatedOverlay** appears:
@@ -29,10 +32,12 @@ picks the empty chair). On sitting, a bottom **SeatedOverlay** appears:
 
 There is **no "Stand Up" prompt** — the seated player uses Leave Seat. The player
 is **not anchored**: the chair's SeatWeld holds position (anchoring fights client
-physics ownership). The server locks WalkSpeed/Jump while seated. Full seated
-ControlModule lock and local prompt suppression are Phase 2.1 cleanup items.
-Controls are restored after unseating or post-battle Continue. The battle camera
-teardown is guarded so it can't re-arm after the duel ends.
+physics ownership). The server locks WalkSpeed/Jump while seated, and the client
+ControlModule is disabled during loading, seated, and battle states. The seated
+player's client locally suppresses table prompts so the same table does not still
+look interactable to them. Controls and prompts are restored after unseating,
+post-battle Continue, timeout, or respawn. The battle camera teardown is guarded
+so it can't re-arm after the duel ends.
 
 ---
 
@@ -61,9 +66,25 @@ Enemy hand shown as card backs (count visible, contents hidden).
 │  "Bonk Bear attacked for 3 damage."         │
 │  "Enemy played Extra Fluffy — +5 Armor."    │
 │                                             │
-│                  [End Turn]                 │
+│             Turn 02: 0:42 [End Turn]        │
 └─────────────────────────────────────────────┘
 ```
+
+### Turn Timer
+
+Phase 3 adds a server-authoritative turn timer. The server sends timer metadata in
+`UpdateBattleState`; the client renders a display-only countdown and resyncs whenever
+a fresh state arrives.
+
+- Desktop: compact timer text/bar sits beside the current-turn indicator / End Turn
+  control in the middle HUD.
+- Mobile: timer lives in the bottom-right HUD cluster above or beside End Turn, using
+  the same compact styling as Energy/Deck counters.
+- Normal state above the warning threshold; warning color under the final seconds;
+  optional pulse under the final 5 seconds.
+- Timeout enforcement is server-only. The client countdown is never trusted for rules.
+- Layout changes may re-render the last battle state; if `turnEndsAt` has not changed,
+  the client preserves the live countdown instead of recomputing from stale metadata.
 
 ### Bottom — Player State
 
@@ -317,11 +338,48 @@ Coin card is shown in hand before turn 1 for the second player.
 
 ---
 
-## Legacy Invoker UI Residue
+## Crystal Core Battle Panel
 
-Invoker is cut from the current ruleset. Any remaining Invoker cells/panels in
-`BattleUIController` are legacy visual residue and should be removed or repurposed
-during UI cleanup.
+The old Invoker UI is retired. Each side's fourth board-row cell is now the
+Crystal Core panel: a square, card-like hero/Core surface showing the player's
+portrait inside a crystal circle treatment.
+
+- Emblems: Energy cost (`2`), Armor, and HP.
+- The Core name is shown at battle scale with a type-colored stroke based on the
+  Core's primary supported Battle Type.
+- Used Cores are visually dimmed until the next start-turn reset.
+- Desktop hover shows an enlarged Core preview using the Spell-card preview
+  composition, with Core description and current scaling values.
+- Mobile long-press shows the same preview.
+- Activation uses click/tap-drag from the owned Core panel to a valid target.
+  Self-only Cores release on the own Core/hero panel; targeted Cores use the
+  existing targeting overlay and valid-target highlights.
+
+The Core remote is server-owned: clients send only a target descriptor, and the
+server derives the battle/seat, checks turn/energy/once-per-turn state, remaps
+perspective, validates the target, then resolves the Core.
+
+---
+
+## Card Library
+
+The top-right world HUD entry is **Card Library**. It opens one reusable
+`InventoryUI` panel with a page stack instead of stacking multiple ScreenGuis:
+
+`Home -> My Cards / Deck Builder -> Deck List -> Deck Editor`
+
+- Home shows `My Cards` and `Deck Builder`.
+- My Cards reuses the existing owned-card grid/filter/preview behavior backed by
+  `GetInventory`.
+- Deck Builder shows saved decks, validity, Core identity, card count, active
+  marker, and deck actions.
+- Create Deck chooses a Core first. The Core is immutable after creation.
+- Deck Editor saves drafts, filters available owned cards to Core-supported
+  Battle Types plus NEUTRAL, enforces max 2 copies per card in the UI, shows
+  validation messages, and enables Set Active only for valid decks.
+- One shared header/back button navigates to the previous page; Back from root
+  closes the panel.
+- The HUD anchor still hides during battle states.
 
 ---
 

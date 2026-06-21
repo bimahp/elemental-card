@@ -6,7 +6,7 @@
 
 ## Concept
 
-A Roblox digital card battle game. Players build decks around one of three archetypes, summon creatures onto a 3-slot board, and spend Energy to play cards and attack. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
+A Roblox digital card battle game. Players build decks around an immutable deck-bound **Crystal Core**, summon creatures onto a 3-slot board, and spend Energy to play cards, attack, and activate the Core once each turn. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
 
 ---
 
@@ -85,6 +85,31 @@ The second player starts with the **Coin** in hand before turn 1: "Gain 1 Energy
 
 ---
 
+## Crystal Core
+
+Crystal Core is the official replacement for the removed Invoker mechanic.
+
+- Each deck has exactly one Core chosen when the deck is created.
+- A deck's Core is immutable. To change Core identity, create a new deck or delete/recreate the old deck.
+- In battle, the Core behaves like a Hearthstone-style Hero Power: it costs **2 Energy**, can be activated once on your own turn, and resets at the start of your next turn.
+- Core scaling is based on cards played by that side during the battle, tracked separately for MIGHTY, SWIFT, and VITAL. NEUTRAL cards, Coin, fatigue, attacks, and Core activations do not advance counters.
+- Threshold tiers are `0-4`, `5-9`, `10-14`, and `15+`.
+
+Alpha Cores:
+
+| Core | Supported Types | Effect |
+|---|---|---|
+| Core of Vanguard | MIGHTY | Gain Armor: 1 / 2 / 4 / 6 from MIGHTY counter |
+| Core of Assassin | SWIFT | Deal damage to a creature: 1 / 2 / 2 / 3 from SWIFT counter. If it kills the target, draw 1 and reduce that drawn card's cost by 1 |
+| Core of Renewal | VITAL | Heal a friendly hero/Core or creature: 1 / 2 / 4 / 6 from VITAL counter |
+| Core of Warrior | MIGHTY + SWIFT | Gain Armor 1 / 2 / 3 / 4 from MIGHTY counter, and draw 0 / 1 / 1 / 2 from SWIFT counter |
+| Core of Guardian | MIGHTY + VITAL | Gain Armor 1 / 2 / 3 / 4 from MIGHTY counter, and heal 0 / 1 / 2 / 3 from VITAL counter |
+| Core of Sage | SWIFT + VITAL | Draw 0 / 1 / 1 / 2 from SWIFT counter, and heal 1 / 2 / 3 / 4 from VITAL counter |
+
+Pure Cores are specialists and should stay stronger than dual Cores in their specialty.
+
+---
+
 ## Keywords
 
 Static, always-on creature states:
@@ -141,6 +166,9 @@ Ability **triggers** (when an `effects[]` entry fires) — **Emerge** (on summon
 
 ## Deck Construction
 
-- One archetype per deck, plus NEUTRAL cards — no mixing of archetypes.
-- Current alpha starter decks are fixed 30-card precons generated from `deck_starter.json`.
-- Final deck construction is TBD. The current 30-card starter size is a working alpha constraint, not a final deckbuilder rule.
+- Decks are exactly **30 cards** when active or battle-usable.
+- A deck may include cards whose Battle Type is supported by its Crystal Core, plus NEUTRAL cards.
+- Maximum **2 copies per card**.
+- Draft decks may be saved incomplete or invalid, but only valid 30-card decks can be set active or used in battle.
+- Each profile must always have one active valid deck. Existing and new profiles migrate to a valid `Mighty Starter` deck using `Core of Vanguard`.
+- Alpha starter decks are generated from `deck_starter.json`; PvE Noob still randomizes among pure starter decks and receives the matching pure Core.
