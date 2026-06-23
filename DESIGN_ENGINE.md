@@ -8,11 +8,12 @@
 
 ## Locked decisions (alpha)
 
-- **Invoker is cut and replaced by Crystal Core.** There is no passive 3/6/9
-  Invoker power track. Each battle side has one deck-bound active Core, a 2-Energy
-  once-per-own-turn skill that scales from per-Battle-Type cards-played counters
-  at 5/10/15 thresholds. Core activation is explicit, target-validated, and
-  server-resolved.
+- **No hero power: Battle Charge replaces Crystal Core (which had replaced Invoker).**
+  There is no active hero skill. Each side instead builds **Battle Charge** — a
+  two-slot hero resource. Playing a MIGHTY/SWIFT/VITAL card grants +1 Charge of its
+  type *after* it resolves; NEUTRAL never produces Charge. Cards may cost Charge
+  (`chargeCost`) or grant extra Charge (`gain_charge`, which stacks with the normal
+  +1). State is server-authoritative. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge.
 - **`lifesteal` is the canonical term.** "Siphon" is retired everywhere. Lifesteal
   = your hero heals for the damage this deals — applies to **combat** (the keyword
   on a creature) and **effects** (`lifesteal = true` on a `damage` entry).
@@ -52,10 +53,11 @@ ReplicatedStorage/
   Definitions/
     Cards.lua        ← all pack cards as one id-keyed map (canonical)
     Decks.lua        ← starter decks (from deck_starter.json)
-    CrystalCores.lua ← six alpha Core definitions, scaling, supported deck types
+    (CrystalCores.lua remains in the tree but is unused — Crystal Core is removed)
   Modules/
     CardSchema       ← validates Cards.lua on load (fields, known triggers/actions/targets)
     CardText         ← renders ability text from effects[] (replaces in-data EFFECT_TEXT)
+    ChargeConfig     ← shared Battle Type palette + Charge-producing rules (server + client)
 
 ServerScriptService/Modules/
   Effects/
@@ -65,6 +67,7 @@ ServerScriptService/Modules/
     Conditions       ← Conditions[type](ctx) → bool
     Keywords         ← static keyword checks + hooks (lifesteal, quickstrike, rebirth)
     Costs            ← reduce_cost / set_cost over hand|drawn_cards|returned_card
+  ChargeState        ← authoritative two-slot Battle Charge state machine (gain/spend/normalize/events)
   BattleLogic        ← state, turn flow, combat; delegates all effect work to Effects/
 
 (unchanged role) ServerScriptService/BattleController ← orchestration, RemoteEvents, DataStore, rewards
@@ -94,10 +97,11 @@ instance so buffs/granted keywords never mutate the shared definition.
 }
 ```
 
-Removed from state: `invoker`, `discounts` (→ Costs), `usedComboExtraAttackThisTurn`
-(Invoker combo extra-attack is gone). Added for Crystal Core: `coreId`,
-`coreUsedThisTurn`, and `coreCounters = {MIGHTY, SWIFT, VITAL}` on each side.
-Kept: `deadAllies` (graveyard recursion), `tempKeywordGrants`, fatigue, etc.
+Removed from state: `invoker`, `discounts` (→ Costs), `usedComboExtraAttackThisTurn`,
+and the Crystal Core fields (`coreId`, `coreUsedThisTurn`, `coreCounters`) — Core is
+gone. Added for **Battle Charge** on each side (initialized by `ChargeState.init`):
+`chargeSlots` (two `{battleType, amount}` slots), `currentChargeSlot`, `chargeSeq`,
+and `pendingChargeEvents`. Kept: `deadAllies` (graveyard recursion), fatigue, etc.
 
 ---
 
@@ -149,8 +153,8 @@ small and parameter-driven; cross-cutting modifiers are applied uniformly:
 
 Alpha action set (each one handler): `damage`, `heal`, `buff`, `draw_card`
 (+`filter`), `destroy`, `grant_keyword`, `summon`, `bounce`,
-`return_from_graveyard`, `reduce_cost`, `set_cost`. (Full param spec in
-DESIGN_DATABASE.)
+`return_from_graveyard`, `reduce_cost`, `set_cost`, `gain_energy`, `gain_charge`.
+(Full param spec in DESIGN_DATABASE.)
 
 ---
 
@@ -225,6 +229,11 @@ code path in `dealDamage*`.
 - **Invoker**: `invokerBonus`, `tallyInvoker`, `comboScaledValue` (Invoker part),
   `siphonAmount`, `mightyDamageBonus`, `applyDestroyInvokerBonus`, armor/destroy
   Invoker bonuses, and the Invoker UI panel.
+- **Crystal Core** (the former Invoker replacement, now also cut): `BattleLogic.useCore`
+  + target validators, `coreId`/`coreUsedThisTurn`/`coreCounters`, the `UseCore`
+  server handler, NPC `aiUseCore`, and the Core preview/drag/targeting UI. Replaced
+  by Battle Charge (`ChargeState`/`ChargeConfig`). `CrystalCores.lua` and the
+  `UseCore` remote are left orphaned as migration artifacts.
 - **22 dead effect renderers** + unused effect branches.
 - **Old `CardData` (32 cards)** and its in-module `EFFECT_TEXT`.
 - **Equipment remnants** (already removed) and `combo_extra_attack` passive.
@@ -233,7 +242,7 @@ code path in `dealDamage*`.
 
 ## Open items
 
-- **Balance**: Core values and card values are alpha numbers. Previous starter sims showed MIGHTY overperforming and VITAL underperforming; rerun balance sims now that NPC Core AI is enabled.
-- **Manual PVP smoke**: run a full 2-player Local Server pass with active decks and Cores.
-- **Core art**: generated Crystal Core art is deferred; current UI uses placeholder crystal-circle treatment around player/NPC portraits.
+- **Balance**: card values are alpha numbers (previous sims showed MIGHTY over- and VITAL under-performing). The Core active power is now removed — an expected balance shift — and no card content uses Charge costs yet; rerun balance sims as Charge content lands.
+- **Manual PVP smoke**: run a full 2-player Local Server pass with active decks.
+- **Charge content**: v1 is the system/UI/deck-builder foundation; no cards use `chargeCost`/`gain_charge` yet. Deciding which cards spend/grant Charge is the next content pass.
 - **Rebirth + board full**: creature died into a freed slot, so the slot is always available. Edge case already handled by design.

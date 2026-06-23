@@ -13,12 +13,11 @@
 > milestone) that must pass before the next. Check boxes as you go. This file is the
 > cross-session progress tracker — update Status and checkboxes as work lands.
 
-**Status:** 🟢 Original backend phases complete. Follow-up Crystal Core + Card Library
-work has landed in Studio (2026-06-21): Invoker is replaced by deck-bound active
-Crystal Cores, profile schema is v1.2 with saved decks/active deck, and the former
-Inventory entry is now a Card Library with My Cards and Deck Builder pages. Remaining
-gates are full 2-player Local Server PVP, desktop/mobile Card Library navigation, and
-desktop/mobile Core drag/preview UX.
+**Status:** 🟢 Original backend phases complete. The later Battle Charge migration
+(`PLAN_BATTLE_CHARGE.md`, 2026-06-23) superseded this plan's Crystal Core deck
+identity: decks are now Core-free, profile schema is v1.3, and the Card Library has
+My Cards plus a Core-free, Charge-aware Deck Builder. Remaining gates are full
+2-player Local Server PVP and desktop/mobile Card Library navigation/editor polish.
 
 ---
 
@@ -38,8 +37,8 @@ desktop/mobile Core drag/preview UX.
   the datastore.
 - **PVP:** two players sit at the two chairs of one Battle Table; a lightweight
   ready/challenge handshake starts the duel.
-- **New player** starts with one active valid `Mighty Starter` deck using
-  `core_vanguard`. Battle deck selection now uses `activeDeckId`, not `archetype`.
+- **New player** starts with one active valid `Mighty Starter` deck. Battle deck
+  selection uses `activeDeckId`, not `archetype`; decks no longer store a Core.
 
 ---
 
@@ -448,7 +447,8 @@ of cleaning entry-flow debt.
       collection (built from `Decks.mighty.cards`).
 - [x] Battle deck selection now reads `activeDeckId` via `SaveService.getActiveBattleDeck`
       in `startPvE`/`startPvP`. NPC seats never touch the datastore; Noob still randomizes
-      among the three pure starter decks and receives the matching pure Core.
+      among the three pure starter decks. The later Battle Charge migration removed
+      Core assignment from NPC battle setup.
 - [x] Wired into `BattleController.endBattle`: PvE `Save.applyRewards(player, rewards)` for
       present human winners.
 - [x] **PvP W/L + anti rage-quit (schema v1.1, added 2026-06-21 after PVP testing).**
@@ -495,13 +495,14 @@ can be done in parallel by a separate session.
 
 ## Phase 5 — Card Library panel
 
-**Goal:** players can browse owned cards and manage saved Crystal Core decks from one
-Card Library panel.
+**Goal:** players can browse owned cards and manage saved decks from one Card Library
+panel.
 
-**Status:** 🟢 Implemented, live-captured, and reconciled against Studio (2026-06-21).
-Interactive filter/tap/close behavior was verified for My Cards. The Deck Builder shell,
-deck remotes, and active-deck integration are implemented; full desktop/mobile manual
-navigation and editor polish remain validation gates.
+**Status:** 🟢 Implemented, live-captured, and reconciled against Studio. Crystal Core
+deck selection was later removed by `PLAN_BATTLE_CHARGE.md`: the Deck Builder is now
+Core-free and Charge-aware. Interactive filter/tap/close behavior was verified for My
+Cards. The Deck Builder shell, deck remotes, and active-deck integration are implemented;
+full desktop/mobile manual navigation and editor polish remain validation gates.
 
 **UI conventions (locked with user 2026-06-21):**
 - **Editor-first.** Static layout = real, named instances in StarterGui (adjustable in
@@ -515,7 +516,8 @@ navigation and editor polish remain validation gates.
   `rbxassetid://72487233066616` (a blue backpack; already has its own thin outline, so the
   extra layer is an outer halo).
 - **Dialog layout:** one reusable `InventoryUI` dialog with a shared header/back button
-  and page stack: Home, My Cards, Deck List, Core Select, Deck Editor.
+  and page stack: Home, My Cards, Deck List, Deck Editor. The former Core Select page
+  was removed by the Battle Charge migration.
 
 - [x] `GetInventory` **RemoteFunction** + `ServerScriptService/InventoryService`: returns
       the player's `collection` (cardId multiset) from `SaveService`; client resolves defs
@@ -535,8 +537,9 @@ navigation and editor polish remain validation gates.
 - [x] Counts: multiset collapsed to unique cards with an **×N** badge per stack.
 - [x] Deck remotes + `ServerScriptService/DeckService`: `GetDecks`, `CreateDeck`,
       `SaveDeckCards`, `RenameDeck`, `DeleteDeck`, `SetActiveDeck`.
-- [x] Deck Builder pages: create deck by choosing Core, edit cards, save drafts, rename,
-      delete, and set active only through server validation.
+- [x] Deck Builder pages: create decks directly (Core-free after the Battle Charge
+      migration), edit cards, save drafts, rename, delete, and set active only through
+      server validation.
 
 **Acceptance (testable milestone):**
 - ✅ Opening the inventory shows the player's owned cards (live: 30-card MIGHTY starter →

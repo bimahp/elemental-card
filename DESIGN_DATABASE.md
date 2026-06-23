@@ -51,6 +51,7 @@ Cards.emberclaw_bear = {
 | `race` | creatures | Tribe. Omitted on spells. |
 | `rarity` | ✅ | `common` / `rare` / `epic`. |
 | `cost` | ✅ | Energy cost. |
+| `chargeCost` | optional | Battle Charge cost: `{ battleType = "MIGHTY"\|"SWIFT"\|"VITAL", amount = N>0 }`. Paid (and validated) before the card resolves, so a card can't use the Charge it will generate. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge. |
 | `atk`, `hp` | creatures | — |
 | `keywords` | optional | Static states (Keywords table). Absent = none. |
 | `effects` | optional | Triggered abilities. **Absent / empty = vanilla.** |
@@ -124,6 +125,8 @@ generic timing triggers stay descriptive.
 | `return_from_graveyard` | `target` | Return a card from your graveyard to hand (`target:"random"`). |
 | `reduce_cost` | `target`, `value`, `duration?` | Lower the cost of cards in `target` by `value`. |
 | `set_cost` | `target`, `value`, `duration?` | Set the cost of cards in `target` to `value`. |
+| `gain_charge` | `battleType`, `value` | Gain `value` Battle Charge of `battleType` (no board target). Stacks with the card's normal +1 played Charge. No-op for NEUTRAL. See [DESIGN_CORE.md](DESIGN_CORE.md). |
+| `gain_energy` | `value` | Gain `value` Energy this turn (the Coin). |
 
 A `damage` entry may carry **`lifesteal = true`** — your hero heals for the
 damage dealt. **`value`** is normally a fixed number; for dynamic amounts use

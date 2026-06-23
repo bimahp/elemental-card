@@ -6,7 +6,7 @@
 
 ## Concept
 
-A Roblox digital card battle game. Players build decks around an immutable deck-bound **Crystal Core**, summon creatures onto a 3-slot board, and spend Energy to play cards, attack, and activate the Core once each turn. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
+A Roblox digital card battle game. Players build decks, summon creatures onto a 3-slot board, and spend Energy to play cards and attack. Playing cards also builds **Battle Charge**, a second hero resource. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
 
 ---
 
@@ -85,28 +85,36 @@ The second player starts with the **Coin** in hand before turn 1: "Gain 1 Energy
 
 ---
 
-## Crystal Core
+## Battle Charge
 
-Crystal Core is the official replacement for the removed Invoker mechanic.
+Battle Charge is a second hero resource, separate from Energy. It **replaces the
+removed Crystal Core active skill** — there is no hero power, and decks no longer
+choose or store a Core.
 
-- Each deck has exactly one Core chosen when the deck is created.
-- A deck's Core is immutable. To change Core identity, create a new deck or delete/recreate the old deck.
-- In battle, the Core behaves like a Hearthstone-style Hero Power: it costs **2 Energy**, can be activated once on your own turn, and resets at the start of your next turn.
-- Core scaling is based on cards played by that side during the battle, tracked separately for MIGHTY, SWIFT, and VITAL. NEUTRAL cards, Coin, fatigue, attacks, and Core activations do not advance counters.
-- Threshold tiers are `0-4`, `5-9`, `10-14`, and `15+`.
+- Each hero holds up to **two Charge Types** at once, shown as two Charge Slots on
+  the hero card. Exactly one occupied slot is the **current** slot.
+- **MIGHTY, SWIFT, and VITAL are Charge-producing.** Playing one of these cards
+  grants **+1 Charge** of its Battle Type **after** the card resolves (after Emerge
+  for creatures, after Cast for spells, before the spell goes to discard).
+  **NEUTRAL never produces or occupies Charge** (and neither does the Coin).
+- A freshly gained Charge always becomes the **current** slot. A matching gain
+  increments its existing slot and becomes current. A **third** distinct type
+  replaces the **inactive** occupied slot (no prompt, no client decision) and
+  becomes current, preserving the previously-current slot as inactive.
+- **Spending** Charge does not move the current slot unless the spent slot reaches
+  zero; an emptied slot hands "current" to the remaining occupied slot.
+- Cards may **cost** Charge (`chargeCost = { battleType, amount }`) and effects may
+  **grant** extra Charge (`gain_charge`). Explicit `gain_charge` **stacks** with the
+  normal +1: a MIGHTY spell with `gain_charge MIGHTY 2` yields **+3** total. A card
+  can never use the Charge it generates to pay its own `chargeCost` — the cost is
+  validated and paid before any effect or the normal +1 resolves.
+- Energy, Armor, and HP are unaffected by Charge — it is its own pool. Tokens,
+  rebirth, summon-from-effect, return-from-graveyard, and board copies do **not**
+  grant normal played-card Charge (only a card played from hand does).
 
-Alpha Cores:
-
-| Core | Supported Types | Effect |
-|---|---|---|
-| Core of Vanguard | MIGHTY | Gain Armor: 1 / 2 / 4 / 6 from MIGHTY counter |
-| Core of Assassin | SWIFT | Deal damage to a creature: 1 / 2 / 2 / 3 from SWIFT counter. If it kills the target, draw 1 and reduce that drawn card's cost by 1 |
-| Core of Renewal | VITAL | Heal a friendly hero/Core or creature: 1 / 2 / 4 / 6 from VITAL counter |
-| Core of Warrior | MIGHTY + SWIFT | Gain Armor 1 / 2 / 3 / 4 from MIGHTY counter, and draw 0 / 1 / 1 / 2 from SWIFT counter |
-| Core of Guardian | MIGHTY + VITAL | Gain Armor 1 / 2 / 3 / 4 from MIGHTY counter, and heal 0 / 1 / 2 / 3 from VITAL counter |
-| Core of Sage | SWIFT + VITAL | Draw 0 / 1 / 1 / 2 from SWIFT counter, and heal 1 / 2 / 3 / 4 from VITAL counter |
-
-Pure Cores are specialists and should stay stronger than dual Cores in their specialty.
+> Charge is fully server-authoritative. Slots, the current slot, and per-change
+> events replicate to clients/spectators for animation; animation completion never
+> affects rules, and a skipped/late animation snaps to the authoritative state.
 
 ---
 
@@ -167,8 +175,12 @@ Ability **triggers** (when an `effects[]` entry fires) — **Emerge** (on summon
 ## Deck Construction
 
 - Decks are exactly **30 cards** when active or battle-usable.
-- A deck may include cards whose Battle Type is supported by its Crystal Core, plus NEUTRAL cards.
-- Maximum **2 copies per card**.
+- A deck may include **any owned cards of any Battle Type** — there is no Core type
+  restriction. Maximum **2 copies per card**.
+- A hero holds only **two Charge Slots**, so the deck builder shows an informational
+  warning when a deck runs **more than two** Charge-producing types
+  (`3 Charge Types - Hero Slots: 2`). The warning is non-blocking: the add/save is
+  still allowed. NEUTRAL does not count toward the type total.
 - Draft decks may be saved incomplete or invalid, but only valid 30-card decks can be set active or used in battle.
-- Each profile must always have one active valid deck. Existing and new profiles migrate to a valid `Mighty Starter` deck using `Core of Vanguard`.
-- Alpha starter decks are generated from `deck_starter.json`; PvE Noob still randomizes among pure starter decks and receives the matching pure Core.
+- Each profile must always have one active valid deck. Existing and new profiles migrate to a valid `Mighty Starter` deck.
+- Alpha starter decks are generated from `deck_starter.json`; PvE Noob randomizes among the pure starter decks.

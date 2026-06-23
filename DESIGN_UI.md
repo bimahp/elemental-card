@@ -338,26 +338,28 @@ Coin card is shown in hand before turn 1 for the second player.
 
 ---
 
-## Crystal Core Battle Panel
+## Hero Card + Battle Charge Slots
 
-The old Invoker UI is retired. Each side's fourth board-row cell is now the
-Crystal Core panel: a square, card-like hero/Core surface showing the player's
-portrait inside a crystal circle treatment.
+The Crystal Core active panel is removed (no hero power). Each side's fourth
+board-row cell is the **hero card**: a square surface with the player's portrait,
+HP (bottom-left), and Armor (bottom-right, hidden at 0).
 
-- Emblems: Energy cost (`2`), Armor, and HP.
-- The Core name is shown at battle scale with a type-colored stroke based on the
-  Core's primary supported Battle Type.
-- Used Cores are visually dimmed until the next start-turn reset.
-- Desktop hover shows an enlarged Core preview using the Spell-card preview
-  composition, with Core description and current scaling values.
-- Mobile long-press shows the same preview.
-- Activation uses click/tap-drag from the owned Core panel to a valid target.
-  Self-only Cores release on the own Core/hero panel; targeted Cores use the
-  existing targeting overlay and valid-target highlights.
+On the right edge sit the **two Battle Charge Slots** (`paintChargeSlots`):
 
-The Core remote is server-owned: clients send only a target descriptor, and the
-server derives the battle/seat, checks turn/energy/once-per-turn state, remaps
-perspective, validates the target, then resolves the Core.
+- Always exactly two sockets; empty sockets stay visible (faint dark). Sized to
+  read at a glance but secondary to HP/portrait (it overlaps the portrait edge
+  rather than widening the board row).
+- An occupied socket shows its Battle Type emblem image (MIGHTY/SWIFT/VITAL, from
+  `AssetIds.ChargeEmblems`) with the amount overlaid and a type-colored rim.
+- The **current** slot carries a persistent bright (yellow) ring.
+- Charge changes pop the affected socket (gain/replace scale up, spend dims) — a
+  cosmetic cue driven by the snapshot's `chargeEvents`; the authoritative slot
+  state is painted first, so a skipped/late pop never changes rules.
+- Both desktop and mobile hero cards render the slots; the board row is unchanged.
+
+State comes from the server snapshot (`chargeSlots`, `currentChargeSlot`,
+`chargeEvents`), perspective-remapped per recipient. There is no Core remote or
+client activation; the orphaned `UseCore` remote does nothing.
 
 ---
 
@@ -371,12 +373,17 @@ The top-right world HUD entry is **Card Library**. It opens one reusable
 - Home shows `My Cards` and `Deck Builder`.
 - My Cards reuses the existing owned-card grid/filter/preview behavior backed by
   `GetInventory`.
-- Deck Builder shows saved decks, validity, Core identity, card count, active
-  marker, and deck actions.
-- Create Deck chooses a Core first. The Core is immutable after creation.
-- Deck Editor saves drafts, filters available owned cards to Core-supported
-  Battle Types plus NEUTRAL, enforces max 2 copies per card in the UI, shows
-  validation messages, and enables Set Active only for valid decks.
+- Deck Builder shows saved decks, validity, card count, active marker, and deck
+  actions. There is no Core column (Core is removed).
+- Create Deck makes a deck directly with a default name (no Core Select page);
+  optional rename remains in the editor.
+- Deck Editor saves drafts, shows **all** owned cards (no Core type filter),
+  enforces max 2 copies per card in the UI, shows validation messages, and enables
+  Set Active only for valid 30-card decks.
+- Because a hero has only **two Charge Slots**, the editor shows a Charge-type
+  indicator (`N Charge Type(s) in deck`) that turns into a non-blocking warning
+  (`N Charge Types - Hero Slots: 2`, plus a one-time toast) when a deck crosses to
+  more than two Charge-producing types. NEUTRAL does not count.
 - One shared header/back button navigates to the previous page; Back from root
   closes the panel.
 - The HUD anchor still hides during battle states.

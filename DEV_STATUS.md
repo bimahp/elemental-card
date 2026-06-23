@@ -1,6 +1,33 @@
 # DEV_STATUS — Elemental TCG: Implementation State
 
-> Last updated: 2026-06-21
+> Last updated: 2026-06-23
+
+---
+
+## Battle Charge migration (2026-06-23)
+
+The **Crystal Core active skill is fully removed and replaced by the two-slot
+Battle Charge system** (`PLAN_BATTLE_CHARGE.md`). Summary of what changed:
+
+- New shared `ReplicatedStorage/Modules/ChargeConfig` (producing types + Battle Type
+  palette) and server `ServerScriptService/Modules/ChargeState` (authoritative
+  two-slot state machine: gain/spend/normalize/replace + per-change events).
+- `BattleLogic.playCard` grants **+1 normal Charge** after a MIGHTY/SWIFT/VITAL card
+  resolves (NEUTRAL/Coin none); supports `chargeCost` (paid before resolution) and a
+  `gain_charge` effect action that **stacks** with the normal +1. `countCoreCard` and
+  `useCore` removed.
+- Removed: `coreId`/`coreUsedThisTurn`/`coreCounters`, `BattleLogic.useCore`, the
+  `UseCore` server handler (remote left orphaned), NPC `aiUseCore`, and the entire
+  client Core surface (preview/drag/targeting/panel). `CrystalCores.lua` is orphaned.
+- Snapshots carry `chargeSlots`/`currentChargeSlot`/`chargeSeq`/`chargeEvents`
+  (perspective-remapped); hero cards render two Charge sockets with emblem art.
+- SaveService schema **v1.3**: decks are Core-free; migration tolerates leftover
+  `coreId`; deck validation drops Core-type restrictions; the deck builder removed
+  the Core Select page and added a `>2 Charge Types` warning.
+
+Verified headless (state machine 39/39, card-play integration, replication 16/16,
+SaveService 8/8, 9-game AI sim 0 errors) and in live Studio Play (charge accrues and
+renders, deck builder Core-free).
 
 ---
 
@@ -10,7 +37,9 @@
 |---|---|---|
 | Cards (definitions) | `ReplicatedStorage/Definitions/Cards.lua` | ✅ Complete — 90 pack cards across 4 packs + `the_coin` engine card (NEUTRAL spell, cost 0, `gain_energy` 1; not collectible / never in a deck), id-keyed map, effects[] schema |
 | Decks (definitions) | `ReplicatedStorage/Definitions/Decks.lua` | ✅ Complete — 3 starter decks normalized to 30 cards each, expanded from deck_starter.json |
-| CrystalCores (definitions) | `ReplicatedStorage/Definitions/CrystalCores.lua` | ✅ Complete — six alpha Cores (`core_vanguard`, `core_assassin`, `core_renewal`, `core_warrior`, `core_guardian`, `core_sage`), supported Battle Types, 2-Energy cost, 5/10/15 scaling helpers, and description text |
+| CrystalCores (definitions) | `ReplicatedStorage/Definitions/CrystalCores.lua` | ⚪ Orphaned — Crystal Core active skills removed (Battle Charge migration). Module still exists but nothing requires it; kept as a migration artifact. |
+| ChargeConfig (definitions) | `ReplicatedStorage/Modules/ChargeConfig.lua` | ✅ Complete — shared single source of truth: Charge-producing types (`MIGHTY`/`SWIFT`/`VITAL`; NEUTRAL excluded), `isProducing()`, `MAX_SLOTS=2`, `ChargeEmblems`-adjacent `Colors` palette (also consumed by `CardVisuals.TC_type`) |
+| ChargeState (engine) | `ServerScriptService/Modules/ChargeState.lua` | ✅ Complete — authoritative two-slot Charge state machine: `init`, `normalizeSlots`, `gainCharge`, `canSpendCharge`, `spendCharge`, `gainChargesOrdered`, `drainEvents`. Gained Charge becomes current; 3rd distinct type replaces the inactive slot; spend moves current only on reaching zero. Unit-tested 39/39 |
 | CardSchema | `ReplicatedStorage/Modules/CardSchema.lua` | ✅ Complete — validates required fields, trigger/action/target/condition vocabs, deck id resolution |
 | CardText | `ReplicatedStorage/Modules/CardText.lua` | ✅ Complete — `getAbilityDisplay(cardId)` renders effects[] as (label, body), spell-level conditions shown as an *If …,* / *Chain:* prefix; `targetClass(card)` → slot/friendly/enemy/hero; `canHitFace(card)` → bool |
 | CardData (shim) | `ReplicatedStorage/Modules/CardData.lua` | ✅ Complete — thin shim the client requires; re-exposes `Cards` plus CardText's `getAbilityDisplay`/`targetClass`/`canHitFace` under the legacy `CardData` name |
@@ -20,15 +49,15 @@
 | Effects/Actions | `ServerScriptService/Modules/Effects/Actions.lua` | ✅ Complete — 12+ handlers: damage (single/all/split/lifesteal/valueFrom), heal, gain_armor, buff, draw_card (+filter), destroy, grant_keyword, summon, bounce, return_from_graveyard, reduce_cost, set_cost, gain_energy |
 | Effects/Triggers | `ServerScriptService/Modules/Effects/Triggers.lua` | ✅ Complete — `fireEvent(state, event, base)`; `chain` fires on emerge/cast when `cardsPlayedThisTurn >= 2`; `base.dynamic` shared across entries of one card; `playBlock(base, card)` pre-play check rejects a spell when no effect would resolve (unmet condition / no valid target) |
 | Effects/Ops | `ServerScriptService/Modules/Effects/Ops.lua` | ✅ Complete — game-op mutation layer (healHero, healCreature, gainArmor, damageHero, damageCreature, killCreature+rebirth, buffCreature, drawCard+filter, bounce, summon, returnFromGraveyard, keyword helpers, cost system, gainEnergy, newInstance) |
-| BattleLogic | `ServerScriptService/Modules/BattleLogic.lua` | ✅ Complete (effects[] engine + Crystal Core) — `newSide`/`newBattle`, `startTurn` (energy ramp, clearTurnCostMods, reset attacks/summons, reset Core use), `endTurn` (turn_end event, Coin expiry), `playCard` (effectiveCost, emerge/cast, Core counters for collectible MIGHTY/SWIFT/VITAL cards), `attack`, and `useCore` (cost, once-per-turn, target validation, armor/heal/damage/draw/Assassin kill bonus). No Invoker. |
-| NpcAI | `ServerScriptService/Modules/NpcAI.lua` | ✅ Complete (effects[] scoring + simple Core AI) — `takeTurn(state, Logic, who)`; `scoreCard` by action verb; `aiUseCore` prefers Assassin lethal creature shots, Renewal healing, and Vanguard armor when spare Energy exists; `aiAttack` prefers lethal/clean kills and handles Taunt. |
-| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read battle cards/Core from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`/`UseCore`, cancel session timers on battle end, delegate rewards to `RewardService`; PvE persists via `SaveService.applyRewards` (present winners), PvP flags `beginPvpMatch` at start + records `recordPvpResult` at end (W/L, anti rage-quit); calls `SaveService.init()` at boot |
-| BattleRegistry | `ServerScriptService/Modules/BattleRegistry.lua` | ✅ Complete — `Battles[battleId]`, `PlayerBattle[userId]` reverse index, `spectators` set; `viewFor`/`viewForSpectator` perspective relabel (own seat→`player`), `remapOpts`; clients never send battleId; state views include Core fields (`coreId`, `coreUsedThisTurn`, `coreCounters`) and server timer metadata (`serverNow`, `turnStartedAt`, `turnEndsAt`, `turnDuration`, perspective-remapped `timeoutStreaks`) |
+| BattleLogic | `ServerScriptService/Modules/BattleLogic.lua` | ✅ Complete (effects[] engine + Battle Charge) — `newSide`/`newBattle` initializes two-slot Charge state; `startTurn` handles energy ramp, `clearTurnCostMods`, and attack/summon resets; `endTurn` fires `turn_end` and expires Coin; `playCard` validates Energy/Charge costs, resolves emerge/cast, grants normal +1 Charge for MIGHTY/SWIFT/VITAL after successful resolution, and leaves NEUTRAL/Coin as no-Charge; `attack` handles combat. No Invoker/Core active power. |
+| NpcAI | `ServerScriptService/Modules/NpcAI.lua` | ✅ Complete (effects[] scoring, no Core AI) — `takeTurn(state, Logic, who)`; `scoreCard` by action verb; NPC plays cards and attacks only, while Charge accrues through normal `BattleLogic.playCard`; `aiAttack` prefers lethal/clean kills and handles Taunt. |
+| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read active deck cards from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`, leave `UseCore` orphaned/unwired, cancel session timers on battle end, delegate rewards to `RewardService`; PvE persists via `SaveService.applyRewards` (present winners), PvP flags `beginPvpMatch` at start + records `recordPvpResult` at end (W/L, anti rage-quit); calls `SaveService.init()` at boot |
+| BattleRegistry | `ServerScriptService/Modules/BattleRegistry.lua` | ✅ Complete — `Battles[battleId]`, `PlayerBattle[userId]` reverse index, `spectators` set; `viewFor`/`viewForSpectator` perspective relabel (own seat→`player`), `remapOpts`; clients never send battleId; state views include Battle Charge fields (`chargeSlots`, `currentChargeSlot`, `chargeSeq`, `chargeEvents`) and server timer metadata (`serverNow`, `turnStartedAt`, `turnEndsAt`, `turnDuration`, perspective-remapped `timeoutStreaks`) |
 | DuelSession | `ServerScriptService/Modules/DuelSession.lua` | ✅ Complete — per-battle turn loop: `start`, `afterHumanAction`, `humanEndTurn`, internal `runNpcTurn`; token-guarded human turn timers with `TURN_TIMEOUT_SECONDS` and `MAX_TIMEOUTS_BEFORE_FORFEIT`; timeout auto-end and repeated-timeout auto-forfeit |
 | RewardService | `ServerScriptService/Modules/RewardService.lua` | ✅ Complete (policy only) — builds mode-aware reward payloads without persistence: PvE winner EXP/gold/NPC-deck card drop; PvE loser/npc no payload; PVP winner/loser placeholder messages for Phase 4 persistence |
-| TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp` |
+| TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp`. **Seating reliability (2026-06-22):** `seatPlayerAt` now clears stale seat/lock state before re-seating, **respects `awaitSeated`** (3s window + one retry), and on failure releases the reservation and returns false — a battle can never start with the player unseated ("in place"). `handleTalkToNpc` no longer returns silently: when no table is free or seating fails it fires `BattleUnseated` (clears the optimistic "Finding Table" overlay) and `Notify` with a reason. |
 | ProfileStore | `ServerScriptService/Packages/ProfileStore.lua` | ✅ Vendored (loleris/MAD STUDIO, pinned commit `45c9847`) — session-locked DataStore lib; provenance/raw copy in repo `vendor/`. `DataStoreState="Access"` confirmed in this published place |
-| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete (Phase 4 + Crystal Core deck schema) — ProfileStore wrapper. Schema **v1.2** `{_version, archetype(legacy), collection(multiset), decks, activeDeckId, gold, exp, pvp={wins,losses}, activeMatch}`; new/migrated profiles receive one active valid `Mighty Starter` using `core_vanguard`; draft decks persist but only valid 30-card decks can be active. Validates ownership, Core-supported Battle Types + NEUTRAL, max 2 copies, exact 30 for active decks, 12-deck cap, immutable Core, and "must always have one active valid deck." API includes `getActiveBattleDeck`, `getDecks`, `createDeck`, `saveDeckCards`, `renameDeck`, `deleteDeck`, `setActiveDeck`, plus existing reward/PVP/profile APIs. |
+| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete (Phase 4 + Charge deck schema) — ProfileStore wrapper. Schema **v1.3** `{_version, archetype(legacy), collection(multiset), decks, activeDeckId, gold, exp, pvp={wins,losses}, activeMatch}`; decks are **Core-free** (no `coreId`); `1.2->1.3` migration tolerates leftover `coreId` harmlessly. New/migrated profiles receive one active valid `Mighty Starter` deck; draft decks persist but only valid 30-card decks can be active. Validates known + owned cards, max 2 copies, exact 30 for active decks, 12-deck cap, and "must always have one active valid deck" — **no Core type restriction** (any owned card is legal). `createDeck(player, name)` is Core-free. API: `getActiveBattleDeck`, `getDecks`, `createDeck`, `saveDeckCards`, `renameDeck`, `deleteDeck`, `setActiveDeck`, plus reward/PVP/profile APIs. |
 | CardVisuals | `StarterGui/BattleUI/Modules/CardVisuals` | ✅ Complete — emblems LEFT edge (`EMBLEM_X=-0.05` full / `0.03` compact, AnchorPoint.X=0); type badge BOTTOM-CENTER (race label for creatures, "SPELL" for spells); spell circle frame (circular art + UICorner on art ImageLabel for true clip + archetype-colored ring); `wrapAbility(text,20)` deterministic word-wrap at fixed `TextSize=10*cardScale`; emblem value labels nudged to `(0.44, 0.5)` for optical centering in icons |
 | BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete for current battle entry — CardText shim replaces old CardData; `cardType=="creature"`/`"spell"` throughout; `race` field passed to buildCard/preview opts; mobile drag zones use `CardData.targetClass` (desktop parity); rejection `warnings` shown as a transient toast on `TargetingOverlay`; `setCardHidden` saves `_wasVisible` before hiding, restores exact value on unhide. `BattleLoadingOverlay`, `SeatedOverlay`, client ControlModule lock, jump disable, local table-prompt suppression, desktop/mobile turn timer labels, and PVP reward messages now cover loading, seated, battle, unseat, battle-over, timeout, and respawn paths. Regression guards: `battleEnded` prevents post-battle `render(lastState)` from re-arming the battle camera, timer re-renders preserve the live countdown when `turnEndsAt` is unchanged, and Noob `TalkPrompt` also shows loading optimistically while the server-owned entry flow proceeds. |
 | TargetingSystem | `StarterGui/BattleUI/Modules/TargetingSystem` | ✅ Complete — `computeDropZones` driven by `CardData.targetClass(card)` → slot/friendly/enemyCreature/enemyHero zones; `endDrag` sends `{slot=idx}` or `{target={side,slot}}` or `{target={side="npc",slot=0}}` for hero; stealth check inlined |
@@ -38,11 +67,14 @@
 | InventoryService | `ServerScriptService/InventoryService` | ✅ Complete (Phase 5) — `GetInventory` RemoteFunction handler; returns the player's `collection` (cardId multiset) from `SaveService`; empty for no/inactive profile |
 | DeckService | `ServerScriptService/DeckService` | ✅ Complete — RemoteFunction wrapper for `GetDecks`, `CreateDeck`, `SaveDeckCards`, `RenameDeck`, `DeleteDeck`, and `SetActiveDeck`; responses use `{ok=true,data=...}` or `{ok=false,error=...}` |
 | Hud + HudController | `StarterGui/Hud` (+ `HudController`) | ✅ Complete — `TopRightAnchor` frame (horizontal UIListLayout) hosting world icons; `InventoryButton` now opens **Card Library**. `HudController` shows the anchor in free-roam, hides the whole group on `BattleLoading`/`BattleSeated`/`UpdateBattleState`, restores on `BattleOver`/`BattleUnseated`/respawn |
-| InventoryUI + InventoryController | `StarterGui/InventoryUI` (+ `InventoryController`) | ✅ Complete — Card Library page stack in one reusable panel: Home, My Cards, Deck List, Core Select, Deck Editor. My Cards preserves the owned-card grid/filter/preview behavior. Deck Builder uses deck remotes for create/save/rename/delete/set-active, shows Core identity/validity/card counts/active marker, saves incomplete drafts, filters legal owned cards by Core-supported types plus NEUTRAL, and uses a shared header Back button. |
+| InventoryUI + InventoryController | `StarterGui/InventoryUI` (+ `InventoryController`) | ✅ Complete — Card Library page stack in one reusable panel: Home, My Cards, Deck List, Deck Editor. My Cards preserves the owned-card grid/filter/preview behavior. Deck Builder uses deck remotes for create/save/rename/delete/set-active, shows validity/card counts/active marker, saves incomplete drafts, allows any owned cards, shows the non-blocking `>2 Charge Types` warning/indicator, and uses a shared header Back button. |
+| AssetIds | `ReplicatedStorage/Modules/AssetIds` | ✅ Complete — single source of truth for every gameplay image asset id (archetype BGs, per-card art, spell placeholder, ATK/HP/Energy icons, card-back, energy-alt/inventory icons, loading background). `criticalList()` returns the de-duped flat list the loading screen gates on. CardVisuals sources its ids from here (no hardcoded `rbxassetid` strings) |
+| AssetPreloader | `ReplicatedStorage/Modules/AssetPreloader` | ✅ Complete — reliable preloading: builds a temp `ImageLabel` per id and `PreloadAsync`es **Instances** (not content strings, which fail at a high rate), then **re-preloads any failed asset up to N attempts** with linear backoff (the actual fix for the cold-fetch "blank on first join, works after rejoin" bug). `preload(ids, opts)` (progress callback + summary) and best-effort `preloadInstances(insts)` |
+| LoadingScreen | `ReplicatedFirst/LoadingScreen` | ✅ Complete — branded loading screen built from **zero remote assets** (solid `BackgroundColor3`, default-font text, Frame progress bar) so it can never render blank; decorative bg image (`99142567993225`) faded in only on successful preload. Removes default loading GUI, gates release on the critical preload + `game.Loaded` with a ~12s hard timeout / continue-anyway, warms environment textures best-effort, then fades out. Verified in Studio play: `preloaded 11/11 critical assets`, no failures |
 | NpcSit | `ServerScriptService/NpcSit` | ⚪ Retired (Disabled) — superseded by TableManager |
 | ChairInteraction | `StarterPlayer/StarterPlayerScripts/ChairInteraction` | ⚪ Retired (removed/missing in current place) — superseded by TableManager |
 
-**The game is playable for manual testing.** All modules implement the current ruleset (universal Energy, 3-slot board, direct face attacks, effects[] abilities, quickstrike/lifesteal/rebirth keywords, Crystal Core active skills). Player starts with an active Core of Vanguard `Mighty Starter` deck; PvE Noob randomizes among the three starter decks and receives the matching pure Core.
+**The game is playable for manual testing.** All modules implement the current ruleset (universal Energy, 3-slot board, direct face attacks, effects[] abilities, quickstrike/lifesteal/rebirth keywords, two-slot Battle Charge). Player starts with an active `Mighty Starter` deck; PvE Noob randomizes among the three starter decks.
 
 ---
 
@@ -50,7 +82,7 @@
 
 - **90 unique pack cards** across 4 packs: ruby_bear (24 MIGHTY), emerald_cat (24 SWIFT), sapphire_frog (24 VITAL), stonebark (18 NEUTRAL); plus the `the_coin` engine card (second player's turn-1 Coin)
 - **3 starter decks** from deck_starter.json: mighty (30), swift (30), vital (30)
-- **6 Crystal Cores**: 3 pure and 3 dual-type Cores, alpha-tuned
+- **CrystalCores module remains orphaned**: 3 pure and 3 dual-type legacy Cores still exist in `ReplicatedStorage/Definitions/CrystalCores.lua` as a migration artifact, but no live code requires them.
 - No Invoker; no old 32-card CardData
 - All cards have `image_prompt` fields for AI art generation
 - the_coin engine card: cost 0, `{trigger="cast", action="gain_energy", value=1}` — dealt to the second player in `DuelSession.start`; expires end of turn 2 if unused (`BattleLogic.endTurn`)
@@ -90,12 +122,13 @@ Effects[] engine implementing:
 | `Forfeit` | Client → Server | — |
 | `StandUp` | Client → Server | — (stand from a seat; also auto-stand on disconnect) |
 | `ReadyUp` | Client → Server | — (PVP ready handshake) |
-| `UseCore` | Client → Server | `targetDescriptor` only; server derives battle/seat, remaps perspective, validates turn/energy/target/once-per-turn, then resolves the active Core |
+| `UseCore` | Client → Server | **Orphaned** (Battle Charge migration) — no server handler; firing it does nothing. Kept as a migration artifact like `StartDuel`/`UseSkill` |
 | `UpdateBattleState` | Server → Client | sanitized, perspective-relabelled state snapshot (densified board arrays); player snapshot carries `costMods` (client effective-cost coloring); timer metadata = `serverNow`, `turnStartedAt`, `turnEndsAt`, `turnDuration`, `timeoutStreaks`; `warnings` = transient rejection reasons (energy/taunt/prerequisite/timeout), cleared after each broadcast |
 | `BattleOver` | Server → Client | `{ winner, rewards }`. PvE rewards = EXP/gold/card-drop (persisted via SaveService). PvP rewards `.message` = "Victory!/Defeat. Record: XW/YL" (W/L persisted via SaveService) |
 | `BattleSeated` | Server → Client | `tableId, chairIdx` — PVP pre-battle seat; shows SeatedOverlay |
 | `BattleUnseated` | Server → Client | — hides SeatedOverlay/loading, unlocks controls, restores local table prompts after stand-up or aborted seating |
 | `BattleLoading` | Server → Client | — shows input-blocking PvE "Finding Table..." overlay; clears on battle state, unseat, battle over, timeout, or respawn |
+| `Notify` | Server → Client | `message` — free-roam toast (own `NotifyOverlay` ScreenGui, shows even when BattleUI is disabled). Used by `handleTalkToNpc` for "all tables busy" / "couldn't seat you" |
 | `GetInventory` | Client → Server (RemoteFunction) | invoke → returns the player's `collection` (cardId multiset) from `SaveService`; empty list if no active profile |
 | `GetDecks` / `CreateDeck` / `SaveDeckCards` / `RenameDeck` / `DeleteDeck` / `SetActiveDeck` | Client → Server (RemoteFunction) | invoke → server-validated deck management responses |
 
@@ -107,15 +140,16 @@ Effects[] engine implementing:
 (`SSS/Modules/SaveService`) wraps the vendored ProfileStore (`SSS/Packages/ProfileStore`,
 pinned commit `45c9847`).
 
-- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Schema **v1.2**:
+- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Schema **v1.3** (Core-free decks):
   `{_version={major,minor}, archetype(legacy), collection (multiset of cardIds),
   decks={...}, activeDeckId, gold, exp, pvp={wins,losses},
-  activeMatch=false|{battleId,startedAt}}`.
+  activeMatch=false|{battleId,startedAt}}`. `1.2->1.3` migration tolerates leftover
+  `coreId` on old decks (harmless).
 - **Lifecycle:** PlayerAdded → `StartSessionAsync` (session lock, `Cancel` on leave) →
   `migrate` (before `Reconcile`) → `Reconcile`. PlayerRemoving → `EndSession`.
   `OnSessionEnd` kicks on remote session steal. Connect-first + `Loading` guard.
 - **New-player grant:** the template grants the 30-card MIGHTY starter collection plus
-  one active valid `Mighty Starter` deck using `core_vanguard`.
+  one active valid `Mighty Starter` deck (no Core).
 - **Autosave:** dirty-flag 60s pooled `Profile:Save()`; ProfileStore `AUTO_SAVE_PERIOD`
   (~300s) backstop; **card drops force an immediate save**.
 - **Migration:** `migrate(data)` — minor (`MINOR_MIGRATIONS` table) / major (guarded
@@ -147,6 +181,9 @@ pinned commit `45c9847`).
 | Card art missing for most cards | 🔴 High | All cards have `image_prompt` fields; art not yet generated/wired. Placeholder `rbxassetid://115543591799677` used for creatures; `rbxassetid://127780045941863` for spell circles |
 | Balance: VITAL too weak, MIGHTY too strong | 🔴 High | Headless sim (n=40/matchup, symmetric NpcAI): MIGHTY 71%, SWIFT 55%, VITAL 24%. MIGHTY vs VITAL 35–5. Naive AI doesn't pilot sustain/Lifesteal. Needs card tuning + smarter AI |
 | Full PVP Local Server smoke still needed | 🟡 Medium | Phase 3 implementation has single-client Play smoke and isolated timer simulation coverage. Still run Studio Local Server with 2 players: sit/ready/start, independent views, timer resync across mobile/desktop switches, invalid remote probes, forfeit/disconnect cleanup. |
+| Archived/unauthorized SOUND assets | 🟡 Medium | Studio play console spams `Failed to load sound rbxassetid://1914538756: Requested asset is archived` and `asset id 150463355 … User is not authorized` (also `150463355`). These are **sound** assets (out of scope of the image preloader); likely from the environment template / a UI sound. Find the referencing instances and replace with owned, non-archived sounds. |
+| Non-critical workspace SpecialMesh textures are not pre-warmed | 🟢 Low | `LoadingScreen` best-effort environment warm currently scans `ImageLabel`, `ImageButton`, `Decal`, `Texture`, and `MeshPart` under Workspace/Lighting, but not `SpecialMesh.TextureId`. The critical gameplay/UI image path is covered; this only affects cafe/world prop textures. |
 | Legacy remotes intentionally orphaned | 🟢 Low | `StartDuel`, `UseSkill`, and `UsePlayerSkill` still exist in Remotes with no live server handler in BattleController v5. Kept as migration artifacts for now; deletion deferred to a later cleanup. |
+| Stray empty image (`rbxassetid://0`) | 🟢 Low | One `ImageLabel`/`Decal` has `Image=""`/`rbxassetid://0` (surfaced during the asset audit). Harmless; clean up the leftover. |
 | Avatar thumbnails in info widgets | 🟢 Low | Main hero portrait uses `GetUserThumbnailAsync`; check remaining placeholder widgets before closing this. |
 | NPC foot orientation | 🟢 Low | Z-axis rotation fix pending |
