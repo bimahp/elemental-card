@@ -23,6 +23,7 @@ A Roblox digital card battle game set inside a 3D TCG card shop. Players challen
 | [DEV_STATUS.md](DEV_STATUS.md) | Current implementation state |
 | [PLAN_ASSET_LOADING.md](PLAN_ASSET_LOADING.md) | Reliable asset preloading and branded loading screen validation |
 | [PLAN_BATTLE_CHARGE.md](PLAN_BATTLE_CHARGE.md) | Crystal Core removal and two-slot Battle Charge migration |
+| [PLAN_BATTLE_CHARGE_USAGE.md](PLAN_BATTLE_CHARGE_USAGE.md) | Charge costs on cards, CORRUPTED trait, hybrid/pure-Charge cost models, CardTraits/CardCost shared modules |
 
 ---
 
@@ -31,13 +32,15 @@ A Roblox digital card battle game set inside a 3D TCG card shop. Players challen
 ```
 ReplicatedStorage/
   Definitions/
-    Cards                 ← 90 cards across 4 packs (id-keyed Lua map, effects[] schema)
+    Cards                 ← 90 cards across 4 packs (id-keyed Lua map, effects[] schema); 2 carry chargeCost (ruby_mauler hybrid, rubyhide_bear Corrupted pure-charge)
     Decks                 ← 3 starter decks expanded from deck_starter.json
     CrystalCores          ← orphaned (Crystal Core removed; replaced by Battle Charge)
   Modules/
     CardSchema            ← Validator: fields, trigger/action/target vocabs, chargeCost, deck ids
     CardText              ← getAbilityDisplay(cardId), targetClass(card), canHitFace(card)
     ChargeConfig          ← Battle Type palette + Charge-producing rules (server + client SSOT)
+    CardTraits            ← has(card, trait) — scans effects[] for passive trait by action name (e.g. "corrupted")
+    CardCost              ← shared server+client cost helper: canPay, getCostParts, failureReason (all 3 cost models)
     AssetIds              ← Gameplay/UI image asset manifest (+ ChargeEmblems); criticalList() preload gate
     AssetPreloader        ← Instance-based image preloader with retry
   Remotes/

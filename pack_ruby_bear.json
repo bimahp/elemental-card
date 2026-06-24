@@ -43,7 +43,8 @@
         "cardType": "creature",
         "race": "BEAR",
         "rarity": "common",
-        "cost": 2,
+        "cost": 1,
+        "chargeCost": { "battleType": "MIGHTY", "amount": 1 },
         "atk": 3,
         "hp": 2,
         "image_prompt": "A lean aggressive young ruby bear baring its claws, jagged ruby crystal spikes along its forearms, snarling in an attacking lunge. Deep ruby-red palette, crimson crystal shards. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
@@ -75,10 +76,15 @@
         "cardType": "creature",
         "race": "BEAR",
         "rarity": "common",
-        "cost": 3,
+        "cost": 0,
+        "chargeCost": { "battleType": "MIGHTY", "amount": 3 },
         "atk": 2,
         "hp": 5,
         "effects": [
+          {
+            "trigger": "passive",
+            "action": "corrupted"
+          },
           {
             "trigger": "emerge",
             "action": "gain_armor",

@@ -57,7 +57,10 @@ Drawing from an empty deck deals escalating direct Core damage: 1 the first time
 
 **Spell** — A one-shot effect. Played from hand, resolves immediately, goes to discard. Costs Energy.
 
-A card's abilities are an ordered `effects[]` list (trigger + action); a card with none is a vanilla body. See [DESIGN_DATABASE.md](DESIGN_DATABASE.md). All cards cost Energy. Nothing is free.
+A card's abilities are an ordered `effects[]` list (trigger + action); a card
+with none is a vanilla body. See [DESIGN_DATABASE.md](DESIGN_DATABASE.md).
+Cards may cost Energy, Battle Charge, or both; pure-Charge cards use `cost = 0`
+plus a printed `chargeCost`.
 
 ---
 
@@ -111,6 +114,12 @@ choose or store a Core.
 - Energy, Armor, and HP are unaffected by Charge — it is its own pool. Tokens,
   rebirth, summon-from-effect, return-from-graveyard, and board copies do **not**
   grant normal played-card Charge (only a card played from hand does).
+- **CORRUPTED** is a permanent printed card trait, not a fifth Battle Type. A
+  Corrupted card retains its original Battle Type, race, rarity, and synergies. It
+  does **not** grant the normal +1 played-card Charge after resolving — it only
+  blocks that grant, not any explicit `gain_charge` effects. Encoded in
+  `effects[]` as `{ trigger = "passive", action = "corrupted" }`. No confirmation
+  dialog. Charge costs are mandatory, automatic, and atomic.
 
 > Charge is fully server-authoritative. Slots, the current slot, and per-change
 > events replicate to clients/spectators for animation; animation completion never

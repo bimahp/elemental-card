@@ -58,6 +58,8 @@ ReplicatedStorage/
     CardSchema       ← validates Cards.lua on load (fields, known triggers/actions/targets)
     CardText         ← renders ability text from effects[] (replaces in-data EFFECT_TEXT)
     ChargeConfig     ← shared Battle Type palette + Charge-producing rules (server + client)
+    CardTraits       ← `has(card, trait)` — scans effects[] for a passive trait by action name (e.g. "corrupted")
+    CardCost         ← shared cost helper (server + client): getEnergyCost, getChargeCost, canPay, getCostParts, failureReason
 
 ServerScriptService/Modules/
   Effects/
@@ -242,7 +244,7 @@ code path in `dealDamage*`.
 
 ## Open items
 
-- **Balance**: card values are alpha numbers (previous sims showed MIGHTY over- and VITAL under-performing). The Core active power is now removed — an expected balance shift — and no card content uses Charge costs yet; rerun balance sims as Charge content lands.
+- **Balance**: card values are alpha numbers (previous sims showed MIGHTY over- and VITAL under-performing). The Core active power is now removed — an expected balance shift — and the first Charge-cost fixtures are live (`ruby_mauler`, `rubyhide_bear`); rerun balance sims before broader card-pool migration.
 - **Manual PVP smoke**: run a full 2-player Local Server pass with active decks.
-- **Charge content**: v1 is the system/UI/deck-builder foundation; no cards use `chargeCost`/`gain_charge` yet. Deciding which cards spend/grant Charge is the next content pass.
+- **Charge content**: `PLAN_BATTLE_CHARGE_USAGE.md` implemented 2026-06-23 — three cost models (Energy-only, Hybrid, Pure-Charge), CORRUPTED trait, CardTraits/CardCost shared modules, ChargeCostBadge UI, NpcAI CardCost.canPay upgrade, deck builder gen/spender feedback, and first fixture cards (`ruby_mauler` hybrid 1E+1M, `rubyhide_bear` Corrupted pure 3M). Broader card-pool migration deferred until balance sims run on fixture data.
 - **Rebirth + board full**: creature died into a freed slot, so the slot is always available. Edge case already handled by design.

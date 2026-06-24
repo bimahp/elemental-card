@@ -160,6 +160,15 @@ in the state broadcast).
   Each emblem is 0.2 of the card's width/height, anchored at `x = 0.03`.
 - Both modes use a 0.03 top inset and a 0.03 gap between stacked emblems
   (fractions of card height).
+- **Charge cost badge** (`ChargeCostBadge`): cards with a printed `chargeCost`
+  show a fourth badge in the stat cluster — the Battle Type emblem icon (from
+  `AssetIds.ChargeEmblems`) with its amount overlaid. Position varies by cost
+  model: *hybrid* cards place it immediately to the right of the Energy badge;
+  *pure-Charge* cards (cost = 0) replace the Energy badge position. The Energy
+  badge is hidden entirely on pure-Charge cards — no zero badge is shown.
+- **CORRUPTED nameplate**: a ☠ prefix is prepended to the card name at the same
+  font, size, and color as a normal name. No separate nameplate color change.
+  The card border remains the card's original Battle Type color.
 
 Icon assets: Energy `rbxassetid://114305689596215`, Attack
 `rbxassetid://139799158026059`, Health `rbxassetid://113514992851320`.
@@ -237,7 +246,8 @@ Hovering a hand card scales it up (1× → 1.22×) so it overlaps neighboring
 cards; the description text scales in lockstep with the card so its size
 stays visually consistent with the rest of the card.
 
-Cards that cannot be played (insufficient Energy, no valid target) are grayed out.
+Cards that cannot be played (insufficient Energy or Charge, no valid target) are
+grayed out when client hints are available.
 
 ### Hand Fan Layout
 
@@ -299,7 +309,7 @@ while any card-play or attack drag is in progress.
 
 ## Rejected Actions — Warning Toast
 
-When the server refuses an action — not enough Energy; an illegal attack
+When the server refuses an action — not enough Energy or Charge; an illegal attack
 (Taunt / Stealth / summoning sickness); or a spell whose prerequisite isn't met
 (no valid target, or an unmet condition such as *No Wounded Ally*) — the reason
 appears as a brief red toast near screen-center, then fades. The card stays in
@@ -384,6 +394,9 @@ The top-right world HUD entry is **Card Library**. It opens one reusable
   indicator (`N Charge Type(s) in deck`) that turns into a non-blocking warning
   (`N Charge Types - Hero Slots: 2`, plus a one-time toast) when a deck crosses to
   more than two Charge-producing types. NEUTRAL does not count.
+- The editor also shows a compact charge-economy summary below the type indicator:
+  per-type generator count (`+N`) and spender count (`-N`), and a pure-Charge
+  card count (`PC:N`). This is informational only — no legality rules change.
 - One shared header/back button navigates to the previous page; Back from root
   closes the panel.
 - The HUD anchor still hides during battle states.

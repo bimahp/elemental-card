@@ -103,6 +103,7 @@ generic timing triggers stay descriptive.
 | `attacked` | this creature is attacked | — |
 | `deal_damage` | this creature deals damage | Lifesteal/reactive damage hook |
 | `ally_death` | a friendly creature dies | — |
+| `passive` | never fires as an event — used exclusively for permanent printed traits (e.g. `corrupted`) | — |
 
 > `turn_end`, `attacked`, `deal_damage`, `ally_death` are descriptive
 > timing/reactive triggers, not signature keywords — rename later if you want
@@ -127,6 +128,7 @@ generic timing triggers stay descriptive.
 | `set_cost` | `target`, `value`, `duration?` | Set the cost of cards in `target` to `value`. |
 | `gain_charge` | `battleType`, `value` | Gain `value` Battle Charge of `battleType` (no board target). Stacks with the card's normal +1 played Charge. No-op for NEUTRAL. See [DESIGN_CORE.md](DESIGN_CORE.md). |
 | `gain_energy` | `value` | Gain `value` Energy this turn (the Coin). |
+| `corrupted` | *(none)* | Permanent printed trait — must use `trigger="passive"`. Blocks the normal +1 played-card Charge grant after this card resolves. Does **not** block explicit `gain_charge` effects. |
 
 A `damage` entry may carry **`lifesteal = true`** — your hero heals for the
 damage dealt. **`value`** is normally a fixed number; for dynamic amounts use
