@@ -6,8 +6,8 @@
     "theme": "Emerald Crystal Cats",
     "cards": [
       {
-        "id": "emerald_cub",
-        "name": "Emerald Cub",
+        "id": "fleetpaw",
+        "name": "Fleetpaw",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -18,11 +18,12 @@
         "keywords": [
           "charge"
         ],
-        "image_prompt": "A small sleek emerald cat cub, lean and quick, faceted emerald crystal accents in its short fur, caught mid-pounce, eager and energetic. Emerald-green palette, green speed motion trails. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "75194860220788",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Fleetpaw, an expressive feline adventurer aligned with emerald crystal magic. Give the cat a clearly animal face, agile low-poly proportions, light practical gear, and a few faceted green crystal accents. Use clean polygonal forms, crisp planar shading, a sleek readable silhouette, fresh magical light, and a restrained forest-canopy backdrop. Keep the face, upper body, and main action within the upper 80% of the image. Use the lowest 20% for grounded paws on a branch, vines, or simple forest terrain, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "jade_cub",
-        "name": "Jade Cub",
+        "id": "jadeblink",
+        "name": "Jadeblink",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -37,7 +38,30 @@
             "value": 1
           }
         ],
-        "image_prompt": "A curious jade-furred kitten with glowing green crystal eyes and small jade crystal shards along its tail, playful and clever. Emerald-green palette, soft green glow. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "108047147659113",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Jadeblink, a small mystical forest cat with wide luminous jade eyes, dark green fur, and translucent crystal markings along its ears and tail. Show it emerging from a soft emerald flash with a curious, alert expression, as though it has just discovered a hidden secret. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Use stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a compact readable silhouette, cool green light, and a quiet misty forest backdrop. Keep the face, glowing eyes, and emerald flash within the upper 80% of the image. Use the lowest 20% for its paws landing on an old mossy branch, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "needlewhisk",
+        "name": "Needlewhisk",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 1,
+        "hp": 1,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "reduce_cost",
+            "target": "hand",
+            "value": 1,
+            "duration": "this_turn"
+          }
+        ],
+        "image_asset": "88953311858601",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Needlewhisk, a tiny sharp-eyed scout cat with needle-thin whiskers, a leaf-map pouch, and a glowing crystal compass held close to its chest. Show it finding a clever shortcut through tangled branches. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for narrow roots, a folded leaf map, and a small trail marker, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "verdant_prowler",
@@ -52,11 +76,32 @@
         "keywords": [
           "quickstrike"
         ],
-        "image_prompt": "A lean prowling emerald cat low to the ground, emerald crystal claws bared, body blurring with first-strike speed, stalking forward. Emerald-green palette, sharp green speed trails. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "85051405713506",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Verdant Prowler, a lean emerald panther with leaf-shaped forearm blades and focused golden eyes. Show it poised for one sudden, precise strike from a low hunting stance. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its paws gripping a slanted branch with a few cut leaves below, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "emerald_lynx",
-        "name": "Emerald Lynx",
+        "id": "mosswhisker",
+        "name": "Mosswhisker",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "chain",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "73744892382414",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Mosswhisker, a moss-covered woodland cat. Show the character in a low, dynamic crouching stance — weight shifted forward onto one extended forepaw reaching toward a floating memory shard, the opposite forepaw braced against the ground, digitigrade legs coiled and ready, tail curved upward for balance. The face is angled upward, eyes locked on the shard with focused intensity. Glowing green pawprints trail behind the character in a curving arc, and the curling whiskers faintly echo the curve of the trail. The character must be an upright bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail — not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for soft moss, linked pawprints, and a weathered forest stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "kessara",
+        "name": "Kessara",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -72,11 +117,12 @@
             "atk": 2
           }
         ],
-        "image_prompt": "An agile emerald lynx with tufted ears and faceted emerald crystal whiskers, leaping mid-air trailing green speed streaks. Emerald-green palette, vivid green motion. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "139640036927973",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Kessara, a confident emerald lynx warrior with tufted ears and a short chain of jade crystals around one foreleg. Show the crystals lighting in sequence as fresh strength surges through its stance. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broad paws on a cracked jade-veined ledge, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "crystal_sabercat",
-        "name": "Crystal Sabercat",
+        "id": "glassfang",
+        "name": "Glassfang",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -91,11 +137,33 @@
             "target": "random_enemy"
           }
         ],
-        "image_prompt": "A sleek crystal saber-toothed cat with long translucent emerald crystal fangs, shadowy, swift and poised to strike. Emerald-green palette, glassy green crystal fangs. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "120365107225695",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Glassfang, a sturdy sabercat with long translucent glass fangs and pale green crystal armor. Show it standing alone in a powerful defensive pose as a curved emerald shockwave expands outward from its body. Glassfang must be the only subject in the image: no enemies, companions, silhouettes, weapons, props, or secondary focal objects. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and shockwave within the upper 80% of the image. Use the lowest 20% only for its braced paws and simple forest ground, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "jade_stalker",
-        "name": "Jade Stalker",
+        "id": "vineleap",
+        "name": "Vineleap",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 4,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "grant_keyword",
+            "target": "self",
+            "keyword": "stealth"
+          }
+        ],
+        "image_asset": "81534724761761",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Vineleap, a spotted forest cat springing through a loop of vines while the rear half of its body dissolves into leaves and green mist. The pose should feel swift, elusive, and predatory. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for the vine-wrapped branch it has just launched from, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "jadestalk",
+        "name": "Jadestalk",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -110,11 +178,28 @@
             "value": 1
           }
         ],
-        "image_prompt": "A sleek dark-green panther stalker with a jade crystal sheen across its coat and glowing green eyes, prowling silently through shadow. Emerald-green palette, subtle green crystal glints. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "106617552630663",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Jadestalk, a patient armored stalker cat moving silently through dense forest ferns. Give it a watchful sideways glance, a low controlled posture, and one forepaw gently parting the leaves as it listens for movement ahead. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and stalking pose within the upper 80% of the image. Use the lowest 20% only for its feet, simple ferns, and quiet forest ground, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "emerald_huntmaster",
-        "name": "Emerald Huntmaster",
+        "id": "shadowtail",
+        "name": "Shadowtail",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 4,
+        "atk": 3,
+        "hp": 5,
+        "keywords": [
+          "stealth"
+        ],
+        "image_asset": "121696131847846",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Shadowtail, a dark long-tailed cat almost hidden inside deep green canopy shadows. Its oversized smoky tail curls around its silhouette like camouflage while only its bright eyes and crystal ear tips catch the light. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a shadowed branch with sparse hanging moss, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "huntmaster_kael",
+        "name": "Huntmaster Kael",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -130,11 +215,135 @@
             "value": 1
           }
         ],
-        "image_prompt": "A noble veteran emerald huntmaster cat with a flowing emerald crystal mane and old scars, commanding, alert and swift. Emerald-green palette, regal green crystal accents. Premium painterly TCG creature art, large expressive eyes, lean dynamic silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "89051969642928",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Huntmaster Kael, a veteran lynx huntmaster wearing practical leaf-and-leather gear with a jade bow across its back. Show it opening a compact supply satchel while calmly directing the unseen hunt. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a high lookout stump with a map and one crystal marker, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ancient_sabercat",
-        "name": "Ancient Sabercat",
+        "id": "galeclaw",
+        "name": "Galeclaw",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 4
+        },
+        "atk": 4,
+        "hp": 3,
+        "keywords": [
+          "charge"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "139779957769332",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Galeclaw, a wind-running cat with swept-back ears, green crystal claws, and curling air ribbons. Show it racing across the canopy while catching a floating memory shard in one paw. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a narrow treetop branch bending beneath the sprint, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "silent_pouncer",
+        "name": "Silent Pouncer",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 3
+        },
+        "atk": 3,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "grant_keyword",
+            "target": "self",
+            "keyword": "stealth"
+          }
+        ],
+        "image_asset": "123879867765641",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Silent Pouncer, a compact black-and-green hunting cat crouched just before a pounce, its outline fading into fern shadows and drifting leaves. Keep the eyes intense and the movement nearly silent. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a mossy log and a pool of deep forest shadow, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "pathwhisker",
+        "name": "Pathwhisker",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 4,
+        "atk": 2,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "chain",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "84447378066629",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Pathwhisker, a rugged pathfinder cat with a crystal compass collar and a bundle of simple trail markers. Show it choosing a safe route across an ancient vine bridge while studying distant paw-signs. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for the worn vine bridge, moss, and one planted trail marker, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "jade_duelist",
+        "name": "Jade Duelist",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 5,
+        "atk": 5,
+        "hp": 4,
+        "keywords": [
+          "quickstrike"
+        ],
+        "effects": [
+          {
+            "trigger": "deal_damage",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "121580452709814",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Jade Duelist, an elegant feline swordfighter wielding two short jade blades. Show it completing a lightning-fast crossing cut as a small crystal memory appears in the wake of the strike. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a clean stone dueling platform with two shallow cut marks, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "flashfang",
+        "name": "Flashfang",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 5
+        },
+        "atk": 5,
+        "hp": 3,
+        "keywords": [
+          "charge"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 2
+          }
+        ],
+        "image_asset": "118518647602169",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Flashfang, a fierce green crystal cat exploding forward in a straight-line charge, fangs bared and body stretched into an emerald afterimage. A compact flash of impact energy should lead the attack. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for the fractured branch and leaves kicked back by its launch, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "sabervyn",
+        "name": "Sabervyn",
         "battleType": "SWIFT",
         "cardType": "creature",
         "race": "CAT",
@@ -152,13 +361,180 @@
             "value": 2
           }
         ],
-        "image_prompt": "An ancient massive emerald sabercat with enormous emerald crystal fangs and a vast crystalline mane, fierce and legendary, mid-charge with explosive green speed trails. Emerald-green palette, radiant green crystal aura. Premium painterly TCG creature art, large expressive eyes, powerful dynamic silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "106620353118657",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Sabervyn, a massive ancient sabercat with weathered jade armor, long crystal fangs, and a mane of forest moss. Show it charging through old ruins while two luminous memory shards trail behind like awakened history. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broken temple stones split by its heavy paws, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "quick_step",
-        "name": "Quick Step",
+        "id": "mirrorleaf",
+        "name": "Mirrorleaf",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 1,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "attacked",
+            "action": "bounce",
+            "target": "self"
+          }
+        ],
+        "image_asset": "129833740787219",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Mirrorleaf, a small silver-green mouser with fur shaped like reflective leaves. Show it escaping an incoming strike by folding into a curved mirror-leaf reflection, playful rather than frightened. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a dew-covered leaf platform reflecting its fading paws, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "clawline_mentor",
+        "name": "Clawline Mentor",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 3,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "quickstrike"
+          }
+        ],
+        "image_asset": "113678064895097",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Clawline Mentor, an older scarred cat mentor demonstrating a perfectly economical quick strike with one jade-edged claw. A younger feline silhouette watches from behind, but the mentor remains the clear hero. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a simple woodland training platform with one cut practice post, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "greenwind_alpha",
+        "name": "Greenwind Alpha",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "rare",
+        "cost": 6,
+        "atk": 5,
+        "hp": 6,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "buff",
+            "target": "all_friendly",
+            "atk": 1
+          }
+        ],
+        "image_asset": "131161483131966",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Greenwind Alpha, a regal forest alpha with a broad leaf-like mane and emerald crystals along its shoulders. Show a steady green wind radiating from its stance and strengthening faint pack silhouettes behind it. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for an elevated root crown with grass leaning in the wind, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "apex_ambusher",
+        "name": "Apex Ambusher",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 6
+        },
+        "atk": 6,
+        "hp": 5,
+        "keywords": [
+          "stealth"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "attack_lte",
+              "value": 3
+            }
+          }
+        ],
+        "image_asset": "104721695607081",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Apex Ambusher, a huge canopy predator concealed among dark leaves, with only its glowing eyes, crystal claws, and powerful shoulders revealed. Show it dropping silently toward a much smaller shadow below. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a heavy branch snapping beneath the launch, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "ninefold_shadow",
+        "name": "Ninefold Shadow",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 7
+        },
+        "atk": 4,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 2
+          },
+          {
+            "trigger": "chain",
+            "action": "damage",
+            "target": "enemy_target",
+            "value": 3
+          }
+        ],
+        "image_asset": "131237142621031",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Ninefold Shadow, a mysterious black cat surrounded by nine overlapping green shadow echoes. Two memory crystals hover near its face while the foremost shadow releases a sharp emerald energy lash. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a moonlit branch with layered shadows pooling beneath it, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "canopy_sprinter",
+        "name": "Canopy Sprinter",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 3,
+        "hp": 2,
+        "keywords": [
+          "charge"
+        ],
+        "image_asset": "122846041193188",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Canopy Sprinter, a lightweight young cat sprinting flat-out across the treetops with leaf streamers and small emerald ankle crystals. Emphasize speed, balance, and a joyful forward charge. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a springy branch and a gap to the next canopy platform, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "matriarch_selka",
+        "name": "Matriarch Selka",
+        "battleType": "SWIFT",
+        "cardType": "creature",
+        "race": "CAT",
+        "rarity": "epic",
+        "cost": 8,
+        "atk": 6,
+        "hp": 8,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 2
+          },
+          {
+            "trigger": "emerge",
+            "action": "reduce_cost",
+            "target": "drawn_cards",
+            "value": 2
+          }
+        ],
+        "image_asset": "128672915639684",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Matriarch Selka, an imposing elder cat matriarch with a crown of leaf-shaped jade and a calm protective expression. Two open memory crystals orbit her paws while their light settles over the gathered pack. The character must be an upright, bipedal fantasy feline creature with a feline head, expressive forepaws, digitigrade legs, and a tail - not a normal four-legged cat and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted emerald accents, and focused forest lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a natural root throne with quiet emerald reflections, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly feline, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "needle_step",
+        "name": "Needle Step",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "enemy_creature",
         "rarity": "common",
         "cost": 0,
         "effects": [
@@ -172,13 +548,15 @@
             }
           }
         ],
-        "image_prompt": "A streak of emerald speed energy, a blurring green dash trail with scattered faceted emerald crystal shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green speed trails, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "113393072209560",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Needle Step: a needle-thin emerald movement streak crossing a dark creature silhouette at the instant of impact, with one sharp crystal pawprint marking the start of the motion. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "cat_reflexes",
-        "name": "Cat Reflexes",
+        "id": "whisker_reflex",
+        "name": "Whisker Reflex",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 1,
         "effects": [
@@ -189,13 +567,15 @@
             "keyword": "quickstrike"
           }
         ],
-        "image_prompt": "Emerald crystal energy sharpening into swift reflex lines, green afterimages and faceted shards crackling with quickness. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green crystal motion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "89983435701831",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Whisker Reflex: a feline silhouette twisting away in perfect timing as luminous green whisker-lines flare outward and a single jade claw becomes ready to counterstrike. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "pouncing_strike",
-        "name": "Pouncing Strike",
+        "id": "fleetpaw_strike",
+        "name": "Fleetpaw Strike",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "enemy_character",
         "rarity": "common",
         "cost": 1,
         "effects": [
@@ -206,13 +586,15 @@
             "value": 2
           }
         ],
-        "image_prompt": "An emerald crystal claw-strike pouncing forward in a sharp green slash of energy with flying crystal shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green slash, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "125990073651608",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Fleetpaw Strike: a compact crystal cat afterimage diving through the center with one bright emerald paw impact and a short controlled speed trail. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "emerald_claws",
         "name": "Emerald Claws",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -223,13 +605,15 @@
             "atk": 2
           }
         ],
-        "image_prompt": "Glowing emerald crystal claws extending and sharpening, vivid green energy crackling along the faceted blades. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green crystal claws, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "133943921101325",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Emerald Claws: two translucent emerald claw gauntlets growing around a pair of feline forepaws, pulsing with clean strengthening energy. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ambush",
-        "name": "Ambush",
+        "id": "greenveil_ambush",
+        "name": "Greenveil Ambush",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "enemy_board",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -246,30 +630,43 @@
             "value": 1
           }
         ],
-        "image_prompt": "A sudden emerald ambush burst, a volley of green crystal shards raining out of the shadows across several targets. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering green shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "93292460245961",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Greenveil Ambush: a curtain of green leaves parting around a sudden claw flash, while one small crystal memory rises safely from the fading attack. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "swipe",
-        "name": "Swipe",
+        "id": "shadow_smoke",
+        "name": "Shadow Smoke",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "enemy_side",
         "rarity": "common",
         "cost": 2,
         "effects": [
           {
             "trigger": "cast",
-            "action": "damage",
-            "target": "enemy_target",
-            "value": 3
+            "action": "bounce",
+            "target": "random_enemy"
+          },
+          {
+            "trigger": "cast",
+            "action": "add_additional_charge_cost_to_player_hand",
+            "targetPlayer": "enemy",
+            "selector": "all",
+            "filter": {
+              "hasChargeCost": true
+            },
+            "value": 1
           }
         ],
-        "image_prompt": "A wide emerald crystal claw swipe carving a sweeping green energy arc with flying faceted shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green arc, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "125213618019269",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Shadow Smoke: a dense, rounded cloud of deep emerald smoke curling horizontally around a dark crystal at its center. Shape the smoke into a compact radial vortex with similar width and height, surrounded by a few heavier crystal wisps. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: keep the entire smoke vortex tightly centered inside an imaginary circle in the middle of the image. Avoid a rising plume, vertical column, or bottom-to-top motion. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "hunting_instinct",
         "name": "Hunting Instinct",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "rare",
         "cost": 2,
         "effects": [
@@ -282,34 +679,15 @@
             }
           }
         ],
-        "image_prompt": "Glowing green hunting-vision energy with emerald crystal pawprints and tracking lines lighting up a dark path. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green tracking energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "93466316229939",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Hunting Instinct: several luminous paw tracks converging on one hovering jade memory shard as a pair of watchful feline eyes appears softly in the surrounding foliage. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "shadow_smoke",
-        "name": "Shadow Smoke",
+        "id": "twinclaw",
+        "name": "Twinclaw",
         "battleType": "SWIFT",
         "cardType": "spell",
-        "rarity": "common",
-        "cost": 2,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "bounce",
-            "target": "random_enemy"
-          },
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 1
-          }
-        ],
-        "image_prompt": "A swirling veil of emerald-tinted shadow smoke flecked with glowing green crystal motes, a vanishing dark-green mist. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green smoke, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "combo_strike",
-        "name": "Combo Strike",
-        "battleType": "SWIFT",
-        "cardType": "spell",
+        "playTarget": "enemy_character",
         "rarity": "rare",
         "cost": 3,
         "effects": [
@@ -320,40 +698,21 @@
             "value": 4
           },
           {
-            "trigger": "cast",
+            "trigger": "chain",
             "action": "damage",
             "target": "enemy_target",
-            "value": 2,
-            "condition": {
-              "type": "chain"
-            }
+            "value": 2
           }
         ],
-        "image_prompt": "A rapid double emerald crystal strike, two crossing green slashing energy arcs bursting with bright shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, twin green slashes, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "feline_agility",
-        "name": "Feline Agility",
-        "battleType": "SWIFT",
-        "cardType": "spell",
-        "rarity": "common",
-        "cost": 3,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "buff",
-            "target": "friendly_creature",
-            "atk": 2,
-            "hp": 2
-          }
-        ],
-        "image_prompt": "Emerald crystal energy swirling into agile motion lines, green speed spirals and faceted shards spinning upward. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green agility energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "93091652921899",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Twinclaw: two crossed jade claw arcs striking in sequence, the first bold and bright and the second following as a smaller echo of the same motion. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "emerald_rush",
         "name": "Emerald Rush",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "common",
         "cost": 3,
         "effects": [
@@ -363,13 +722,15 @@
             "value": 2
           }
         ],
-        "image_prompt": "A rushing surge of glowing emerald crystal cards and green speed streaks pouring forward. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic green rush, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "114558824552697",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Emerald Rush: a fast emerald wind vortex carrying two distinct glowing memory crystals toward the viewer through a tunnel of leaves. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "pack_tactics",
         "name": "Pack Tactics",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "rare",
         "cost": 4,
         "effects": [
@@ -388,31 +749,21 @@
             "value": 1
           }
         ],
-        "image_prompt": "Multiple glowing green emerald pawprints converging into a coordinated pack-tactics surge of crystal energy. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, converging green energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "emerald_dagger",
-        "name": "Emerald Dagger",
-        "battleType": "SWIFT",
-        "cardType": "spell",
-        "rarity": "rare",
-        "cost": 4,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "destroy",
-            "target": "enemy_creature"
-          }
-        ],
-        "image_prompt": "A gleaming faceted emerald crystal dagger plunging forward in a precise green strike, shards flying from the point. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sharp green crystal strike, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "118256722748502",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Pack Tactics: a round crystal map viewed at an angle, with several feline paw markers converging on one brightly selected route and one small jade token. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "predators_assault",
-        "name": "Predator\u0027s Assault",
+        "name": "Predator's Assault",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "own_board",
         "rarity": "rare",
-        "cost": 5,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 4
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -422,14 +773,62 @@
             "atk": 2
           }
         ],
-        "image_prompt": "A sweeping wave of emerald crystal energy empowering rows of claws across the field, a surging green war-charge. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping green energy wave, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "139172419314229",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Predator's Assault: a powerful emerald predator silhouette surging forward as crystalline strength wraps around its shoulders and foreclaws. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "vanishing_pounce",
+        "name": "Vanishing Pounce",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "playTarget": "friendly_creature",
+        "rarity": "common",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 3
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "stealth"
+          },
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "81562568821966",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Vanishing Pounce: a leaping cat silhouette dissolving into leaves and green mist at the peak of its pounce, leaving one luminous memory shard behind. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "glassfang_seal",
+        "name": "Glassfang Seal",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "playTarget": "enemy_creature",
+        "rarity": "rare",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "disable_shatter",
+            "target": "enemy_creature"
+          }
+        ],
+        "image_asset": "96410567701672",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Glassfang Seal: two interlocking glass-green crystal fangs closing around a cracked enemy crystal and holding every fragment firmly in place. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "nine_lives",
         "name": "Nine Lives",
         "battleType": "SWIFT",
         "cardType": "spell",
-        "rarity": "common",
+        "playTarget": "own_side",
+        "rarity": "rare",
         "cost": 5,
         "effects": [
           {
@@ -438,15 +837,21 @@
             "value": 3
           }
         ],
-        "image_prompt": "A radiant burst of nine glowing green emerald crystal cat-spirit wisps swirling upward in a spiral. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling green spirit wisps, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "129721387735863",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Nine Lives: nine small luminous feline spirit wisps circling three bright jade memory crystals in a calm, protective spiral. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "apex_hunt",
         "name": "Apex Hunt",
         "battleType": "SWIFT",
         "cardType": "spell",
+        "playTarget": "enemy_creature",
         "rarity": "epic",
-        "cost": 8,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 8
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -459,7 +864,35 @@
             "value": 2
           }
         ],
-        "image_prompt": "An apex predator\u0027s emerald crystal killing-strike, a massive green slash of energy obliterating its target in an explosion of emerald shards. Emerald-green palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, explosive green crystal strike, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "82807346571795",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Apex Hunt: the shadow of a vast emerald claw closing around a vulnerable dark crystal while two clear memory lights rise from the successful hunt. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "sudden_death",
+        "name": "Sudden Death",
+        "battleType": "SWIFT",
+        "cardType": "spell",
+        "playTarget": "enemy_creature",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "SWIFT",
+          "amount": 4
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "disable_shatter",
+            "target": "enemy_creature"
+          },
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature"
+          }
+        ],
+        "image_asset": "139085226445995",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Sudden Death: a razor-fast emerald feline shadow striking through a hostile crystal creature while a sealing ring locks every fracture in place, preventing any death-triggered release. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted emerald crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no gore, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       }
     ]
   }

@@ -78,8 +78,8 @@ The live Studio implementation now has the foundation and first fixtures:
   `CostBadge`; pure-Charge cards hide the Energy badge.
 - `NpcAI` uses `CardCost.canPay`, so it considers both Energy and Charge.
 - Fixture cards are live in `Cards.lua` and `pack_ruby_bear.json`:
-  `ruby_mauler` is hybrid (`cost = 1`, `1 MIGHTY` Charge) and
-  `rubyhide_bear` is Corrupted pure-Charge (`cost = 0`, `3 MIGHTY` Charge).
+  `vangorn` is hybrid (`cost = 1`, `1 MIGHTY` Charge) and
+  `rubyhide` is Corrupted pure-Charge (`cost = 0`, `3 MIGHTY` Charge).
 
 Important live-schema mapping from the TRD:
 
@@ -359,9 +359,9 @@ The server remains authoritative. Client usage is for display and hints only.
 
 - Add a tiny test/example set only.
 - Implemented fixtures:
-  - `ruby_mauler`: hybrid non-Corrupted MIGHTY creature, `cost = 1`,
+  - `vangorn`: hybrid non-Corrupted MIGHTY creature, `cost = 1`,
     `chargeCost = { battleType = "MIGHTY", amount = 1 }`, ATK 3 / HP 2.
-  - `rubyhide_bear`: pure-Charge Corrupted MIGHTY creature, `cost = 0`,
+  - `rubyhide`: pure-Charge Corrupted MIGHTY creature, `cost = 0`,
     `chargeCost = { battleType = "MIGHTY", amount = 3 }`, ATK 2 / HP 5,
     passive `corrupted`, Emerge: gain 3 Armor.
 - Avoid broad pack migration until balance testing is complete.
@@ -371,11 +371,11 @@ The server remains authoritative. Client usage is for display and hints only.
 
 ### Tests
 
-- `ruby_mauler` requires 1 Energy and 1 MIGHTY Charge.
-- `ruby_mauler` pays Energy and Charge, resolves, then generates +1 MIGHTY
+- `vangorn` requires 1 Energy and 1 MIGHTY Charge.
+- `vangorn` pays Energy and Charge, resolves, then generates +1 MIGHTY
   because it is not Corrupted.
-- `rubyhide_bear` requires 3 MIGHTY Charge and zero Energy.
-- `rubyhide_bear` spends 3 MIGHTY Charge, enters the board, gains 3 Armor on
+- `rubyhide` requires 3 MIGHTY Charge and zero Energy.
+- `rubyhide` spends 3 MIGHTY Charge, enters the board, gains 3 Armor on
   Emerge, and does not generate normal +1 MIGHTY because it is Corrupted.
 - Starter decks still validate.
 - Existing pack cards remain unchanged unless intentionally edited.

@@ -24,12 +24,13 @@ should use the pack JSON files.
 ## Card Schema
 
 ```lua
-Cards.emberclaw_bear = {
-    id         = "emberclaw_bear",   -- unique key (matches table key)
-    name       = "Emberclaw Bear",
+Cards.embermaw = {
+    id         = "embermaw",   -- unique key (matches table key)
+    name       = "Embermaw",
     pack       = "ruby_bear_pack",   -- release/set grouping
     battleType = "MIGHTY",           -- MIGHTY | SWIFT | VITAL | NEUTRAL
     cardType   = "creature",         -- creature | spell
+    playTarget = "enemy_character",  -- spells only; client drop surface
     race       = "BEAR",             -- creatures only; BEAR | TREANT | GOLEM | ...
     rarity     = "rare",             -- common | rare | epic   (legendary TBD)
     cost       = 4,
@@ -43,15 +44,16 @@ Cards.emberclaw_bear = {
 
 | Field | Required | Notes |
 |---|---|---|
-| `id` | ✅ | Unique; equals the table key. |
+| `id` | ✅ | Canonical lowercase snake_case of `name` with punctuation removed; unique and equal to the table key. |
 | `name` | ✅ | Display name. |
 | `pack` | ✅ | Set id, e.g. `ruby_bear_pack`. |
 | `battleType` | ✅ | Archetype / affinity. Drives color identity and deck identity. |
 | `cardType` | ✅ | `creature` or `spell`. (Renamed from the engine's old `monster`/`action`.) |
+| `playTarget` | spells | Required on spells, forbidden on creatures. Defines the client drag/drop surface; the effect `target` fields still define what the rules resolve. |
 | `race` | creatures | Tribe. Omitted on spells. |
 | `rarity` | ✅ | `common` / `rare` / `epic`. |
 | `cost` | ✅ | Energy cost. |
-| `chargeCost` | optional | Battle Charge cost: `{ battleType = "MIGHTY"\|"SWIFT"\|"VITAL", amount = N>0 }`. Paid (and validated) before the card resolves, so a card can't use the Charge it will generate. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge. |
+| `chargeCost` | optional | Battle Charge cost: `{ battleType = "MIGHTY"\|"SWIFT"\|"VITAL", amount = N>0 }`. Paid and validated before the card resolves, so a card cannot use Charge it generates later. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge. |
 | `atk`, `hp` | creatures | — |
 | `keywords` | optional | Static states (Keywords table). Absent = none. |
 | `effects` | optional | Triggered abilities. **Absent / empty = vanilla.** |
@@ -102,6 +104,7 @@ generic timing triggers stay descriptive.
 | `turn_end` | at the end of your turn | — |
 | `attacked` | this creature is attacked | — |
 | `deal_damage` | this creature deals damage | Lifesteal/reactive damage hook |
+| `take_damage` | this creature takes non-lethal damage | reactive damage hook |
 | `ally_death` | a friendly creature dies | — |
 | `passive` | never fires as an event — used exclusively for permanent printed traits (e.g. `corrupted`) | — |
 
@@ -126,9 +129,13 @@ generic timing triggers stay descriptive.
 | `return_from_graveyard` | `target` | Return a card from your graveyard to hand (`target:"random"`). |
 | `reduce_cost` | `target`, `value`, `duration?` | Lower the cost of cards in `target` by `value`. |
 | `set_cost` | `target`, `value`, `duration?` | Set the cost of cards in `target` to `value`. |
-| `gain_charge` | `battleType`, `value` | Gain `value` Battle Charge of `battleType` (no board target). Stacks with the card's normal +1 played Charge. No-op for NEUTRAL. See [DESIGN_CORE.md](DESIGN_CORE.md). |
+| `gain_charge` | `battleType`, `value` | Explicitly gain `value` Battle Charge of `battleType` (no board target). No-op for NEUTRAL. See [DESIGN_CORE.md](DESIGN_CORE.md). |
 | `gain_energy` | `value` | Gain `value` Energy this turn (the Coin). |
-| `corrupted` | *(none)* | Permanent printed trait — must use `trigger="passive"`. Blocks the normal +1 played-card Charge grant after this card resolves. Does **not** block explicit `gain_charge` effects. |
+| `destroy_charge_slot` | `chargeOwner`, `selector`, `condition?` | Destroy one Charge slot owned by `self` or `enemy`. Current alpha use is Crystal Vent: self, lowest, gated by `two_charge_slots_occupied`. |
+| `drain_charge` | `chargeOwner`, `selector`, `value` | Remove `value` Charge from the selected slot. If it reaches zero, the slot empties. |
+| `disable_shatter` | `target` | Mark an enemy creature with Shatter so its Shatter effects do not fire while it remains on board. Invalid on creatures with no Shatter. |
+| `add_additional_charge_cost_to_player_hand` | `targetPlayer`, `selector`, `filter`, `value` | Increase Charge cost for matching Charge-cost cards currently in the target player's hand. `selector` is `"all"` or `"random"`; current Shadow Smoke uses `"all"`. |
+| `corrupted` | *(none)* | Legacy permanent printed trait — must use `trigger="passive"`. Retained for compatibility; current alpha packs do not depend on it. |
 
 A `damage` entry may carry **`lifesteal = true`** — your hero heals for the
 damage dealt. **`value`** is normally a fixed number; for dynamic amounts use
@@ -142,6 +149,36 @@ order above). `duration` omitted = persists while the card stays in hand.
 **Targeting is fully parameterized** — never bake the target into the action
 name. `damage` + `target:"enemy_creature"` + `area:"all"`, *not*
 `damage_all_enemy_creatures`. One handler per action, parameterized by target.
+
+### Play target vocabulary
+
+`playTarget` is spell-level UX metadata. It tells desktop/mobile targeting which
+board card, hero, board segment, or whole-side surface should highlight while the
+card is dragged. Creatures do not store this field; the UI treats them as
+`empty_slot` plays.
+
+| `playTarget` | Valid drop surface |
+|---|---|
+| `friendly_creature` | one friendly creature |
+| `enemy_creature` | one enemy creature |
+| `friendly_character` | one friendly creature or your hero |
+| `enemy_character` | one enemy creature or enemy hero |
+| `any_creature` | one creature on either board |
+| `own_hero` | your hero |
+| `enemy_hero` | enemy hero |
+| `own_board` | your board slots |
+| `enemy_board` | enemy board slots |
+| `battle_board` | either board's slots |
+| `own_side` | your board slots plus your hero |
+| `enemy_side` | enemy board slots plus enemy hero |
+
+For explicit chosen targets (`enemy_creature`, `friendly_creature`,
+`any_creature`, `enemy_target`), the client sends
+`{target={side=..., slot=...}}`; `slot=0` means a hero. For broad zone drops
+(`own_board`, `enemy_board`, `battle_board`, `own_side`, `enemy_side`), the
+client sends `{zone="..."}` and the server stores a canonical `chosenZone` for
+future zone-aware effects. `CardSchema` validates that a spell's `playTarget`
+is compatible with the effects it declares.
 
 ### Target vocabulary
 
@@ -175,6 +212,7 @@ Cost actions (`reduce_cost`/`set_cost`) use a card-pool target instead:
 | `{ type = "attack_lte", value = N }` | the target's Attack ≤ N |
 | `{ type = "friendly_damaged_exists" }` | you control a damaged creature |
 | `{ type = "chain" }` | you've already played another card this turn (Combo) |
+| `{ type = "two_charge_slots_occupied", chargeOwner = "self"\|"enemy" }` | the specified side has both Charge slots occupied |
 
 > Cost manipulation (`reduce_cost`/`set_cost`) is an **action**, not a separate
 > "modifier" block — there is no standalone modifier field. This keeps one
@@ -226,11 +264,16 @@ ServerScriptService/
 The **Actions registry keyed by `action`** is the core scalability win: a new
 card's behavior = register one function, no edits to a mega-dispatch.
 
+`CardText.playTarget(card)` returns the explicit spell `playTarget` for UI drag
+targeting, while `CardSchema` validates both the enum and compatibility with the
+declared effects. `CardData` is only a client shim that re-exports this helper
+alongside the card map and ability text renderer.
+
 ---
 
 ## Open / Unresolved
 
 - **Deck model — TBD.** Starter decks are a playtest stopgap (fixed precon per archetype). Current alpha starter decks are normalized to 30 cards each; final construction rules are not yet designed.
 - **MIGHTY identity concern (Ruby Bear pack).** 8 creatures vs 16 spells, heavy Armor + heavy card draw — plays like defensive control, not the aggressive Ruby fantasy. Flagged for balance tuning.
-- **Neutral Taunt reinstated.** `crystal_sentinel` has Taunt and `barkskin_blessing` grants it. The prior design banned neutral Taunt as tempo-warping — confirm reversal is intentional.
-- **`race` underdeveloped.** Only `rally_the_clan` and `hunting_instinct`/`pack_tactics` care about tribe. Flavor-only until more tribal payoffs exist.
+- **Neutral Taunt reinstated.** `sentinel_oryn` has Taunt and `barkskin_blessing` grants it. The prior design banned neutral Taunt as tempo-warping — confirm reversal is intentional.
+- **`race` underdeveloped.** Only `clan_rally` and `hunting_instinct`/`pack_tactics` care about tribe. Flavor-only until more tribal payoffs exist.

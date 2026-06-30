@@ -6,8 +6,8 @@
     "theme": "Ruby Crystal Bears",
     "cards": [
       {
-        "id": "ruby_cub",
-        "name": "Ruby Cub",
+        "id": "bristlecub",
+        "name": "Bristlecub",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -15,11 +15,12 @@
         "cost": 1,
         "atk": 1,
         "hp": 2,
-        "image_prompt": "A small chunky ruby bear cub, round and fluffy, tiny ruby crystal nubs growing through its crimson-tinted fur, curious and brave, sitting upright. Deep ruby-red palette, glowing crimson crystal accents. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal-powered fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Bristlecub, a young stocky clan bear with short ruby bristles along its shoulders and a stubborn, ready expression. Show it holding a compact defensive stance with both paws raised. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its broad feet on packed earth near the clan den, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "emberpaw_cub",
-        "name": "Emberpaw Cub",
+        "id": "sparkhide",
+        "name": "Sparkhide",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -34,24 +35,103 @@
             "value": 2
           }
         ],
-        "image_prompt": "A tiny ruby bear cub with glowing ember-red paws and small smoking ruby crystal claws, sparks of heat rising from its pads, playful and fierce. Deep ruby-red palette, crimson ember glow. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Sparkhide, a small ember-brown clan bear whose glowing red fur sheds sparks that gather into fresh protective bristles along its forearms. Make it fierce despite its size. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet on packed earth with a faint ember glow, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ruby_mauler",
-        "name": "Ruby Mauler",
+        "id": "denwatcher",
+        "name": "Denwatcher",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
         "rarity": "common",
         "cost": 1,
-        "chargeCost": { "battleType": "MIGHTY", "amount": 1 },
-        "atk": 3,
-        "hp": 2,
-        "image_prompt": "A lean aggressive young ruby bear baring its claws, jagged ruby crystal spikes along its forearms, snarling in an attacking lunge. Deep ruby-red palette, crimson crystal shards. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "atk": 0,
+        "hp": 3,
+        "keywords": [
+          "taunt"
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Denwatcher, a compact young guardian bear with a thick ridge of dark russet fur and blunt ruby bristles. Show it planted squarely with crossed forearms at the clan den entrance, daring anything to pass. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for sturdy feet on packed earth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "cragfur_bear",
-        "name": "Cragfur Bear",
+        "id": "vangorn",
+        "name": "Vangorn",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 3,
+        "hp": 2,
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Vangorn, an athletic mauler with heavy ruby knuckle guards and a focused animal snarl. Show it driving one powerful punch forward with its whole body behind the motion. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for one planted foot, broken gravel, and a short impact shadow, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "thickpelt_guard",
+        "name": "Thickpelt Guard",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Thickpelt Guard, a disciplined bear guard whose dense dark pelt rises into protective ridges across its shoulders and forearms around small ruby clasps. Show it arriving in a calm protective stance. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broad feet at a timber-framed den threshold, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "rumbleclaw",
+        "name": "Rumbleclaw",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "take_damage",
+            "action": "buff",
+            "target": "self",
+            "atk": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Rumbleclaw, a battered arena brawler with cracked crystal gauntlets and old marks across its fur. Show the red glow inside its armor growing brighter as it absorbs pain and prepares to strike back. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a firm fighting stance on worn rock, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "forgeclaw_initiate",
+        "name": "Forgeclaw Initiate",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 1,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "buff",
+            "target": "self",
+            "atk": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Forgeclaw Initiate, a determined young clan bear with one ember-red claw guard and simple training wraps. Show it practicing a controlled stance as the claw gradually burns brighter with gathered strength. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for wrapped feet on a worn clan training floor, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "redpelt_elder",
+        "name": "Redpelt Elder",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -67,35 +147,76 @@
             "atk": 1
           }
         ],
-        "image_prompt": "A rugged sturdy bear with craggy rock-like fur studded with jagged ruby crystals, weathered and calm, a steadfast guardian. Deep ruby-red and stone palette, glowing red crystal veins. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Redpelt Elder, a broad shaggy clan bear with deep russet fur, old battle marks, and warm ruby beads woven into its coat. Show a steady red aura building around its body like patient protective strength. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for heavy feet beside the clan fire, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "rubyhide_bear",
-        "name": "Rubyhide Bear",
+        "id": "clan_grappler",
+        "name": "Clan Grappler",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
         "rarity": "common",
-        "cost": 0,
-        "chargeCost": { "battleType": "MIGHTY", "amount": 3 },
-        "atk": 2,
-        "hp": 5,
+        "cost": 3,
+        "atk": 3,
+        "hp": 4,
         "effects": [
           {
-            "trigger": "passive",
-            "action": "corrupted"
-          },
+            "trigger": "emerge",
+            "action": "damage",
+            "target": "enemy_creature",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Clan Grappler, a powerful bear wrestler with leather-wrapped forearms and compact ruby knuckle guards. Show it finishing a ground slam that sends one clean ring of force outward. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for both feet braced on a worn clan sparring floor, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "broadback_shieldbear",
+        "name": "Broadback Shieldbear",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 2,
+        "hp": 5,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
           {
             "trigger": "emerge",
             "action": "gain_armor",
-            "value": 3
+            "value": 2
           }
         ],
-        "image_prompt": "A thick-set bear armored in overlapping ruby crystal plates that grow like natural armor across its hide, broad and defensive stance. Deep ruby-red palette, faceted crimson crystal plating. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Broadback Shieldbear, a massive clan guardian with a broad furred back and one powerful forearm protected by layered hide and ruby bracers. Show it stepping forward to block the path. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for planted feet at the clan gate, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "emberclaw_bear",
-        "name": "Emberclaw Bear",
+        "id": "scarback",
+        "name": "Scarback",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 3,
+        "atk": 4,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "take_damage",
+            "action": "gain_armor",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Scarback, a scarred frontline warrior with torn fur and chipped ruby armor. Show fresh crystal plates forming over an old wound as its posture becomes more defiant. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a forward step through loose battlefield stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "embermaw",
+        "name": "Embermaw",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -111,11 +232,100 @@
             "value": 2
           }
         ],
-        "image_prompt": "A powerful bear mid-roar with massive glowing ruby claws wreathed in ember sparks, crimson energy radiating from its paws. Deep ruby-red palette, intense crimson glow. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Embermaw, a fierce mature bear with a glowing ember-crystal jaw and powerful claw guards. Show it roaring forward as a compact burst of red heat gathers around its mouth. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for wide-set feet on black volcanic rock, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "stoneguard_bear",
-        "name": "Stoneguard Bear",
+        "id": "rubyhide",
+        "name": "Rubyhide",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 4
+        },
+        "atk": 3,
+        "hp": 6,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 3
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Rubyhide, a resilient bear almost fully covered in smooth overlapping ruby-hide plates, with only its expressive animal face and thick fur visible. Show the armor locking into place. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for armored feet on a clean crystal-veined slab, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "denwarden",
+        "name": "Denwarden",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "common",
+        "cost": 4,
+        "atk": 3,
+        "hp": 6,
+        "keywords": [
+          "taunt"
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Denwarden, a huge clan guardian with oversized paws, thick hide cuffs, and a patient unmovable expression. Show it standing like a living gate with both arms lowered and ready. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for massive feet spanning the clan den entrance, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "grondal",
+        "name": "Grondal",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 4,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "buff",
+            "target": "all_friendly",
+            "atk": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Grondal, a veteran bear captain wearing practical dark armor and a short ruby command mantle. Show it raising one crystal-clad paw in a confident rallying gesture. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a simple warcamp stone platform and folded red cloth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "clan_bulwark",
+        "name": "Clan Bulwark",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 5
+        },
+        "atk": 4,
+        "hp": 7,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 4
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Clan Bulwark, an immense bear with a square silhouette, dense layered fur, and broad ruby-braced hide guards across its chest and arms. Show it locking into an immovable defensive stance. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet planted before the clan banner, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "clan_sentinel",
+        "name": "Clan Sentinel",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -126,11 +336,81 @@
         "keywords": [
           "taunt"
         ],
-        "image_prompt": "A huge stalwart guardian bear with a shield-like ruby crystal carapace across its back and shoulders, planted firmly in a protective defensive pose. Deep ruby-red palette, heavy faceted crimson crystal armor. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Clan Sentinel, a solemn veteran bear with dark heavy fur, ruby shoulder guards, and thick protective forearms. Show it watching forward with calm vigilance and arms crossed low. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broad feet on a timber clan watch platform, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ancient_ruby_bear",
-        "name": "Ancient Ruby Bear",
+        "id": "garnara",
+        "name": "Garnara",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 5,
+        "atk": 5,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "buff",
+            "target": "all_friendly",
+            "hp": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Garnara, a powerful elder warmother with deep auburn fur, ruby beads, and a gentle red hearth-glow within her chest armor. Show her spreading a steady strengthening aura. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a warm stone dais with subtle clan cloth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "warmaul",
+        "name": "Warmaul",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 5
+        },
+        "atk": 6,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "damage",
+            "target": "enemy_creature",
+            "value": 3
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Warmaul, a muscular siege bear wearing heavy ruby bracers over its massive forearms. Show it launching into a crushing shoulder charge with both paws ready to maul through the enemy line. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm battlefield lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for one foot driving forward through churned earth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "elder_bristleback",
+        "name": "Elder Bristleback",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "epic",
+        "cost": 6,
+        "atk": 5,
+        "hp": 8,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
+          {
+            "trigger": "take_damage",
+            "action": "gain_armor",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Elder Bristleback, a colossal old bear with a towering ridge of crimson bristles across its back and dense scarred fur protecting its body. Show the bristled ridge rising more fiercely where an impact has struck. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm clan-fire lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for enormous feet planted on churned earth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "urvangor",
+        "name": "Urvangor",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -146,13 +426,91 @@
             "atk": 2
           }
         ],
-        "image_prompt": "An ancient colossal bear elder with an enormous mane of giant ruby crystal formations erupting from its back, glowing crimson eyes, majestic and battle-scarred, towering and regal. Deep ruby-red palette, radiant crimson crystal aura. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Urvangor, an ancient massive bear with weathered fur, old ruby plates, and deep amber eyes. Show its crystals awakening brighter as it endures an attack, making the creature feel increasingly dangerous. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for rooted feet on an age-worn cliff platform, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "rubyskin",
-        "name": "Rubyskin",
+        "id": "vangorn_apex",
+        "name": "Vangorn Apex",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 7
+        },
+        "atk": 7,
+        "hp": 8,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "damage",
+            "target": "enemy_creature",
+            "area": "all",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Vangorn Apex, the apex form of Vangorn, a towering ruby-armored bear with a crown-like crystal ridge and overwhelming physical presence. Show a controlled red shockwave radiating from its arrival. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a broad impact crater and lifted stone fragments, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "greatmaul_ursar",
+        "name": "Greatmaul Ursar",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "rare",
+        "cost": 8,
+        "atk": 8,
+        "hp": 8,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "damaged"
+            }
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Greatmaul Ursar, a gigantic elder warrior bear with massive forearms, battle-scarred fur, and jagged ruby hand guards. Show it finishing one overwhelming downward maul, emphasizing raw decisive power. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm battlefield lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet planted firmly in churned earth, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "rubyheart_guardian",
+        "name": "Rubyheart Guardian",
+        "battleType": "MIGHTY",
+        "cardType": "creature",
+        "race": "BEAR",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 8
+        },
+        "atk": 6,
+        "hp": 10,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 8
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Rubyheart Guardian, an enormous bear guardian with a brilliant ruby glow shining through the dense fur over its chest. Show the heart-light surging outward and raising fresh protective bristles across its body. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm clan-fire lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for immense feet before the clan's central fire, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "bristleplate",
+        "name": "Bristleplate",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "common",
         "cost": 1,
         "effects": [
@@ -162,35 +520,15 @@
             "value": 3
           }
         ],
-        "image_prompt": "Ruby crystal armor plating snapping into place in mid-air, faceted red crystalline shards locking together into a protective layer, crimson glow. Premium painterly TCG spell art, the magical effect fills 60-80 percent of a center-weighted frame, energetic ruby crystal shards and energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Bristleplate: a fan of short crimson crystal bristles growing into a compact protective plate around a warm red core. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "battle_scar",
-        "name": "Battle Scar",
+        "id": "vangorn_slam",
+        "name": "Vangorn Slam",
         "battleType": "MIGHTY",
         "cardType": "spell",
-        "rarity": "rare",
-        "cost": 1,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "damage",
-            "target": "own_hero",
-            "value": 1
-          },
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 1
-          }
-        ],
-        "image_prompt": "Three glowing crimson ruby-crystal claw-slash marks tearing across the frame, sharp red energy and scattered ruby shards. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic crystal energy trails, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "ruby_slam",
-        "name": "Ruby Slam",
-        "battleType": "MIGHTY",
-        "cardType": "spell",
+        "playTarget": "enemy_character",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -201,32 +539,15 @@
             "value": 3
           }
         ],
-        "image_prompt": "A massive ruby crystal fist of energy slamming down with a violent crimson shockwave, red crystal fragments bursting outward on impact. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic shards and shockwaves, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Vangorn Slam: a gigantic ruby-clad bear paw striking stone at the center of one clean circular impact wave. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "crushing_blow",
-        "name": "Crushing Blow",
+        "id": "thickpelt_oath",
+        "name": "Thickpelt Oath",
         "battleType": "MIGHTY",
         "cardType": "spell",
-        "rarity": "rare",
-        "cost": 2,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "destroy",
-            "target": "enemy_creature",
-            "condition": {
-              "type": "damaged"
-            }
-          }
-        ],
-        "image_prompt": "An enormous ruby crystal warhammer of light crashing down and obliterating its target in an explosion of red crystal fragments and crimson sparks. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, explosive crystal motion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "ironfur_training",
-        "name": "Ironfur Training",
-        "battleType": "MIGHTY",
-        "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -238,13 +559,15 @@
             "hp": 2
           }
         ],
-        "image_prompt": "Ruby crystal energy hardening fur into spiky armored plates, crimson crystalline growth surging upward with strength and power. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic ruby crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Thickpelt Oath: dense dark bear fur and glowing ruby bristles weaving together into a strong protective forearm guard. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "defiant_roar",
         "name": "Defiant Roar",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -257,13 +580,36 @@
             }
           }
         ],
-        "image_prompt": "A thunderous roar visualized as expanding concentric crimson sound-wave rings filled with ruby crystal shards radiating outward. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic shockwave rings, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Defiant Roar: a bright red roar wave expanding from a bear-shaped energy core while two memory crystals appear inside the sound rings. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "mountain_roar",
-        "name": "Mountain Roar",
+        "id": "maulers_finish",
+        "name": "Mauler's Finish",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "enemy_creature",
+        "rarity": "rare",
+        "cost": 2,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "destroy",
+            "target": "enemy_creature",
+            "condition": {
+              "type": "damaged"
+            }
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Mauler's Finish: one massive ruby-braced bear paw delivering a decisive downward strike against the silhouette of an already wounded foe. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "thunderous_roar",
+        "name": "Thunderous Roar",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "playTarget": "enemy_board",
         "rarity": "common",
         "cost": 3,
         "effects": [
@@ -275,31 +621,39 @@
             "value": 1
           }
         ],
-        "image_prompt": "A mountainous crimson shockwave erupting across a battlefield with rows of jagged ruby crystal spikes bursting up from the ground. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping crystal eruption, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Thunderous Roar: a powerful bear muzzle at the center releasing a broad circular crimson shockwave that strikes several enemy silhouettes evenly outward. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ancient_endurance",
-        "name": "Ancient Endurance",
+        "id": "clan_memory",
+        "name": "Clan Memory",
         "battleType": "MIGHTY",
         "cardType": "spell",
-        "rarity": "rare",
+        "playTarget": "own_side",
+        "rarity": "common",
         "cost": 3,
         "effects": [
           {
             "trigger": "cast",
-            "action": "gain_armor",
-            "value": 8
+            "action": "draw_card",
+            "value": 2
           }
         ],
-        "image_prompt": "A towering ancient wall of deep ruby crystal rising into a massive protective barrier, glowing with steady crimson light and weathered runes. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, monumental crystal formation, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Clan Memory: two warm ruby memory stones revealing soft ancestral bear reflections within their facets. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "war_banner",
-        "name": "War Banner",
+        "id": "bristle_banner",
+        "name": "Bristle Banner",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "own_board",
         "rarity": "common",
-        "cost": 3,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 4
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -310,29 +664,15 @@
             "hp": 1
           }
         ],
-        "image_prompt": "A glowing ruby crystal war banner planted firmly, radiating waves of crimson rallying energy over a misty battlefield. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant rally energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Bristle Banner: a compact clan banner tipped with crimson crystal, releasing a steady strengthening glow in all directions. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "bear_lore",
-        "name": "Bear Lore",
+        "id": "clanhide_rite",
+        "name": "Clanhide Rite",
         "battleType": "MIGHTY",
         "cardType": "spell",
-        "rarity": "common",
-        "cost": 3,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 2
-          }
-        ],
-        "image_prompt": "Ancient ruby crystal runes and glowing red lore-pages swirling in the air around a faceted ruby tome, knowledge energy spiraling upward. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling arcane crystal energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "stonehide_ritual",
-        "name": "Stonehide Ritual",
-        "battleType": "MIGHTY",
-        "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 4,
         "effects": [
@@ -343,30 +683,16 @@
             "hp": 4
           }
         ],
-        "image_prompt": "A ritual of ruby crystal plates growing and encasing a form in protective armor, ringed by glowing crimson runic circles. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, ritual crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Clanhide Rite: thick layers of spectral bear fur and crimson bristles closing protectively around a ruby-lit bear silhouette. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "clan_reserves",
-        "name": "Clan Reserves",
+        "id": "clan_rally",
+        "name": "Clan Rally",
         "battleType": "MIGHTY",
         "cardType": "spell",
-        "rarity": "common",
-        "cost": 4,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 3
-          }
-        ],
-        "image_prompt": "Several glowing ruby crystal cards and ember sparks emerging from an opening red reserve cache, crimson light pouring out. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, energetic crystal draw, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "rally_the_clan",
-        "name": "Rally the Clan",
-        "battleType": "MIGHTY",
-        "cardType": "spell",
-        "rarity": "common",
+        "playTarget": "own_side",
+        "rarity": "rare",
         "cost": 4,
         "effects": [
           {
@@ -384,15 +710,68 @@
             "value": 1
           }
         ],
-        "image_prompt": "A rallying surge of ruby crystal energy with crimson banners and glowing red bear pawprints, the bear clan summoned in a wave of red light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging rally energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Clan Rally: a ruby beacon horn releasing one clear call wave while a single glowing memory crystal rises from its center. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "crystal_rampart",
-        "name": "Crystal Rampart",
+        "id": "vangorn_charge",
+        "name": "Vangorn Charge",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 3
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "charge"
+          },
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "atk": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Vangorn Charge: a bear-shaped mass of crimson energy compressing into one forward-rushing form with a bright leading edge. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "den_reserves",
+        "name": "Den Reserves",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "playTarget": "own_side",
+        "rarity": "rare",
         "cost": 5,
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "draw_card",
+            "value": 3
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Den Reserves: three stored ruby supply crystals rising from a dark stone den cache in a balanced triangular arrangement. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "unbroken_guard",
+        "name": "Unbroken Guard",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "playTarget": "own_hero",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 5
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -400,13 +779,15 @@
             "value": 12
           }
         ],
-        "image_prompt": "An enormous fortified rampart of ruby crystal walls erupting upward into an impenetrable crimson barrier, glowing red battlements. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, towering crystal walls, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Unbroken Guard: a circle of towering spectral clan bears locking shoulders around a brilliant ruby heart-light, their dense fur forming an unyielding protective barrier. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "avalanche",
-        "name": "Avalanche",
+        "id": "crush_the_mighty",
+        "name": "Crush the Mighty",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "enemy_creature",
         "rarity": "rare",
         "cost": 6,
         "effects": [
@@ -420,15 +801,21 @@
             }
           }
         ],
-        "image_prompt": "A catastrophic avalanche of giant ruby crystal boulders thundering down a slope in a crashing crimson cascade of shards and dust. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, massive crystal landslide, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Crush the Mighty: two enormous crimson bear paws closing around the silhouette of a powerful enemy and forcing it down with overwhelming strength. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting. Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "last_stand",
         "name": "Last Stand",
         "battleType": "MIGHTY",
         "cardType": "spell",
+        "playTarget": "enemy_board",
         "rarity": "epic",
-        "cost": 8,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 7
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -438,7 +825,32 @@
             "value": 4
           }
         ],
-        "image_prompt": "A final defiant detonation of ruby crystal energy radiating destruction in every direction, a massive crimson blast wave of shattering red crystal. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, apocalyptic crystal explosion, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Last Stand: a lone ruby shield-core holding firm as four powerful red shockwaves burst outward around it. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "crimson_overrun",
+        "name": "Crimson Overrun",
+        "battleType": "MIGHTY",
+        "cardType": "spell",
+        "playTarget": "own_board",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "MIGHTY",
+          "amount": 8
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "buff",
+            "target": "friendly_creature",
+            "area": "all",
+            "atk": 3
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Crimson Overrun: a wide crimson surge of layered claw-shaped energy sweeping forward as one unstoppable wave. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       }
     ]
   }

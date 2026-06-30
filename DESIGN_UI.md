@@ -229,6 +229,8 @@ size):
 - **Summoning Sickness** — floating "Z" particles drift up from the
   top-right of the card and fade out, looping. A minion with **Charge**
   never shows this (it's never summoning-sick).
+- **Disabled Shatter** — a compact red `X` badge appears on a creature whose
+  Shatter has been disabled by `disable_shatter`.
 - **Attacked this turn** — the whole card is dimmed (lighter than Stealth's
   dim).
 - Hover (desktop) or tap-and-hold (mobile) a board minion to preview its full
@@ -247,7 +249,9 @@ cards; the description text scales in lockstep with the card so its size
 stays visually consistent with the rest of the card.
 
 Cards that cannot be played (insufficient Energy or Charge, no valid target) are
-grayed out when client hints are available.
+grayed out when client hints are available. If a card's Charge cost is increased
+by a hand-tax effect, the Charge cost badge shows the effective amount in the
+debuff color.
 
 ### Hand Fan Layout
 
@@ -264,16 +268,21 @@ Both hands are arranged as a horizontal fan, anchored to the bottom (player) or 
 
 Cards are played by dragging them out of the hand. Valid drop zones
 highlight green while dragging, with a hint banner naming the target. Zones are
-driven by `CardData.targetClass(card)` — the same logic on desktop and mobile:
+driven by `CardData.playTarget(card)` on desktop and mobile:
 
-- **Creature:** drag onto a highlighted open board slot
-- **Friendly-target spell** (buff / heal / grant a friendly creature): drag
-  onto one of your minions
-- **Enemy-target spell** (damage / destroy / bounce an enemy creature; burn
-  may also hit the enemy hero): drag onto a highlighted enemy minion, or the
-  enemy hero where allowed
-- **Untargeted spell** (self-buff, heal hero, draw, armor, board-wide buff):
-  drag onto your hero portrait
+- **Creature:** drag onto a highlighted open board slot.
+- **Single-target spell:** drag onto the matching highlighted card or hero
+  (`friendly_creature`, `enemy_creature`, `friendly_character`,
+  `enemy_character`, `any_creature`, `own_hero`, `enemy_hero`).
+- **Board/side spell:** drag onto the highlighted board segment or side surface
+  (`own_board`, `enemy_board`, `battle_board`, `own_side`, `enemy_side`).
+  Area spells like enemy AOE now drop on the enemy board instead of requiring a
+  hero drop.
+
+Single chosen targets send `PlayCard(cardId, {target={side=..., slot=...}})`;
+`slot=0` means a hero. Broad board/side drops send
+`PlayCard(cardId, {zone="enemy_board"})` or the matching zone, which the server
+validates against the spell's `playTarget`.
 
 Releasing outside a valid zone, or pressing ESC/right-click, cancels and
 returns the card to the hand.
@@ -438,7 +447,7 @@ Continue closes the Battle UI and returns the player to the world.
 - Card artwork is large and prominent — the art is what sells the card
 - Card text hidden by default, shown on hover/click
 - Board state must be readable at a glance: ATK, HP, keywords visible without interaction
-- Avoid clutter — status badges (Armor, Taunt, Stealth) use iconography, not text spam
+- Avoid clutter — status badges (Armor, Taunt, Stealth, disabled Shatter) use iconography, not text spam
 
 ---
 
@@ -468,7 +477,7 @@ the gap above each board row is symmetric.
 
 **Expanded**: Tapping any card when collapsed triggers a 0.18s tween to Y=65%, height=35%. Cards re-layout with a tighter 8°/(n-1) fan and full spacing.
 
-**Drag to play**: Dragging a card ≥25px lifts it to `mobileRoot` at ZIndex=100, collapses the hand, and highlights valid zones with a green UIStroke. Releasing over a zone fires `PlayCard` to the server; releasing elsewhere returns the card.
+**Drag to play**: Dragging a card ≥25px lifts it to `mobileRoot` at ZIndex=100, collapses the hand, and highlights valid zones from `CardData.playTarget(card)` with a green UIStroke. Releasing over a single target fires `PlayCard` with `opts.target`; releasing over a board/side zone fires `PlayCard` with `opts.zone`; releasing elsewhere returns the card.
 
 **ZIndex**: cards are ordered `25 + i` (left-most = lowest, right-most = highest), matching deck-draw direction.
 

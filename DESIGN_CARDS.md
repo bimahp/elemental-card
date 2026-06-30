@@ -118,9 +118,13 @@ The alpha set is authored across four packs:
 | [pack_sapphire_frog.json](pack_sapphire_frog.json) | VITAL | `sapphire_frog_pack` |
 | [pack_stonebark.json](pack_stonebark.json) | NEUTRAL | `stonebark_pack` |
 
-Current runtime validation, as of 2026-06-21:
+Current runtime validation, as of 2026-06-25:
 
-- 90 unique cards across the four packs.
+- 132 unique pack cards across the four packs: 40 MIGHTY, 40 SWIFT, 40 VITAL,
+  and 12 NEUTRAL.
+- The NEUTRAL Stonebark pack is intentionally narrow for alpha: 5 Treants,
+  5 Golems, Crystal Vent, and Crystal Growth.
+- 29 pure-Charge cards are present across the three non-NEUTRAL packs.
 - 3 starter decks at 30 cards each: `mighty`, `swift`, `vital`.
 - Card and deck schema validation pass with zero errors.
 
@@ -130,8 +134,8 @@ Current runtime validation, as of 2026-06-21:
 
 - Most cards still use placeholder art in runtime. Use the `image_prompt`
   fields in the pack JSON files as the art-generation brief.
-- MIGHTY, SWIFT, and VITAL balance should be re-evaluated only after Phase 2.1
-  cleanup and Phase 3 PVP hardening; old balance results were tied to earlier
-  rules and are no longer canonical.
+- MIGHTY, SWIFT, and VITAL balance should be re-evaluated with board-generated
+  Charge. Old balance results were tied to earlier played-card Charge rules and
+  are no longer canonical.
 - Tribe support exists in data, but tribal payoff density is still light. Treat
   `race` as a real schema field whose mechanical importance can grow later.

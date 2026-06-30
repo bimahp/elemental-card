@@ -1,9 +1,9 @@
 {
   "pack": {
-    "id": "stonebark_pack",
-    "name": "Stonebark Pack",
+    "id": "young_treant",
+    "name": "Young Treant",
     "battleType": "NEUTRAL",
-    "theme": "Treants \u0026 Crystal Golems",
+    "theme": "Treants & Crystal Golems",
     "cards": [
       {
         "id": "rootling",
@@ -15,11 +15,20 @@
         "cost": 1,
         "atk": 1,
         "hp": 2,
-        "image_prompt": "A tiny sprouting treant seedling, a small wooden body with white quartz crystal buds and a single leaf, cute and earnest. White-and-clear quartz crystal formations, prismatic light, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 1
+          }
+        ],
+        "image_asset": "98527763292276",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Rootling, a small lively treant sprout with a monstrous wooden face formed from crooked knots and a jagged hollow mouth, tiny white-quartz growths, fresh leaves, and a soft green healing glow. Give it a playful but brave pose. Its face must look naturally grown and distinctly non-human, with no human nose, lips, skin, or facial proportions. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: chunky proportions, a bold readable silhouette, faceted low-poly bark and crystal surfaces, warm cinematic lighting, and a simple parchment-toned forest backdrop. Keep the face and main silhouette within the upper 80% of the image. Use the lowest 20% for root feet standing on a mossy fallen branch and subtle forest ground, keeping it attractive when the full image is shown but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "crystal_sapling",
-        "name": "Crystal Sapling",
+        "id": "shardleaf",
+        "name": "Shardleaf",
         "battleType": "NEUTRAL",
         "cardType": "creature",
         "race": "TREANT",
@@ -27,11 +36,19 @@
         "cost": 1,
         "atk": 2,
         "hp": 1,
-        "image_prompt": "A young sapling treant with crystal-clear quartz leaves and a slender bark body, glowing faintly with prismatic light. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "117867661123949",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Shardleaf, a lean young treant with pale branches, a narrow glowing maw and uneven eye hollows formed from bark, and a crown of green leaves edged with translucent white quartz. Show it springing forward as a few prismatic leaf-shards scatter around it. Its face must look like a strange, distinctly non-human forest monster, never a wooden human face. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: agile exaggerated proportions, a bold readable silhouette, faceted low-poly natural materials, warm light, cool crystal accents, and a simple parchment-toned woodland backdrop. Keep the face, leaf crown, and action within the upper 80% of the image. Use the lowest 20% for the curved fallen branch it leaps from and quiet forest ground, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "young_treant",
-        "name": "Young Treant",
+        "id": "stonebark_pack",
+        "name": "Stonebark Pack",
         "battleType": "NEUTRAL",
         "cardType": "creature",
         "race": "TREANT",
@@ -39,23 +56,12 @@
         "cost": 2,
         "atk": 2,
         "hp": 3,
-        "image_prompt": "A young treant with bark skin, leafy arms and white quartz crystal growths along its limbs, sturdy and earnest. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "113544174538620",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Stonebark Pack, a sturdy adolescent tree guardian with broad branch shoulders, a beast-like face formed from bark splits and glowing eye hollows, green foliage, and clear quartz growing from its bark. Show it striding forward with youthful confidence. Its face must be distinctly arboreal and non-human, without a human nose, lips, skin, or facial proportions. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: heroic chunky proportions, oversized hands and feet, a strong readable silhouette, faceted low-poly bark and crystal, warm sunlight, and a soft parchment-toned forest backdrop. Keep the face, upper body, and quartz features within the upper 80% of the image. Use the lowest 20% for its root feet crossing a broad fallen tree and simple forest ground, visually complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "quartz_worker",
-        "name": "Quartz Worker",
-        "battleType": "NEUTRAL",
-        "cardType": "creature",
-        "race": "GOLEM",
-        "rarity": "common",
-        "cost": 2,
-        "atk": 3,
-        "hp": 2,
-        "image_prompt": "A small quartz crystal golem worker, a geometric faceted white-crystal body with a simple glowing core, diligent and blocky. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, bold readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
-      },
-      {
-        "id": "ancient_sapkeeper",
-        "name": "Ancient Sapkeeper",
+        "id": "sapkeeper",
+        "name": "Sapkeeper",
         "battleType": "NEUTRAL",
         "cardType": "creature",
         "race": "TREANT",
@@ -70,46 +76,8 @@
             "value": 1
           }
         ],
-        "image_prompt": "An old wise treant sapkeeper with a mossy bark face, glowing white quartz crystal veins, cradling luminous sap, gentle and ancient. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, bold readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
-      },
-      {
-        "id": "quartz_guardian",
-        "name": "Quartz Guardian",
-        "battleType": "NEUTRAL",
-        "cardType": "creature",
-        "race": "GOLEM",
-        "rarity": "common",
-        "cost": 3,
-        "atk": 3,
-        "hp": 4,
-        "image_prompt": "A solid quartz crystal golem guardian, a blocky faceted white-crystal body with a steady glowing core, steadfast stance. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, bold readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
-      },
-      {
-        "id": "crystal_sentinel",
-        "name": "Crystal Sentinel",
-        "battleType": "NEUTRAL",
-        "cardType": "creature",
-        "race": "GOLEM",
-        "rarity": "rare",
-        "cost": 4,
-        "atk": 4,
-        "hp": 5,
-        "keywords": [
-          "taunt"
-        ],
-        "image_prompt": "A tall quartz crystal sentinel golem with a broad shielding white-crystal body and glowing core, planted in a firm defensive stance. White-and-clear quartz crystal, prismatic light. Premium painterly TCG creature art, a glowing expressive core, imposing readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
-      },
-      {
-        "id": "grove_guardian",
-        "name": "Grove Guardian",
-        "battleType": "NEUTRAL",
-        "cardType": "creature",
-        "race": "TREANT",
-        "rarity": "common",
-        "cost": 5,
-        "atk": 5,
-        "hp": 5,
-        "image_prompt": "A large grove guardian treant with thick bark, a broad leafy canopy and white quartz crystal growths, calm and protective. White-and-clear quartz crystal, earthy palette. Premium painterly TCG creature art, large expressive eyes, broad readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "131523888857063",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Sapkeeper, an ancient treant sage with an eerie face grown from knotted bark, hanging moss, a warm amber glow within its trunk, and a crooked staff holding a floating quartz seed. Show it calmly conjuring a simple leaf-shaped memory. Its face should feel wise, monstrous, and distinctly non-human, with irregular eye hollows and no human facial anatomy. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: storybook proportions, an expressive silhouette, faceted low-poly old bark and crystal, warm magical light, and a restrained parchment-toned grove backdrop. Keep the face, staff, seed, and magic within the upper 80% of the image. Use the lowest 20% for coiling roots resting on an old stump with subtle leaves and moss, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "elder_treant",
@@ -125,11 +93,68 @@
           {
             "trigger": "shatter",
             "action": "summon",
-            "cardId": "young_treant",
+            "cardId": "stonebark_pack",
             "count": 1
           }
         ],
-        "image_prompt": "An ancient elder treant, a massive gnarled bark body crowned with glowing white quartz crystals and dense foliage, wise and immense. White-and-clear quartz crystal, earthy palette, prismatic glow. Premium painterly TCG creature art, large expressive eyes, majestic readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "90274823928421",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Elder Treant, a colossal ancient forest guardian with a massive trunk body, sweeping branch antlers, a fearsome face formed from a hollow trunk split and glowing eyes, clear quartz armor, and a small living sapling glowing safely within its chest. Use a heroic low-angle pose. Its face must be ancient, monstrous, and entirely non-human, with no human facial anatomy. Render it in a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: monumental chunky proportions, an iconic silhouette, faceted low-poly bark and crystal surfaces, golden light, and a soft misty woodland backdrop. Keep the face, antlers, chest sapling, and upper silhouette within the upper 80% of the image. Use the lowest 20% for vast roots standing across an ancient fallen trunk and rocky ground, reinforcing scale while remaining safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "quartzkin",
+        "name": "Quartzkin",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "gain_armor",
+            "value": 1
+          }
+        ],
+        "image_asset": "83315778248164",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Quartzkin, a compact worker golem made from chunky stone, simple wooden braces, and translucent white quartz. Give it a friendly glowing turquoise core and one oversized crystal mining arm as it lifts a quartz chunk. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: squat exaggerated proportions, a charming readable silhouette, faceted low-poly stone and crystal surfaces, warm light, and an uncluttered parchment-toned quarry backdrop. Keep the face, core, mining arm, and lifted crystal within the upper 80% of the image. Use the lowest 20% for blocky feet on a split stone ledge with light rubble, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "quartz_guardian",
+        "name": "Quartz Guardian",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 3,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "attacked",
+            "action": "gain_armor",
+            "value": 1
+          }
+        ],
+        "image_asset": "138255344787355",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Quartz Guardian, a broad defensive golem made from weathered gray stone, root bindings, thick white-quartz shoulders, and a glowing turquoise core. Show it bracing with crossed forearms as fresh crystal armor forms across one arm. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: heavy chunky proportions, a strong readable silhouette, faceted low-poly stone and crystal, dramatic warm light, and a simple forest-ruin backdrop. Keep the face, core, crossed arms, and crystal effect within the upper 80% of the image. Use the lowest 20% for firmly planted feet, cracked stone, moss, and a little impact dust, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "sentinel_oryn",
+        "name": "Sentinel Oryn",
+        "battleType": "NEUTRAL",
+        "cardType": "creature",
+        "race": "GOLEM",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 4,
+        "hp": 5,
+        "keywords": [
+          "taunt"
+        ],
+        "image_asset": "82781906990176",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Sentinel Oryn, an elite golem knight of dark slate and brilliant white quartz with a cyan core and a crown-like crystal crest. Oryn stands behind a large crystal shield, projecting a soft curved barrier in a noble defensive pose. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: imposing chunky armor, a bold iconic silhouette, faceted low-poly stone and crystal, golden rim light, and a restrained parchment-toned ruin backdrop. Keep Oryn's face, crest, core, shield top, and barrier within the upper 80% of the image. Use the lowest 20% for the planted shield and heavy feet on a broken stone bridge with subtle roots, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "stone_golem",
@@ -141,7 +166,16 @@
         "cost": 6,
         "atk": 6,
         "hp": 7,
-        "image_prompt": "A massive stone-and-quartz golem, a heavy rocky body veined with white crystal and a glowing core, powerful and looming. White-and-clear quartz crystal, stone palette. Premium painterly TCG creature art, a glowing expressive core, massive readable silhouette, focal high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "buff",
+            "target": "self",
+            "hp": 1
+          }
+        ],
+        "image_asset": "74397095584070",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Stone Golem, a towering brute built from stacked granite, old root bindings, small white-quartz deposits, and a blazing green core. Show it rising from the forest floor with massive shoulders and oversized fists. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: top-heavy chunky proportions, a powerful readable silhouette, faceted low-poly rock surfaces, warm sunrise light, and a sparse parchment-toned woodland backdrop. Keep the face, core, shoulders, and fists within the upper 80% of the image. Use the lowest 20% for its feet emerging beside a shattered fallen log with broken earth and light dust, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "amber_golem",
@@ -153,127 +187,47 @@
         "cost": 8,
         "atk": 4,
         "hp": 10,
-        "image_prompt": "A huge amber-and-quartz golem, a translucent amber crystalline body studded with white quartz facets and a warm glowing core, immense and tanky. Amber and white quartz crystal, warm glow. Premium painterly TCG creature art, a glowing expressive core, towering readable silhouette, focal high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
-      },
-      {
-        "id": "crystal_fragment",
-        "name": "Crystal Fragment",
-        "battleType": "NEUTRAL",
-        "cardType": "spell",
-        "rarity": "common",
-        "cost": 1,
         "effects": [
           {
-            "trigger": "cast",
-            "action": "draw_card",
+            "trigger": "take_damage",
+            "action": "gain_armor",
             "value": 1
           }
         ],
-        "image_prompt": "A glowing white quartz crystal fragment splitting and shimmering with prismatic rainbow light. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing prismatic crystal shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "89230376227581",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Amber Golem, an enormous guardian made from honey-gold amber, petrified wood, and rugged stone. Show warm light glowing through its translucent body as new amber armor forms over one shoulder after an impact. Use a stylized low-poly fantasy art direction with clean polygonal forms and crisp planar shading: colossal rounded proportions, a fortress-like silhouette, faceted low-poly amber and stone, rich golden light, and a quiet ancient-grove backdrop. Keep the face, glowing torso, and forming armor within the upper 80% of the image. Use the lowest 20% for immense feet standing over a petrified fallen tree with a few roots and stones, complete but safe beneath a translucent description panel. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "crystal_bolt",
-        "name": "Crystal Bolt",
+        "id": "crystal_vent",
+        "name": "Crystal Vent",
         "battleType": "NEUTRAL",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "common",
         "cost": 2,
         "effects": [
           {
             "trigger": "cast",
-            "action": "damage",
-            "target": "enemy_target",
-            "value": 2
+            "action": "destroy_charge_slot",
+            "chargeOwner": "self",
+            "selector": "lowest",
+            "condition": {
+              "type": "two_charge_slots_occupied",
+              "chargeOwner": "self"
+            }
           }
         ],
-        "image_prompt": "A sharp white quartz crystal bolt streaking forward with prismatic energy and trailing shards. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, streaking crystal bolt, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "crystal_shard",
-        "name": "Crystal Shard",
-        "battleType": "NEUTRAL",
-        "cardType": "spell",
-        "rarity": "common",
-        "cost": 2,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "damage",
-            "target": "enemy_target",
-            "value": 1
-          },
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 1
-          }
-        ],
-        "image_prompt": "A white quartz crystal shard bursting forward, prismatic splinters scattering outward in a sharp spray. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering prismatic shards, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "barkskin_blessing",
-        "name": "Barkskin Blessing",
-        "battleType": "NEUTRAL",
-        "cardType": "spell",
-        "rarity": "rare",
-        "cost": 2,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "grant_keyword",
-            "target": "friendly_creature",
-            "keyword": "taunt"
-          }
-        ],
-        "image_prompt": "Protective bark and white quartz crystal plating forming a defensive shell, prismatic glow wrapping around it. White-and-clear quartz palette, earthy accents. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, protective crystal-bark shell, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "crystal_reinforcement",
-        "name": "Crystal Reinforcement",
-        "battleType": "NEUTRAL",
-        "cardType": "spell",
-        "rarity": "common",
-        "cost": 2,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "buff",
-            "target": "friendly_creature",
-            "atk": 1,
-            "hp": 1
-          }
-        ],
-        "image_prompt": "White quartz crystal energy reinforcing and strengthening a form, prismatic crystalline growth surging upward. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, reinforcing crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "ancient_archive",
-        "name": "Ancient Archive",
-        "battleType": "NEUTRAL",
-        "cardType": "spell",
-        "rarity": "rare",
-        "cost": 3,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "draw_card",
-            "value": 2
-          },
-          {
-            "trigger": "cast",
-            "action": "reduce_cost",
-            "target": "drawn_cards",
-            "value": 1
-          }
-        ],
-        "image_prompt": "An ancient floating quartz crystal archive, glowing white runic pages and prismatic knowledge light swirling around a crystalline tome. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, swirling prismatic archive energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "123394326282689",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Crystal Vent: a white-quartz charge stone set in an old root-and-rock mechanism cracks open and releases a bright cyan-white burst of crystal energy. A second socket glows nearby while the spent socket is dark. Use a stylized low-poly fantasy art direction with clean polygonal forms, crisp planar shading, faceted stone and crystal, warm shadows, and a simple forest-shrine backdrop. Compose the artwork for a circular crop: place the cracked crystal, both sockets, and the complete magical burst together at the exact center of the image, contained within an imaginary central circle. Let the round mechanism create a natural visual cradle around the effect. Keep the corners and outer edges quiet, with no important details outside the central circle. Do not draw a visible circle. Family-friendly, no characters, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "crystal_growth",
         "name": "Crystal Growth",
         "battleType": "NEUTRAL",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
-        "cost": 4,
+        "cost": 3,
         "effects": [
           {
             "trigger": "cast",
@@ -283,7 +237,8 @@
             "hp": 2
           }
         ],
-        "image_prompt": "A surge of white quartz crystal growth erupting upward, large prismatic faceted crystals expanding and interlocking. White-and-clear quartz palette, prismatic light. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, erupting crystal growth, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "107965750026109",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Crystal Growth: a distinctly non-human bark-and-stone monster gains luminous white-quartz armor around its arms and shoulders as fresh vines and leaves rise with it. Make the transformation feel strong, healthy, and triumphant. Use a stylized low-poly fantasy art direction with clean polygonal forms, crisp planar shading, faceted bark and crystal, vibrant magical light, and a restrained forest backdrop. Compose the artwork for a circular crop: center the creature's head and torso, new armor, vines, and complete crystal-growth effect together inside an imaginary circle in the middle of the image. Curve the magical growth inward so its silhouette remains readable within the circle. Keep the corners and outer edges quiet, with no important details outside the central circle. Do not draw a visible circle. Family-friendly, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       }
     ]
   }

@@ -67,9 +67,13 @@ Player level is separate from monster mastery and tracks overall account progres
 
 ---
 
-## Gold Uses (Planned)
+## Crystal Currency Uses
 
-- Buy card packs from the in-game store
+- **Crystal Shards:** spend 50 at the Card Vending Machine to open five cards
+  (currently earnable through play; Robux bundles are planned in
+  `PLAN_MONETIZATION.md` and are not implemented yet)
+- **Crystal Dust:** duplicate conversion currency (5 common / 20 rare / 80 epic);
+  spending and crafting remain future work
 - Cosmetic purchases
 - Trade facilitation
 
@@ -79,7 +83,7 @@ Player level is separate from monster mastery and tracks overall account progres
 
 Players collect cards through:
 - NPC battle drops (v0.1)
-- Card packs (planned)
+- Card Vending Machine packs (implemented: unified 132-card pool, five-card pulls)
 - Player trading (planned)
 - Tournament rewards (planned)
 
@@ -90,5 +94,9 @@ Players collect cards through:
 - Player levels with cosmetic unlocks
 - Seasonal ranked ladders
 - Tournament entry and prize pools
-- Pack opening with rarity tiers
+- Additional pack banners, pity rules, and targeted pools
+- Duplicate-aware per-draw odds disclosure and same-rarity duplicate protection
+  for the Standard Pack (`PLAN_MONETIZATION.md`; planned, not implemented)
+- Policy-gated Developer Product bundles for Crystal Shards
+  (`PLAN_MONETIZATION.md`; planned, not implemented)
 - Card trading between players

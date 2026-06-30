@@ -4,74 +4,198 @@
       "name": "Ruby Bear Starter",
       "battleType": "MIGHTY",
       "cards": [
-        { "id": "ruby_cub", "count": 2 },
-        { "id": "emberpaw_cub", "count": 2 },
-        { "id": "ruby_mauler", "count": 2 },
-        { "id": "rubyhide_bear", "count": 2 },
-
-        { "id": "rubyskin", "count": 2 },
-        { "id": "ruby_slam", "count": 2 },
-        { "id": "ironfur_training", "count": 2 },
-        { "id": "defiant_roar", "count": 2 },
-        { "id": "mountain_roar", "count": 2 },
-
-        { "id": "bear_lore", "count": 2 },
-        { "id": "rally_the_clan", "count": 2 },
-
-        { "id": "rootling", "count": 2 },
-        { "id": "young_treant", "count": 2 },
-        { "id": "quartz_worker", "count": 2 },
-        { "id": "crystal_fragment", "count": 2 }
+        {
+          "id": "bristlecub",
+          "count": 2
+        },
+        {
+          "id": "sparkhide",
+          "count": 2
+        },
+        {
+          "id": "vangorn",
+          "count": 2
+        },
+        {
+          "id": "thickpelt_guard",
+          "count": 2
+        },
+        {
+          "id": "redpelt_elder",
+          "count": 2
+        },
+        {
+          "id": "broadback_shieldbear",
+          "count": 2
+        },
+        {
+          "id": "rubyhide",
+          "count": 2
+        },
+        {
+          "id": "clan_sentinel",
+          "count": 2
+        },
+        {
+          "id": "bristleplate",
+          "count": 2
+        },
+        {
+          "id": "vangorn_slam",
+          "count": 2
+        },
+        {
+          "id": "thickpelt_oath",
+          "count": 2
+        },
+        {
+          "id": "bristle_banner",
+          "count": 2
+        },
+        {
+          "id": "rootling",
+          "count": 2
+        },
+        {
+          "id": "quartzkin",
+          "count": 2
+        },
+        {
+          "id": "crystal_growth",
+          "count": 2
+        }
       ]
     },
-
     "swift": {
       "name": "Emerald Cat Starter",
       "battleType": "SWIFT",
       "cards": [
-        { "id": "emerald_cub", "count": 2 },
-        { "id": "jade_cub", "count": 2 },
-        { "id": "verdant_prowler", "count": 2 },
-        { "id": "emerald_lynx", "count": 2 },
-
-        { "id": "quick_step", "count": 2 },
-        { "id": "cat_reflexes", "count": 2 },
-        { "id": "pouncing_strike", "count": 2 },
-        { "id": "emerald_claws", "count": 2 },
-        { "id": "ambush", "count": 2 },
-
-        { "id": "swipe", "count": 2 },
-        { "id": "shadow_smoke", "count": 2 },
-
-        { "id": "rootling", "count": 2 },
-        { "id": "crystal_sapling", "count": 2 },
-        { "id": "young_treant", "count": 2 },
-        { "id": "crystal_fragment", "count": 2 }
+        {
+          "id": "fleetpaw",
+          "count": 2
+        },
+        {
+          "id": "jadeblink",
+          "count": 2
+        },
+        {
+          "id": "verdant_prowler",
+          "count": 2
+        },
+        {
+          "id": "mosswhisker",
+          "count": 2
+        },
+        {
+          "id": "kessara",
+          "count": 2
+        },
+        {
+          "id": "vineleap",
+          "count": 2
+        },
+        {
+          "id": "silent_pouncer",
+          "count": 2
+        },
+        {
+          "id": "canopy_sprinter",
+          "count": 2
+        },
+        {
+          "id": "whisker_reflex",
+          "count": 2
+        },
+        {
+          "id": "fleetpaw_strike",
+          "count": 2
+        },
+        {
+          "id": "greenveil_ambush",
+          "count": 2
+        },
+        {
+          "id": "sudden_death",
+          "count": 2
+        },
+        {
+          "id": "shardleaf",
+          "count": 2
+        },
+        {
+          "id": "stonebark_pack",
+          "count": 2
+        },
+        {
+          "id": "crystal_growth",
+          "count": 2
+        }
       ]
     },
-
     "vital": {
       "name": "Sapphire Frog Starter",
       "battleType": "VITAL",
       "cards": [
-        { "id": "sapphire_tadpole", "count": 2 },
-        { "id": "moonpool_tadpole", "count": 2 },
-        { "id": "dewcaller_frog", "count": 2 },
-        { "id": "spiritpond_frog", "count": 2 },
-
-        { "id": "healing_mist", "count": 2 },
-        { "id": "spirit_touch", "count": 2 },
-        { "id": "leech_life", "count": 2 },
-        { "id": "spirit_crush", "count": 2 },
-        { "id": "moonpool_blessing", "count": 2 },
-
-        { "id": "renew", "count": 2 },
-        { "id": "memory_fragment", "count": 2 },
-
-        { "id": "rootling", "count": 2 },
-        { "id": "young_treant", "count": 2 },
-        { "id": "ancient_sapkeeper", "count": 2 },
-        { "id": "crystal_fragment", "count": 2 }
+        {
+          "id": "dewtongue",
+          "count": 2
+        },
+        {
+          "id": "moonbelly",
+          "count": 2
+        },
+        {
+          "id": "dewcaller",
+          "count": 2
+        },
+        {
+          "id": "pondwatch",
+          "count": 2
+        },
+        {
+          "id": "spiritpond",
+          "count": 2
+        },
+        {
+          "id": "sapphguard",
+          "count": 2
+        },
+        {
+          "id": "soulcroak",
+          "count": 2
+        },
+        {
+          "id": "mistpool",
+          "count": 2
+        },
+        {
+          "id": "mistmend",
+          "count": 2
+        },
+        {
+          "id": "sapphire_leech",
+          "count": 2
+        },
+        {
+          "id": "renew",
+          "count": 2
+        },
+        {
+          "id": "rebirth_charm",
+          "count": 2
+        },
+        {
+          "id": "sapkeeper",
+          "count": 2
+        },
+        {
+          "id": "quartz_guardian",
+          "count": 2
+        },
+        {
+          "id": "crystal_growth",
+          "count": 2
+        }
       ]
     }
   }

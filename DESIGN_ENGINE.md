@@ -10,10 +10,12 @@
 
 - **No hero power: Battle Charge replaces Crystal Core (which had replaced Invoker).**
   There is no active hero skill. Each side instead builds **Battle Charge** — a
-  two-slot hero resource. Playing a MIGHTY/SWIFT/VITAL card grants +1 Charge of its
-  type *after* it resolves; NEUTRAL never produces Charge. Cards may cost Charge
-  (`chargeCost`) or grant extra Charge (`gain_charge`, which stacks with the normal
-  +1). State is server-authoritative. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge.
+  two-slot hero resource. At end turn, each non-NEUTRAL creature on board grants
+  +1 Charge of its Battle Type after `turn_end` effects resolve. Automatic board
+  generation stacks matching slots, fills empty slots, and skips third off-type
+  generation while both slots are occupied. Cards may cost Charge (`chargeCost`) or
+  grant explicit Charge (`gain_charge`). State is server-authoritative. See
+  [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge.
 - **`lifesteal` is the canonical term.** "Siphon" is retired everywhere. Lifesteal
   = your hero heals for the damage this deals — applies to **combat** (the keyword
   on a creature) and **effects** (`lifesteal = true` on a `damage` entry).
@@ -69,7 +71,7 @@ ServerScriptService/Modules/
     Conditions       ← Conditions[type](ctx) → bool
     Keywords         ← static keyword checks + hooks (lifesteal, quickstrike, rebirth)
     Costs            ← reduce_cost / set_cost over hand|drawn_cards|returned_card
-  ChargeState        ← authoritative two-slot Battle Charge state machine (gain/spend/normalize/events)
+  ChargeState        ← authoritative two-slot Battle Charge state machine (gain/spend/normalize/events; board generation skips replacement)
   BattleLogic        ← state, turn flow, combat; delegates all effect work to Effects/
 
 (unchanged role) ServerScriptService/BattleController ← orchestration, RemoteEvents, DataStore, rewards
@@ -119,7 +121,7 @@ matches (and whose `condition` passes) calls `Actions[entry.action](ctx')`.
 | `cast` | a spell resolves | that spell |
 | `shatter` | a creature dies | the dying creature |
 | `deal_damage` | a creature deals damage | the dealer |
-| `take_damage` | a creature is damaged | the damaged |
+| `take_damage` | a creature takes non-lethal damage | the damaged |
 | `attacked` | a creature is declared as attack target | the defender |
 | `turn_end` | owner's turn ends | all that owner's creatures |
 | `ally_death` | a friendly creature dies | surviving allies |
@@ -155,42 +157,61 @@ small and parameter-driven; cross-cutting modifiers are applied uniformly:
 
 Alpha action set (each one handler): `damage`, `heal`, `buff`, `draw_card`
 (+`filter`), `destroy`, `grant_keyword`, `summon`, `bounce`,
-`return_from_graveyard`, `reduce_cost`, `set_cost`, `gain_energy`, `gain_charge`.
+`return_from_graveyard`, `reduce_cost`, `set_cost`, `gain_energy`, `gain_charge`,
+`destroy_charge_slot`, `drain_charge`, `disable_shatter`, and
+`add_additional_charge_cost_to_player_hand`.
 (Full param spec in DESIGN_DATABASE.)
 
 ---
 
 ## Targeting
 
-`target` is **player-chosen** for the explicit single targets (`enemy_creature`,
-`friendly_creature`, `any_creature`, `enemy_target`), matching the schema's intent
-and Hearthstone convention. `self`, `own_hero`, `all_*`, `random_*`, and `area:all`
-need no pick and resolve server-side.
+Spell targeting has two layers:
 
-- Client sends the chosen target through the existing drag-to-target flow:
-  `PlayCard(cardId, {target={side="npc", slot=N}})` from the client's perspective;
-  `slot=0` means hero for `enemy_target` burn.
-- Server remaps that descriptor from client perspective to canonical battle seats,
-  then **always re-validates** it against the card's target class and descriptor
-  shape before battle logic runs. Malformed or illegal targets reject without throwing.
+- `playTarget` is spell-level UI metadata. It controls which drag/drop surfaces
+  highlight on desktop and mobile: a single card/hero, a board segment, or a
+  whole side.
+- effect `target` is rules metadata. It controls what `Effects.Targeting`
+  resolves when the spell actually executes.
+
+For explicit single targets (`enemy_creature`, `friendly_creature`,
+`any_creature`, `enemy_target`), the client sends
+`PlayCard(cardId, {target={side="npc", slot=N}})` from the client's perspective;
+`slot=0` means hero for hero-capable character targets. For broad board/side
+drops (`own_board`, `enemy_board`, `battle_board`, `own_side`, `enemy_side`), the
+client sends `PlayCard(cardId, {zone="enemy_board"})`; the server validates that
+zone against `card.playTarget` and stores `opts.chosenZone` in canonical battle
+seat terms.
+
+Server validation is still authoritative:
+
+- The server remaps client-perspective target descriptors to canonical battle
+  seats, rejects malformed descriptors, rejects illegal target kinds, and rejects
+  targeted enemy creatures with Stealth.
+- Zone drops must use one of the allowed zone strings and must match the spell's
+  `playTarget`; mismatches reject before the card is consumed.
 - `Effects.Targeting` also guards chosen descriptors before use. `random_*`,
   `area`, and legal fallback targets are resolved entirely server-side.
 
-This replaces the current auto-pick (`lowest_hp`, random) for player-facing
-targeted effects.
+`chosenZone` is threaded through spell resolution for future zone-aware actions;
+current area/random effects still resolve through their normal effect `target`
+and `area` parameters.
 
 ### Pre-play prerequisite gate
 
 A spell is **rejected before it is consumed** if none of its effects would do
-anything — every entry's `condition` fails or its required target is missing.
+anything — every entry's `condition` fails, its required target is missing, or an
+action-specific requirement fails.
 `Triggers.playBlock(base, card)` dry-runs the effects (resolve targets + check
 conditions, no execution) and returns a player-facing reason (e.g.
 *No Wounded Ally*, *Target not damaged*, *No valid target*); `BattleLogic.playCard`
-refuses the play with that reason, so the card stays in hand and the Energy is
-kept — the same shape as the Energy and Taunt pre-checks. Creatures are **never**
+refuses the play with that reason, so the card stays in hand and the Energy/Charge
+are kept — the same shape as the Energy and Taunt pre-checks. Creatures are **never**
 blocked this way: the body is the point, so a fizzled Emerge is allowed. The
 reason is delivered to the client via a transient `warnings` array on the state
-broadcast (cleared after each broadcast) and shown as a toast.
+broadcast (cleared after each broadcast) and shown as a toast. Current
+action-specific gate: `disable_shatter` requires an enemy creature that actually
+has a `shatter` effect.
 
 ---
 
@@ -244,7 +265,13 @@ code path in `dealDamage*`.
 
 ## Open items
 
-- **Balance**: card values are alpha numbers (previous sims showed MIGHTY over- and VITAL under-performing). The Core active power is now removed — an expected balance shift — and the first Charge-cost fixtures are live (`ruby_mauler`, `rubyhide_bear`); rerun balance sims before broader card-pool migration.
+- **Balance**: card values are alpha numbers. PLAN_BATTLE_CHARGE_V2 moved Charge
+  generation to board end-turn and expanded pure-Charge content across all three
+  archetypes; rerun larger starter and custom-deck sims before locking alpha values.
 - **Manual PVP smoke**: run a full 2-player Local Server pass with active decks.
-- **Charge content**: `PLAN_BATTLE_CHARGE_USAGE.md` implemented 2026-06-23 — three cost models (Energy-only, Hybrid, Pure-Charge), CORRUPTED trait, CardTraits/CardCost shared modules, ChargeCostBadge UI, NpcAI CardCost.canPay upgrade, deck builder gen/spender feedback, and first fixture cards (`ruby_mauler` hybrid 1E+1M, `rubyhide_bear` Corrupted pure 3M). Broader card-pool migration deferred until balance sims run on fixture data.
+- **Charge content**: three cost models are live (Energy-only, Hybrid, Pure-Charge).
+  Current packs contain 29 pure-Charge cards and new Charge interaction actions:
+  `destroy_charge_slot`, `drain_charge`, `disable_shatter`, and
+  `add_additional_charge_cost_to_player_hand`. `corrupted` remains as a legacy
+  schema action, not as a current pack pillar.
 - **Rebirth + board full**: creature died into a freed slot, so the slot is always available. Edge case already handled by design.

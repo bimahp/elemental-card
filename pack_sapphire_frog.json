@@ -6,8 +6,8 @@
     "theme": "Sapphire Crystal Frogs",
     "cards": [
       {
-        "id": "sapphire_tadpole",
-        "name": "Sapphire Tadpole",
+        "id": "dewtongue",
+        "name": "Dewtongue",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -15,11 +15,12 @@
         "cost": 1,
         "atk": 1,
         "hp": 2,
-        "image_prompt": "A tiny round sapphire tadpole with a glowing blue crystal tail, bioluminescent and cute, drifting in water. Sapphire-blue palette, soft rounded form, bioluminescent blue glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame (top-weighted for card UI), vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Dewtongue, a small bright-eyed young frog with a long sapphire-blue tongue tipped by a perfect dew drop. Show it balancing eagerly with the tongue curled in a playful arc. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for small webbed feet on a smooth wet pebble, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "moonpool_tadpole",
-        "name": "Moonpool Tadpole",
+        "id": "moonbelly",
+        "name": "Moonbelly",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -35,11 +36,33 @@
             "value": 2
           }
         ],
-        "image_prompt": "A small luminous tadpole glowing with soft moonlit blue light and sapphire crystal speckles, peaceful. Sapphire-blue palette, gentle bioluminescent glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Moonbelly, a tiny moonlit tadfrog with a round glowing belly and a short translucent tail. Show soft healing light escaping through fine crystal cracks in its belly markings. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet at the edge of a still moonpool, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "dewcaller_frog",
-        "name": "Dewcaller Frog",
+        "id": "springtail",
+        "name": "Springtail",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 1,
+        "atk": 0,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Springtail, a cheerful polliwog with a spring-curled tail, small legs, and pale blue dew crystals along its back. Show a gentle healing droplet gathering above its head. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for tiny feet and tail resting on a broad lily pad, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "dewcaller",
+        "name": "Dewcaller",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -55,11 +78,49 @@
             "value": 1
           }
         ],
-        "image_prompt": "A gentle round frog with dewy sapphire crystal skin, glowing blue water droplets rising and orbiting it, a serene healer. Sapphire-blue palette, soft blue glow, water motifs. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Dewcaller, a young rain-caller with blue throat markings and small sapphire wrist crystals. Show it raising both webbed hands as a clean ring of nourishing rain gathers overhead. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet in a shallow reflective puddle, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "spiritpond_frog",
-        "name": "Spiritpond Frog",
+        "id": "pondwatch",
+        "name": "Pondwatch",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 1,
+        "hp": 4,
+        "keywords": [
+          "taunt"
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Pondwatch, a stout watchful toad with a broad lily-pad shoulder guard and dark sapphire brow plates. Show it standing squarely like a patient gatekeeper. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for heavy webbed feet on a low pond-side stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "bluegill",
+        "name": "Bluegill",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 2,
+        "hp": 2,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "heal",
+            "target": "friendly_creature",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Bluegill, a gentle blue-gilled healer with feathery sapphire frills and a small sphere of clear restorative water held between its hands. Give it a focused caring expression. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet beside a quiet stream stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "spiritpond",
+        "name": "Spiritpond",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -70,11 +131,12 @@
         "keywords": [
           "lifesteal"
         ],
-        "image_prompt": "A mystical frog with translucent sapphire crystal skin and glowing inner blue light, wisps of life-draining lifesteal energy swirling around it. Sapphire-blue palette, ethereal blue glow. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Spiritpond, a sleek spirit frog with translucent water markings flowing across its body and a bright sapphire core in its chest. Show the current circling its arms before returning inward. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet planted in a thin pool of luminous water, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "sapphire_guardian",
-        "name": "Sapphire Guardian",
+        "id": "sapphguard",
+        "name": "Sapphguard",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -85,11 +147,74 @@
         "keywords": [
           "taunt"
         ],
-        "image_prompt": "A large sturdy guardian frog with a thick faceted sapphire crystal shell on its back, planted in a protective defensive stance. Sapphire-blue palette, heavy blue crystal shell. Premium painterly TCG creature art, large gentle expressive eyes, sturdy readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Sapphguard, a broad armored toad with thick sapphire shoulder plates and shield-like forearms grown from blue crystal. Show it braced in an unshakable protective stance. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for large feet on a cracked wet-stone causeway, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "lifebloom_frog",
-        "name": "Lifebloom Frog",
+        "id": "lilyguard",
+        "name": "Lilyguard",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 2,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "attacked",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Lilyguard, a sturdy lilyguard wearing a layered lily-pad mantle with sapphire veins. Show healing droplets releasing from the mantle as it calmly absorbs an impact. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet rooted among simple pond stones and reeds, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "marsh_sage",
+        "name": "Marsh Sage",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 3,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Marsh Sage, an elderly marsh frog with mossy skin, calm luminous eyes, and a crooked reed staff topped by a small blue crystal. Show a slow healing ripple spreading from its free hand. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet on an old moss-covered stump, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "bulbspirit",
+        "name": "Bulbspirit",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 4,
+        "atk": 3,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "return_from_graveyard",
+            "target": "random"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Bulbspirit, a round bulbfrog with a translucent glowing throat sac that contains one pale spirit seed. Show fine cracks of blue light forming as the spirit prepares to emerge. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for short feet on dark marsh soil with a little mist, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "lifebloom",
+        "name": "Lifebloom",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -105,11 +230,64 @@
             "value": 1
           }
         ],
-        "image_prompt": "A serene frog covered in blooming sapphire crystal flowers and lily pads, radiating a gentle blue healing glow. Sapphire-blue palette, blooming crystal flora, soft blue light. Premium painterly TCG creature art, large gentle expressive eyes, soft readable silhouette, face high in frame, vibrant magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Lifebloom, a healthy green-blue frog with a small garden of crystal lotus flowers growing across its back. Show the blossoms opening together and releasing a warm healing pulse. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet among soft grass at the pond edge, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "ancient_tidefrog",
-        "name": "Ancient Tidefrog",
+        "id": "soulcroak",
+        "name": "Soulcroak",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 4
+        },
+        "atk": 3,
+        "hp": 5,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "return_from_graveyard",
+            "target": "random"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Soulcroak, a solemn reclaimer frog with dark blue robes and a resonant crystal throat. Show its croak drawing one pale spirit droplet upward from a still pool. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet on a half-submerged stone altar, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "moonwell",
+        "name": "Moonwell",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 4
+        },
+        "atk": 2,
+        "hp": 7,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Moonwell, a massive moonwell toad with a circular pool-like sapphire core set into its chest armor. Show clear healing water overflowing from the core in gentle arcs. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for immense feet on moonlit temple stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "tidefather",
+        "name": "Tidefather",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -125,11 +303,12 @@
             "value": 6
           }
         ],
-        "image_prompt": "An ancient massive tide frog with cascading sapphire crystal growths flowing like waterfalls down its back, deep blue glow, wise and immense. Sapphire-blue palette, radiant blue crystal cascades, water motifs. Premium painterly TCG creature art, large gentle expressive eyes, majestic readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Tidefather, an ancient powerful tidefrog with weathered blue crystal ridges and a broad shell-like back holding compressed ocean light. Show the stored tide beginning to release through bright cracks. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for large webbed feet on a wave-worn rock shelf, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "sapphire_elder",
-        "name": "Sapphire Elder",
+        "id": "elder_saphros",
+        "name": "Elder Saphros",
         "battleType": "VITAL",
         "cardType": "creature",
         "race": "FROG",
@@ -144,13 +323,206 @@
             "target": "random"
           }
         ],
-        "image_prompt": "An ancient frog elder shaman with a crown of sapphire crystals and glowing blue spirit-light, a mystical resurrection aura swirling around it, wise and powerful. Sapphire-blue palette, radiant blue spirit glow. Premium painterly TCG creature art, large gentle expressive eyes, regal readable silhouette, face high in frame, dramatic magical crystal lighting, family-friendly crystal fantasy world, no humans."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Elder Saphros, a tall elder frog with a crown of pale sapphire branches and deep wise eyes. Show it opening a quiet water portal from which one small spirit light returns. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet on an ancient circular pond platform, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "healing_mist",
-        "name": "Healing Mist",
+        "id": "reborn_croaker",
+        "name": "Reborn Croaker",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 5
+        },
+        "atk": 4,
+        "hp": 4,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "grant_keyword",
+            "target": "self",
+            "keyword": "rebirth"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Reborn Croaker, a battle-worn croaker surrounded by a fresh sapphire cocoon glow, with old cracked skin giving way to bright renewed markings. Make the rebirth feel calm and powerful. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet on a broken shell of blue crystal, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "rainpool_oracle",
+        "name": "Rainpool Oracle",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 4,
+        "atk": 2,
+        "hp": 6,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "draw_card",
+            "value": 1
+          },
+          {
+            "trigger": "emerge",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Rainpool Oracle, a slender oracle with rain-drop jewelry and a reflective water sphere floating between its hands. Show one memory image forming in the sphere while healing light gathers below it. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet on a shallow rain-covered dais, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "glasspond",
+        "name": "Glasspond",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 3,
+        "atk": 2,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "heal",
+            "target": "friendly_creature",
+            "value": 4
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Glasspond, a clear-skinned sapphire healer whose hands shape a simple prism of restorative water. Let soft rainbow-blue light pass through its glasslike body. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet in a clean circular pond ripple, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "spiritfen",
+        "name": "Spiritfen",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 5,
+        "atk": 4,
+        "hp": 6,
+        "keywords": [
+          "taunt"
+        ],
+        "effects": [
+          {
+            "trigger": "ally_death",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Spiritfen, a strong fen protector with spectral reed armor and a steady sapphire heart-light. Show pale grief-like mist entering the reeds and transforming into healing water around its chest. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for feet planted in dark marsh water and simple reeds, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "lotusback",
+        "name": "Lotusback",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 6
+        },
+        "atk": 4,
+        "hp": 8,
+        "effects": [
+          {
+            "trigger": "turn_end",
+            "action": "heal",
+            "target": "all_friendly",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Lotusback, a huge peaceful elder toad carrying an open sapphire lotus garden across its back. Show the flowers releasing a broad rhythmic healing glow. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for wide feet settled in a calm lotus pond, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "tidecaller_aum",
+        "name": "Tidecaller Aum",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "epic",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 8
+        },
+        "atk": 5,
+        "hp": 7,
+        "effects": [
+          {
+            "trigger": "emerge",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "area": "all",
+            "keyword": "rebirth"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Tidecaller Aum, a tall tidecaller mystic with flowing blue fins, a crystal staff, and several luminous spirit seeds orbiting its shoulders. Show a rebirth wave awakening each seed. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet on a tide-washed ritual stone, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "mistpool",
+        "name": "Mistpool",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "common",
+        "cost": 2,
+        "atk": 1,
+        "hp": 3,
+        "effects": [
+          {
+            "trigger": "shatter",
+            "action": "draw_card",
+            "value": 1
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Mistpool, a small mist-covered tadfrog with bright curious eyes and a cloudy sapphire shell around its body. Show the mist parting to reveal one glowing memory pearl. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for tiny feet and tail on a wet lily leaf, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "soulstream",
+        "name": "Soulstream",
+        "battleType": "VITAL",
+        "cardType": "creature",
+        "race": "FROG",
+        "rarity": "rare",
+        "cost": 6,
+        "atk": 5,
+        "hp": 7,
+        "keywords": [
+          "lifesteal"
+        ],
+        "effects": [
+          {
+            "trigger": "deal_damage",
+            "action": "heal",
+            "target": "own_hero",
+            "value": 2
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy card illustration of Soulstream, a strong river warrior frog with a continuous sapphire spirit stream wrapping its arms and chest. Show the current flowing outward through one fist and returning as healing light. The character must be an upright, bipedal fantasy amphibian creature with a distinctly frog-like or toad-like head, expressive webbed hands, powerful folded legs, and visible amphibian skin - not a normal four-legged frog and not a human. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted sapphire accents, and cool wetland lighting. Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for webbed feet braced in a fast shallow current, keeping the full artwork complete but safe beneath a translucent description panel. Family-friendly, clearly amphibian, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "mistmend",
+        "name": "Mistmend",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "common",
         "cost": 1,
         "effects": [
@@ -161,13 +533,15 @@
             "value": 3
           }
         ],
-        "image_prompt": "A soft sapphire-blue healing mist with glowing crystal droplets and gentle restorative light spreading outward. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing blue mist and crystal droplets, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Mistmend: a soft spiral of sapphire healing mist wrapping around one bright heart-shaped crystal core. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "spirit_touch",
         "name": "Spirit Touch",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 1,
         "effects": [
@@ -178,15 +552,21 @@
             "value": 3
           }
         ],
-        "image_prompt": "A gentle sapphire crystal touch of glowing blue restorative energy mending a wound, soft blue light radiating. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, gentle blue healing energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Spirit Touch: a translucent blue webbed hand gently touching a cracked crystal core as the fracture seals with light. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "leech_life",
-        "name": "Leech Life",
+        "id": "sapphire_leech",
+        "name": "Sapphire Leech",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "enemy_character",
         "rarity": "common",
-        "cost": 2,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 2
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -201,13 +581,15 @@
             "value": 2
           }
         ],
-        "image_prompt": "A sapphire crystal drain effect, blue life-energy siphoning along a glowing crystalline tendril from one point to another. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, blue siphon energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Sapphire Leech: a narrow sapphire spirit ribbon draining light from a dark crystal and carrying it into a bright blue healing pearl. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "spirit_crush",
         "name": "Spirit Crush",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "enemy_creature",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -219,15 +601,24 @@
               "type": "attack_lte",
               "value": 3
             }
+          },
+          {
+            "trigger": "cast",
+            "action": "drain_charge",
+            "chargeOwner": "enemy",
+            "selector": "current",
+            "value": 1
           }
         ],
-        "image_prompt": "A sapphire crystal spirit-shatter, a fragile blue spectral form crushed in a burst of blue crystal shards and fading light. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, shattering blue crystal, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Spirit Crush: two opposing currents of spectral water compressing a dark crystal while a smaller charge-like light is pulled away. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "moonpool_blessing",
         "name": "Moonpool Blessing",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "friendly_creature",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -239,13 +630,15 @@
             "hp": 2
           }
         ],
-        "image_prompt": "A blessing of sapphire moonpool water, glowing blue crystal droplets and soft empowering light rising in a gentle column. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, glowing blue blessing energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Moonpool Blessing: one moonlit water drop striking a circular pool and blooming into protective sapphire lotus petals. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "renew",
         "name": "Renew",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "common",
         "cost": 2,
         "effects": [
@@ -261,36 +654,15 @@
             "value": 2
           }
         ],
-        "image_prompt": "A renewing swirl of sapphire crystal energy and glowing blue life-droplets cycling upward in a gentle spiral. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, cycling blue renewal energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Renew: a fresh water sprout lifting one clear memory pearl while a healing ring spreads beneath it. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "spirit_bloom",
-        "name": "Spirit Bloom",
+        "id": "memory_shards",
+        "name": "Memory Shards",
         "battleType": "VITAL",
         "cardType": "spell",
-        "rarity": "rare",
-        "cost": 3,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "heal",
-            "target": "friendly_creature",
-            "value": 2
-          },
-          {
-            "trigger": "cast",
-            "action": "grant_keyword",
-            "target": "friendly_creature",
-            "keyword": "lifesteal"
-          }
-        ],
-        "image_prompt": "A blooming sapphire crystal lotus radiating blue healing light and lifesteal energy, petals of glowing crystal unfurling. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, blooming blue crystal flower, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "memory_fragment",
-        "name": "Memory Fragment",
-        "battleType": "VITAL",
-        "cardType": "spell",
+        "playTarget": "enemy_board",
         "rarity": "common",
         "cost": 3,
         "effects": [
@@ -303,13 +675,15 @@
             "lifesteal": true
           }
         ],
-        "image_prompt": "Drifting sapphire crystal memory fragments shimmering with blue light, splintering and streaking toward several targets. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, scattering blue crystal fragments, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Memory Shards: four sharp sapphire memory shards separating from one core and flying outward along distinct clean paths. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "sapphire_waters",
         "name": "Sapphire Waters",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "common",
         "cost": 3,
         "effects": [
@@ -320,13 +694,67 @@
             "value": 2
           }
         ],
-        "image_prompt": "A surging wave of sapphire healing waters with glowing blue crystal foam washing restoratively across the frame. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging blue healing wave, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Sapphire Waters: a broad concentric wave of luminous blue water expanding evenly from one sapphire spring. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "spirit_bloom",
+        "name": "Spirit Bloom",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "playTarget": "friendly_creature",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 3
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "heal",
+            "target": "friendly_creature",
+            "value": 4
+          },
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "lifesteal"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Spirit Bloom: a blue crystal flower opening around a healing pearl while a gentle spirit current curls back toward its center. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+      },
+      {
+        "id": "rebirth_charm",
+        "name": "Rebirth Charm",
+        "battleType": "VITAL",
+        "cardType": "spell",
+        "playTarget": "friendly_creature",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 8
+        },
+        "effects": [
+          {
+            "trigger": "cast",
+            "action": "grant_keyword",
+            "target": "friendly_creature",
+            "keyword": "rebirth"
+          }
+        ],
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Rebirth Charm: a small sapphire cocoon charm opening to reveal a newly awakened frog-shaped spirit light. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "soul_recovery",
         "name": "Soul Recovery",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "rare",
         "cost": 4,
         "effects": [
@@ -342,15 +770,21 @@
             "value": 4
           }
         ],
-        "image_prompt": "A gentle recovery of glowing blue soul-light and sapphire crystal cards rising from a calm pool of water. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, rising blue soul energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Soul Recovery: two luminous memory pearls returning through a strong upward current of restorative blue water. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "grave_call",
-        "name": "Grave Call",
+        "id": "gravecall",
+        "name": "Gravecall",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_side",
         "rarity": "rare",
-        "cost": 5,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 5
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -364,13 +798,15 @@
             "value": 1
           }
         ],
-        "image_prompt": "A sapphire crystal grave-call, a glowing blue spirit rising out of a crystalline pool and drawn back, ghostly and serene. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, rising blue spirit, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Gravecall: one pale spirit rising from a dark still pond toward a small sapphire bead glowing above the surface. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "moonpool_ritual",
-        "name": "Moonpool Ritual",
+        "id": "moonpool_rite",
+        "name": "Moonpool Rite",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_hero",
         "rarity": "common",
         "cost": 5,
         "effects": [
@@ -381,15 +817,21 @@
             "value": 8
           }
         ],
-        "image_prompt": "A grand sapphire moonpool ritual, a radiant circular pool of blue crystal water glowing with a massive surge of healing light. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue healing pool, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Moonpool Rite: a perfect moon reflection inside a circular sapphire pool releasing a powerful vertical column of healing light. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "spirit_harvest",
         "name": "Spirit Harvest",
         "battleType": "VITAL",
         "cardType": "spell",
-        "rarity": "common",
-        "cost": 5,
+        "playTarget": "enemy_board",
+        "rarity": "rare",
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 5
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -400,37 +842,15 @@
             "lifesteal": true
           }
         ],
-        "image_prompt": "A sweeping sapphire crystal harvest of blue spirit energy draining across a row of enemies, lifesteal wisps flowing back. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, sweeping blue siphon energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
-      },
-      {
-        "id": "ancient_staff",
-        "name": "Ancient Staff",
-        "battleType": "VITAL",
-        "cardType": "spell",
-        "rarity": "rare",
-        "cost": 6,
-        "effects": [
-          {
-            "trigger": "cast",
-            "action": "buff",
-            "target": "friendly_creature",
-            "atk": 5,
-            "hp": 5
-          },
-          {
-            "trigger": "cast",
-            "action": "grant_keyword",
-            "target": "friendly_creature",
-            "keyword": "lifesteal"
-          }
-        ],
-        "image_prompt": "An ancient sapphire crystal staff held upright, radiating powerful blue empowering and lifesteal energy in glowing rings. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue staff energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Spirit Harvest: many faint marsh wisps flowing inward toward one faceted sapphire vessel as blue energy radiates back outward. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "essence_tide",
         "name": "Essence Tide",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "enemy_board",
         "rarity": "rare",
         "cost": 6,
         "effects": [
@@ -448,15 +868,21 @@
             "lifesteal": true
           }
         ],
-        "image_prompt": "A surging tide of sapphire crystal essence, blue energy drawn inward then unleashed in a wave across enemies, lifesteal wisps trailing back. Sapphire-blue palette, water motifs. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, surging blue essence tide, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Essence Tide: one bright memory pearl feeding a surging sapphire tide that divides into several controlled streams. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "eternal_rebirth",
         "name": "Eternal Rebirth",
         "battleType": "VITAL",
         "cardType": "spell",
+        "playTarget": "own_board",
         "rarity": "epic",
-        "cost": 8,
+        "cost": 0,
+        "chargeCost": {
+          "battleType": "VITAL",
+          "amount": 8
+        },
         "effects": [
           {
             "trigger": "cast",
@@ -466,7 +892,8 @@
             "keyword": "rebirth"
           }
         ],
-        "image_prompt": "A radiant sapphire crystal rebirth bloom, glowing blue resurrection light enveloping the field as crystalline spirits rise renewed. Sapphire-blue palette. Premium painterly TCG spell art, the effect fills 60-80 percent of a center-weighted frame, radiant blue resurrection energy, dramatic magical lighting, family-friendly crystal-powered fantasy world, no characters."
+        "image_asset": "",
+        "image_prompt": "Create a vertical 3:4 fantasy spell-card illustration of Eternal Rebirth: a large ring of sapphire lotus petals surrounding several spirit seeds as they awaken together in blue light. Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted sapphire crystal, fluid magical shapes, and focused moonlit lighting. Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle. Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       }
     ]
   }

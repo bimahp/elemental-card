@@ -1,90 +1,78 @@
 # PLAN — Reliable Asset Preloading + Branded Loading Screen
 
-> Status: **Implemented & re-validated against the live Studio place (2026-06-22).** Pending one real-device first-join test before closing.
-> Related: `DEV_STATUS.md` (module entries + Known Issues).
+> Status: **Implemented and reworked against Roblox's documented preload contract (2026-06-30).** A real-device cold-cache test is still required.
 
----
+## Problem
 
-## Context
+Card and UI art could be absent on a player's first join but appear after rejoining. The assets are dynamic, so scanning the initial GUI tree cannot discover all of them.
 
-**Problem (reported):** On a non-Studio client (mobile / another device), card & UI art did **not** load on first join — the player had to leave and rejoin for art to appear.
+The earlier loader did pass an array to `ContentProvider:PreloadAsync`, but it decided success by polling `ImageLabel.IsLoaded` and retried/cancelled whole batches. That could report false failures even when `PreloadAsync` had processed the request.
 
-**Diagnosis (verified via `GetProductInfo` on every asset, 2026-06-22):**
-- Every gameplay asset (`[EC]`/`[SS]` card backgrounds, card art, ATK/HP/Energy icons, spell art, card-back, inventory icon, loading bg `99142567993225`) is **AssetType = Image (1)** and **owned by the place creator `2297144997`**.
-- Rules out the three usual culprits: **not** Decal-vs-Image, **not** ownership/permission, **not** moderation.
-- Symptom is the documented **transient cold-fetch failure cached as "failed" for the session** (DevForum reports match the exact "rejoin fixes it" pattern). Rejoin works because a fresh session re-issues the fetch.
+## Implemented contract
 
-**Why a loading screen alone is not the fix:** `ContentProvider:PreloadAsync` has **no built-in retry**, and with raw content-string IDs it assumes every ID is an image and fails at a high rate — passing **Instances** drops failures to ~0% (DevForum bug 2660912). The real fix is **preload-with-retry, using Instances**, behind a loading screen.
+- `AssetPreloader.preload` accepts only a dense numeric array. Dictionary and sparse tables are rejected.
+- Every image request calls `PreloadAsync({ imageLabel }, callback)` with a literal one-element array.
+- The callback's final `Enum.AssetFetchStatus` is primary. A concurrent documented
+  `GetAssetFetchStatus(id) == Success` observation can complete an already-cached
+  request when Studio does not return from `PreloadAsync`. `ImageLabel.IsLoaded`
+  and `ContentProvider.RequestQueueSize` are not used.
+- Each asset has its own retry and timeout. A failed asset cannot cancel or misclassify the rest of the batch.
+- A bounded worker pool avoids flooding the request queue.
+- Progress and final failures are reported by authored asset ID.
 
-**Why a manifest is mandatory:** The failing card backgrounds/art/icons are created **dynamically at runtime** in `CardVisuals.buildCardFrame`/`updateCardFrame` — they don't exist as instances at join time, so a GUI-tree scan can't catch them. They must be enumerated.
+## Two-tier loading
 
-**Chicken-and-egg (the loading screen's own background is also an asset):** The screen's functional layer uses **zero remote assets** — solid `BackgroundColor3` fill, default-font text, Frame-based progress bar (all render instantly). The background **image** is layered on top at full transparency and faded in only if/when it loads; if it never loads, the player keeps the solid color. So the screen can never be blank/broken.
+Roblox recommends preloading only assets required immediately instead of an entire place or library. The client therefore uses two gates:
 
-**Outcome:** Art present on the **first** join (no rejoin), plus a branded loading screen as the vehicle that buys time to preload + retry.
+1. `AssetIds.startupList()` contains shared card chrome and common UI images. `ReplicatedFirst.LoadingScreen` gates only this small list.
+2. `AssetIds.revealList(result.cards)` adds the exact artwork for the five cards returned by the server. `PackRevealController` completes this gate before creating and displaying the 3D card stage.
 
----
+`AssetIds.criticalList()` remains available as the de-duplicated full-library list for audits and tooling; it is intentionally not the login gate.
 
-## Approach (as built)
+The loading screen's functional layer still uses no remote assets. Its decorative
+background remains best-effort. Workspace/Lighting is deliberately not bulk
+preloaded because it competes with the essential queue and Roblox recommends
+streaming non-essential world content normally.
 
-Three new client modules + one mechanical refactor.
+## Runtime flow
 
-- **`ReplicatedStorage.Modules.AssetIds`** — single source of truth for all gameplay image IDs; `criticalList()` returns the de-duped flat list the loading screen gates on.
-- **`ReplicatedStorage.Modules.AssetPreloader`** — `preload(ids, opts)` builds a temp `ImageLabel` per id, `PreloadAsync`es the **Instances**, then re-preloads any failed asset up to `attempts` rounds (linear backoff), with progress callback + summary. `preloadInstances(insts)` = best-effort warm of existing instances.
-- **`ReplicatedFirst.LoadingScreen`** — removes default GUI; builds the asset-free branded screen; preloads bg image (non-blocking fade-in), critical list (gated, with progress), and environment textures/mesh-part textures (best-effort); gates release on critical preload + `game.Loaded` with a **~12s hard timeout / continue-anyway**; fades out.
-- **`StarterGui.BattleUI.Modules.CardVisuals`** — sources its IDs from `AssetIds` (no hardcoded `rbxassetid` strings).
+1. Show the asset-free loading UI.
+2. Retry callback-verified startup assets with four concurrent workers.
+3. Release the loading screen after the bounded startup cycle.
+4. On a successful pack purchase, show `Preparing cards…` and preload shared reveal art plus the exact five card artworks.
+5. Continue to the burst and rigid 3D reveal. If an ID exhausts retries, log it and allow normal Roblox rendering/fallback behavior instead of trapping the player.
 
-**Design decisions:** two tiers (gameplay = critical/retried/gating; environment = best-effort/non-gating); gate timeout 12s; preload Instances never strings; single source of truth over a duplicated manifest.
+## Verification
 
----
+- [x] Preload input is a dense array; dictionary-shaped inputs are rejected.
+- [x] Each `PreloadAsync` call receives `{ imageLabel }`.
+- [x] Completion uses the callback and documented fetch status, not `IsLoaded`.
+- [x] Login gates `startupList()`, not all card art.
+- [x] Pack reveal gates `revealList(result.cards)` before constructing SurfaceGuis.
+- [x] Full-library `criticalList()` remains available for coverage audits.
+- [x] Studio bounded-failure test: the session accepted the new scripts, rejected a
+  dictionary input, reported 6/11 startup IDs as `Success`, and released the loading
+  screen after five timed out. Roblox's own documented sample asset also failed to
+  return from `PreloadAsync` in this Studio session, so this environment is not a
+  valid cold-delivery success oracle. A later warmed-cache play run completed 11/11.
+- [ ] Publish and test on the original device with a cold cache; confirm first-draw front/back/card chrome loads without rejoining.
 
-## Checklist
+## Main files
 
-### Investigation
-- [x] Confirm no existing preloading in the place (`script_grep` → zero `PreloadAsync`)
-- [x] Web research: PreloadAsync best practice, retry, Instances-vs-strings failure rate
-- [x] Asset-health audit: `GetProductInfo` on every referenced ID (type + owner)
-- [x] Rule out Decal-vs-Image / ownership / moderation
-- [x] Verify loading bg `99142567993225` is Image-type and owned
-
-### Implementation
-- [x] `AssetIds` module + `criticalList()`
-- [x] `AssetPreloader` (Instances + per-asset retry + progress + summary; best-effort `preloadInstances`)
-- [x] `ReplicatedFirst.LoadingScreen` (asset-free screen, bg fade-in, gated critical + best-effort env, timeout/continue, fade-out)
-- [x] Refactor `CardVisuals` to consume `AssetIds`
-- [x] Update `DEV_STATUS.md` (module entries + Known Issues)
-
-### Verification
-- [x] Headless: `criticalList()` → 11 unique IDs; preload resolved 11/11
-- [x] Headless: CardVisuals rebuilds creature/spell/back frames with correct resolved IDs (behavior-identical)
-- [x] Studio play: `[LoadingScreen] preloaded 11/11 critical assets`, no failures, screen fades out cleanly (no hang)
-- [x] Failure injection: bogus ID fails gracefully after retries in ~1.7s (`ok=false, loaded=1, failed=1`), no block
-- [x] Codex re-validation (2026-06-22): Studio object map contains `ReplicatedStorage.Modules.AssetIds`, `ReplicatedStorage.Modules.AssetPreloader`, `ReplicatedFirst.LoadingScreen`, and `StarterGui.BattleUI.Modules.CardVisuals`; only `AssetPreloader` calls `PreloadAsync`; `CardVisuals` requires `AssetIds` and has no hardcoded `rbxassetid://` strings; `criticalList()` returns 11 IDs; Play mode printed `[LoadingScreen] preloaded 11/11 critical assets`; `PlayerGui.LoadingScreen` was destroyed after release.
-- [x] Codex asset-reference scan (2026-06-22): editor-placed `StarterGui` image assets are covered by the critical list (`DeckPanel` energy icon, HUD inventory icon/outline). Workspace decor contains many third-party cafe/baseplate/noob texture IDs that are intentionally **not** critical; the current best-effort environment warm scans `ImageLabel`, `ImageButton`, `Decal`, `Texture`, and `MeshPart` under `Workspace`/`Lighting`.
-- [ ] **Real-device first-join test** — publish, join on the non-Studio device that originally failed (ideally fresh / cache-cleared), confirm art present on the **first** join with no rejoin *(only this proves the original bug fixed — Studio joins with a warm cache and can't reproduce it)*
-- [ ] Save the Studio place to persist the three new scripts
-
----
-
-## Critical files
-| File | Change |
+| Studio object | Responsibility |
 |---|---|
-| `ReplicatedStorage.Modules.AssetIds` | NEW — id source of truth + `criticalList()` |
-| `ReplicatedStorage.Modules.AssetPreloader` | NEW — preload + retry utility (Instances) |
-| `ReplicatedFirst.LoadingScreen` | NEW — branded screen, solid-color fallback, run preloader, timeout/continue |
-| `StarterGui.BattleUI.Modules.CardVisuals` | REFACTOR — source IDs from `AssetIds` |
-| `DEV_STATUS.md` | docs — new module entries + Known Issues |
+| `ReplicatedStorage.Modules.AssetIds` | Shared IDs plus `startupList`, `revealList`, and full audit list |
+| `ReplicatedStorage.Modules.AssetPreloader` | Array validation, callback status, per-ID retry, timeout, and progress |
+| `ReplicatedFirst.LoadingScreen` | Branded startup UI and essential-asset gate |
+| `StarterPlayer.StarterPlayerScripts.PackRevealController` | Exact-five preparation gate before 3D reveal |
 
-> Scripts live in the Studio place (not the repo) — created via the Studio MCP. Save the place to persist.
+## Tuning
 
-## Out of scope (logged in DEV_STATUS Known Issues)
-- Generating/wiring missing card art (separate 🔴 issue).
-- 🟡 Archived/unauthorized **sound** assets (`1914538756` archived, `150463355` unauthorized) — still present in the 2026-06-22 Codex Play check; sounds, not images.
-- 🟢 Stray `rbxassetid://0` empty image — harmless leftover from the audit.
-- 🟢 Workspace decor `SpecialMesh.TextureId` assets are not included in the current best-effort environment warm. Gameplay/UI image loading is covered; this only affects non-critical cafe props.
-- Balance tuning.
+- Startup and reveal: `attempts = 2`, `assetTimeout = 6`, `concurrency = 4`.
+- Decorative loading background: `attempts = 2`, `assetTimeout = 4`, `concurrency = 1`.
+- Workspace and Lighting are not bulk preloaded.
 
-## Tuning knobs (constants in `LoadingScreen` / `AssetPreloader`)
-- `GATE_TIMEOUT = 12` — max hold before continue-anyway
-- `BG_TIMEOUT = 4` — max wait on decorative bg image
-- `attempts = 3` — critical preload retry rounds
-- backoff `0.35 * round` between retry rounds
+## References
+
+- [Roblox ContentProvider API](https://create.roblox.com/docs/reference/engine/classes/ContentProvider)
+- [Roblox load-time performance guidance](https://create.roblox.com/docs/performance-optimization/improve)

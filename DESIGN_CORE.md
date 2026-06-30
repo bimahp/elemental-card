@@ -6,7 +6,7 @@
 
 ## Concept
 
-A Roblox digital card battle game. Players build decks, summon creatures onto a 3-slot board, and spend Energy to play cards and attack. Playing cards also builds **Battle Charge**, a second hero resource. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
+A Roblox digital card battle game. Players build decks, summon creatures onto a 3-slot board, and spend Energy to play cards and attack. Creatures on board build **Battle Charge** at the end of their owner's turn, creating a second hero resource for Charge-cost cards. The setting is a 3D social TCG card shop — battles happen at visible tables, cards are collected through play.
 
 ---
 
@@ -41,7 +41,7 @@ A Roblox digital card battle game. Players build decks, summon creatures onto a 
 1. **Energy** — cap increases by 1, pool refills to cap
 2. **Draw** — draw 1 card; if deck is empty, take Fatigue damage instead
 3. **Main Phase** — play cards and attack in any order, any number of times while resources allow
-4. **End Turn** — pass to opponent
+4. **End Turn** — resolve end-turn abilities, generate Battle Charge from non-NEUTRAL creatures on board, then pass to opponent
 
 ---
 
@@ -53,9 +53,9 @@ Drawing from an empty deck deals escalating direct Core damage: 1 the first time
 
 ## Card Types
 
-**Creature** — Summon to an empty board slot. Cannot attack the turn it is summoned (**Summoning Sickness**), unless it has **Charge**. Costs Energy.
+**Creature** — Summon to an empty board slot. Cannot attack the turn it is summoned (**Summoning Sickness**), unless it has **Charge**. Costs Energy, Battle Charge, or both.
 
-**Spell** — A one-shot effect. Played from hand, resolves immediately, goes to discard. Costs Energy.
+**Spell** — A one-shot effect. Played from hand, resolves immediately, goes to discard. Costs Energy, Battle Charge, or both.
 
 A card's abilities are an ordered `effects[]` list (trigger + action); a card
 with none is a vanilla body. See [DESIGN_DATABASE.md](DESIGN_DATABASE.md).
@@ -96,30 +96,26 @@ choose or store a Core.
 
 - Each hero holds up to **two Charge Types** at once, shown as two Charge Slots on
   the hero card. Exactly one occupied slot is the **current** slot.
-- **MIGHTY, SWIFT, and VITAL are Charge-producing.** Playing one of these cards
-  grants **+1 Charge** of its Battle Type **after** the card resolves (after Emerge
-  for creatures, after Cast for spells, before the spell goes to discard).
+- **MIGHTY, SWIFT, and VITAL are Charge-producing.** At the end of a player's turn,
+  each non-NEUTRAL creature that player controls generates **+1 Charge** of its
+  Battle Type. Generation checks the board left-to-right after `turn_end` effects.
   **NEUTRAL never produces or occupies Charge** (and neither does the Coin).
-- A freshly gained Charge always becomes the **current** slot. A matching gain
-  increments its existing slot and becomes current. A **third** distinct type
-  replaces the **inactive** occupied slot (no prompt, no client decision) and
-  becomes current, preserving the previously-current slot as inactive.
+- Automatic board generation follows the two-slot limit: matching type stacks,
+  an empty slot is filled, and a third off-type creature generates nothing while
+  both slots are occupied. Board generation never replaces an occupied slot.
+- Direct effect gains such as `gain_charge` still use the core Charge gain rule:
+  a matching gain stacks, an empty slot is filled, and a third distinct direct gain
+  replaces the inactive occupied slot.
 - **Spending** Charge does not move the current slot unless the spent slot reaches
   zero; an emptied slot hands "current" to the remaining occupied slot.
 - Cards may **cost** Charge (`chargeCost = { battleType, amount }`) and effects may
-  **grant** extra Charge (`gain_charge`). Explicit `gain_charge` **stacks** with the
-  normal +1: a MIGHTY spell with `gain_charge MIGHTY 2` yields **+3** total. A card
-  can never use the Charge it generates to pay its own `chargeCost` — the cost is
-  validated and paid before any effect or the normal +1 resolves.
-- Energy, Armor, and HP are unaffected by Charge — it is its own pool. Tokens,
-  rebirth, summon-from-effect, return-from-graveyard, and board copies do **not**
-  grant normal played-card Charge (only a card played from hand does).
-- **CORRUPTED** is a permanent printed card trait, not a fifth Battle Type. A
-  Corrupted card retains its original Battle Type, race, rarity, and synergies. It
-  does **not** grant the normal +1 played-card Charge after resolving — it only
-  blocks that grant, not any explicit `gain_charge` effects. Encoded in
-  `effects[]` as `{ trigger = "passive", action = "corrupted" }`. No confirmation
-  dialog. Charge costs are mandatory, automatic, and atomic.
+  **grant** explicit Charge (`gain_charge`). A card can never use Charge it will
+  generate later to pay its own `chargeCost` — cost validation and payment happen
+  before card resolution.
+- Energy, Armor, and HP are unaffected by Charge — it is its own pool.
+- The old `corrupted` trait is retained only as a legacy schema action. Current
+  alpha packs do not rely on Corrupted because board-generated Charge removed the
+  need for a "played card does not grant Charge" exception.
 
 > Charge is fully server-authoritative. Slots, the current slot, and per-change
 > events replicate to clients/spectators for animation; animation completion never
