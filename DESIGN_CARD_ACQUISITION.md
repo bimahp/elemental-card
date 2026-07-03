@@ -14,10 +14,11 @@
 > [PLAN_CARD_ACQUISITION.md](PLAN_CARD_ACQUISITION.md)
 > for the implemented architecture and verification record.
 
-> **Planned successor (2026-07-01):** [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md)
+> **Implemented successor (2026-07-01):** [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md)
 > adds live server-computed per-draw odds, same-rarity duplicate protection, a
 > leveled Vending Machine UI, and a policy-gated Developer Product mall for
-> Crystal Shards. This work is planning-only until `DEV_STATUS.md` says otherwise.
+> Crystal Shards. Product IDs and dedicated currency icons are configured; only
+> the published-place real-purchase receipt test remains.
 > It is duplicate protection, not an Epic/Legendary dry-streak or guaranteed-rarity
 > pity counter. The selected algorithm takes one ownership snapshot before all five
 > draws, so same-pack over-cap repeats can still convert to Dust.

@@ -6,6 +6,176 @@ Hybrid 3D/2D presentation. The 3D world shows the card shop and table setup. A 2
 
 ---
 
+## UI Visual Standard
+
+Core non-battle panels use a **hybrid game UI** direction: the interface should
+feel playful and chunky like a Roblox game panel while still belonging to the
+crystal-fantasy card world. The goal is not to add decoration everywhere; it is
+to make hierarchy, contrast, touch targets, and empty states feel intentionally
+designed.
+
+### Panel Frame
+
+- Modal panels use a thick dark navy outer stroke, large rounded corners, and a
+  colored title bar.
+- A solid dark navy divider separates the title bar from the content body; the
+  header must read as a distinct colored layer, never as body text floating on
+  the panel background.
+- Title bars use stable individual `UICorner` radii: rounded top corners and
+  zero-radius bottom corners. Use 9-slice artwork only when a frame needs a
+  decorative silhouette beyond native rounded geometry.
+- Modal shells use a restrained native `UIShadow` for separation from the 3D
+  world. Shadows remain soft, dark, and secondary to the navy outer stroke.
+- Default shell: deep navy body, darker inner surfaces, saturated accent header.
+- Use light panel bodies only for inventory-like dense grids where readability
+  improves.
+- Every modal has a title bar, large title, close button, consistent padding,
+  optional back button, and optional scrim.
+- Root pages show the panel's product icon in the reserved back-button slot.
+  Deeper pages hide that icon and show Back in the same stable header region.
+- Modal shells include an invisible input blocker below their content. Clicking
+  the header or any empty interior area must not activate the scrim; only the
+  close button or a click outside the panel closes the modal.
+- Modal entrance motion begins slightly below rest, travels upward past the
+  final position, then settles downward a shorter distance through one
+  continuous eased tween. Keep it under `0.5s`, restore the exact responsive
+  position, and play it only when the modal opens, not during internal page
+  navigation.
+- Floating sections inside a modal use framed surfaces, not nested modal cards.
+
+### Color System
+
+- Base outline: near-black navy.
+- Main panel fill: dark blue-navy.
+- Inner panel fill: darker slate-navy.
+- Text: white primary, soft blue-gray secondary.
+- Accent colors come from the game identity: Crystal Shards cyan/blue, Dust
+  violet, SWIFT green, MIGHTY ruby, VITAL sapphire, and NEUTRAL quartz.
+- Avoid one-note dark panels where background, panel, section, and empty state
+  all share similar values.
+- Gradients may polish title bars, badges, and primary buttons, but contrast and
+  hierarchy must work without relying on the gradient.
+
+### Typography
+
+- Use a rounded display font for modal titles, category labels, card/item names,
+  and important numbers.
+- Body text can remain a cleaner readable font.
+- Titles are visibly larger than body labels; primary game panels must not use
+  small quiet titles.
+- Important text may use dark outline/stroke when placed on saturated headers.
+- Text must stay inside its container for long card names, large currency values,
+  and localized product prices.
+
+### Buttons
+
+- Primary buttons are chunky, high-contrast, and full-width inside purchase or
+  product rows when appropriate.
+- Economy actions use icon/value hierarchy so the player sees item, amount, and
+  price at a glance.
+- Disabled and loading states visibly dim and stop hover feedback; they do not
+  merely ignore input.
+- Close and back controls use large icon-style buttons, not small plain text.
+- HUD icons that include a finished dark silhouette or border render once with
+  `ScaleType = Fit`. Do not add a duplicate-image outline or `UIStroke` around
+  pre-bordered artwork; reserve external outlines for unframed placeholder art.
+- Desktop world-menu icons use a `72px` target with a short white label
+  overlapping their lower edge. Labels use a rounded display font and a dark
+  contextual `UIStroke`; they do not create a second row beneath the icon.
+
+### Inventory / Card Grid
+
+- Browsing tiles prioritize artwork/icon, name, quantity, rarity/type color, and
+  ownership state.
+- Full rules text belongs in a detail panel, not cramped into every browsing
+  tile.
+- Empty detail states include a designed placeholder: faint card silhouette,
+  crystal motif, or preview frame.
+- Selected-card detail surfaces should feel like inspection areas, not blank
+  dark rectangles.
+
+### Vending Browser / Odds List
+
+- Pack selection is one vertically scrolling browser made of named sections.
+  Each section owns a responsive pack-tile grid so future collections can be
+  appended without introducing another page or overflowing the panel body.
+- Pack tiles target approximately `220x270` on desktop and `160x190` on mobile
+  landscape. Artwork uses `ScaleType = Fit`, remains clipped by the scrolling
+  body, and never extends through the title bar or modal frame.
+- Pack Contents uses the same two-column structure on desktop and mobile
+  landscape: a vertically scrolling odds list at approximately 68% width and a
+  fixed explanatory surface at approximately 32% width.
+- Odds rows are stable `58-66px` touch targets. Their outer stroke uses the
+  card's battle-type color. The unframed battle-type emblem fills the reserved
+  icon footprint at the left; do not place it inside a circle or badge. The race
+  overlays the top of the emblem, with `SPELL` used when race is absent.
+- Card names are white rounded display text with a thick contextual rarity
+  stroke: Common quartz, Rare cyan, and Epic violet. A dark percentage pill is
+  right aligned and displays up to four decimal places with trailing zeroes
+  removed.
+- Odds retain server-calculated values and are displayed by rarity (Common,
+  Rare, Epic), then battle type, then card name ascending. The UI does not
+  reroll or imply a guarantee that the server does not provide.
+- The right surface is text-only and explains duplicate protection and odds
+  rounding. Its content uses a clipped vertical `ScrollingFrame` with automatic
+  Y canvas sizing and stable readable typography; desktop simply remains at
+  canvas origin when all copy fits. It is not a persistent selected-card panel.
+- On desktop, hovering an odds row for `0.5s` opens a full card preview; leaving
+  cancels or closes it. On mobile, holding for `0.5s` opens the preview,
+  releasing closes it, and moving more than `12px` cancels the hold so normal
+  scrolling remains responsive. A normal tap performs no action.
+- Odds rows immediately gain a restrained battle-color tint and stronger outer
+  stroke on desktop hover or mobile touch-down. Feedback clears on leave,
+  release, or scroll cancellation; the delayed preview remains a separate state.
+- Preview instances are non-interactive, stay within visible safe bounds, and
+  are dismissed on scroll, page navigation, close, odds refresh, purchase, and
+  pack reveal.
+
+### Texture / Pattern
+
+- Use subtle crystal, faceted, or diamond patterns in panel bodies and empty
+  states.
+- Imported panel textures must be seamless or edge-safe, low-contrast, free of
+  text and focal objects, and remain readable when cropped across aspect ratios.
+- Use a texture image as a quiet overlay above the base fill at low opacity; it
+  must not replace the base panel color or carry essential information.
+- The shared navy panel texture is `rbxassetid://115366182634060`; render it
+  behind page content and never allow it to intercept input.
+- The shared texture spans the complete non-header interior, edge-to-edge from
+  the title divider through the rounded bottom corners. Content padding belongs
+  to the page layout and must not inset the shell texture.
+- Do not use noisy full-background images inside functional panels.
+- Background images are supporting polish only; the main UI quality comes from
+  hierarchy, spacing, contrast, outlines, typography, and strong states.
+
+### Responsive Rules
+
+- Mobile gameplay is landscape-only. `StarterGui.ScreenOrientation` must be
+  `LandscapeSensor`, allowing both left- and right-landscape rotation while
+  preventing portrait layouts.
+- Panels respect Roblox device safe areas.
+- The world HUD uses `DeviceSafeInsets`: top-right currency aligns with the
+  Roblox top-bar row, while world menu buttons remain directly beneath it.
+- Modal presentation uses two ScreenGuis: a full-viewport backdrop button with
+  `ScreenInsets = None` covers the physical viewport, while the interactive
+  panel and secondary click-to-close scrim use `CoreUISafeInsets`. The backdrop
+  uses `InputSink = All` and closes the modal when activated, preventing camera
+  or world input from leaking through outside the Core-safe area. Roblox CoreGui
+  remains above player UI by design, and panel headers must not overlap it.
+- Only the full-screen backdrop renders the dark dim. The Core-safe scrim is
+  transparent and exists solely to catch clicks outside the panel; never stack
+  both surfaces visually, which creates a darker safe-area rectangle.
+- Do not rely on `FullscreenExtension` for new overlays. Set screen insets
+  explicitly and audit every loading, modal, and battle-blocking overlay.
+- Dense panels use a two-column desktop layout and a stacked/mobile layout under
+  the existing mobile threshold.
+- Text and controls must not overlap during hover, selection, loading, dynamic
+  price lookup, or balance updates.
+- Test with long values such as `1000 Shards`, `1599 Robux`, `10.2K`, `999.9K`,
+  and long card names.
+
+---
+
 ## Pre-Battle: Table Interaction
 
 Two entry flows (server-owned tables — see `PLAN_BACKEND.md` A3):

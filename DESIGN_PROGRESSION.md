@@ -70,8 +70,7 @@ Player level is separate from monster mastery and tracks overall account progres
 ## Crystal Currency Uses
 
 - **Crystal Shards:** spend 50 at the Card Vending Machine to open five cards
-  (currently earnable through play; Robux bundles are planned in
-  `PLAN_MONETIZATION.md` and are not implemented yet)
+  (earnable through play; the policy-gated Robux bundle shop and product IDs are configured)
 - **Crystal Dust:** duplicate conversion currency (5 common / 20 rare / 80 epic);
   spending and crafting remain future work
 - Cosmetic purchases
@@ -95,8 +94,8 @@ Players collect cards through:
 - Seasonal ranked ladders
 - Tournament entry and prize pools
 - Additional pack banners, pity rules, and targeted pools
-- Duplicate-aware per-draw odds disclosure and same-rarity duplicate protection
-  for the Standard Pack (`PLAN_MONETIZATION.md`; planned, not implemented)
-- Policy-gated Developer Product bundles for Crystal Shards
-  (`PLAN_MONETIZATION.md`; planned, not implemented)
 - Card trading between players
+
+Implemented acquisition support: duplicate-aware per-draw odds disclosure,
+same-rarity duplicate protection for the Standard Pack, and the policy-gated
+configured Developer Product shop (`PLAN_MONETIZATION.md`).

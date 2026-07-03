@@ -2,11 +2,11 @@
 
 ## Implementation status — completed and verified 2026-06-29
 
-> Successor planning note (2026-07-01): `PLAN_MONETIZATION.md` plans the next
-> Vending Machine UI, live per-draw odds, same-rarity duplicate protection, and
-> policy-gated Robux Shard mall. Those additions are not part of this completed
-> implementation record. The successor must also remove the temporary `125`
-> Shard-on-login test override below before any paid currency is enabled.
+> Successor implementation note (2026-07-01): `PLAN_MONETIZATION.md` implements
+> the next Vending Machine UI, live per-draw odds, same-rarity duplicate protection,
+> and policy-gated Robux Shard mall. Those additions remain separate from this
+> original implementation record. The successor removed the temporary `125`
+> Shard-on-login override; Developer Product IDs are now configured.
 
 The implementation now uses the display name's canonical card ID throughout and
 SaveService schema **v5.0**. The earlier v4.1-only notes below are historical; v5.0
@@ -47,9 +47,9 @@ Final architecture corrections made during review:
 - `TestService.GachaAcquisitionSpec` deterministically verifies the 132-card pool,
   five-card generation, insufficient-funds atomicity, invalid-roll atomicity, and
   the same-pack duplicate cap/Dust conversion.
-- **Temporary testing override:** SaveService sets Crystal Shards to **125** after
-  each successful profile load, before broadcasting the initial snapshot. This is
-  intentionally not production economy behavior.
+- **Historical testing override (removed 2026-07-01):** SaveService formerly set
+  Crystal Shards to **125** after each successful profile load. The monetization
+  successor removed it before enabling paid-currency code.
 
 ## Context
 

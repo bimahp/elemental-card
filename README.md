@@ -28,7 +28,7 @@ A Roblox digital card battle game set inside a 3D TCG card shop. Players challen
 | [PLAN_BATTLE_CHARGE_V2.md](PLAN_BATTLE_CHARGE_V2.md) | Board-generated Battle Charge, redesigned packs/starters, and new Charge interaction actions |
 | [PLAN_BATTLE_TARGET.md](PLAN_BATTLE_TARGET.md) | Explicit spell `playTarget` targeting revamp and drag/drop zone model |
 | [PLAN_CARD_ACQUISITION.md](PLAN_CARD_ACQUISITION.md) | Implemented Card Vending Machine, atomic purchase flow, reveal UI, and verification |
-| [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md) | Planned duplicate-aware pack odds, Vending Machine UI revamp, currency HUD, and policy-gated Robux Shard mall |
+| [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md) | Implemented duplicate-aware pack odds, Vending Machine UI revamp, currency HUD, and configured policy-gated Robux Shard mall |
 
 ---
 
@@ -79,7 +79,7 @@ ServerScriptService/
     TableManager          ← Table/seat ownership, chained seating, PvE NPC bench
     GachaTransaction      ← Atomic shard/card/Dust mutation with same-pack two-copy enforcement
     GachaService          ← Unified 132-card weighted roll generator
-    SaveService           ← ProfileStore wrapper: schema v5.0, canonical-ID reset, decks, quests, currency, atomic pack purchase, autosave
+    SaveService           ← ProfileStore wrapper: schema v5.1, canonical-ID reset, decks, quests, currency, atomic pack/receipt persistence, autosave
   Packages/
     ProfileStore          ← vendored session-locked DataStore lib (loleris, pinned 45c9847)
   BattleController        ← Thin remote-wiring → Registry/Session/TableManager + SaveService (v5)

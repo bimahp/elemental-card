@@ -1,6 +1,34 @@
 # PLAN_MONETIZATION — Vending Machine Revamp + Robux Item Mall
 
-> Status: **planning** | Author: bimahp | Date: 2026-07-01
+> Status: **implemented and configured; published receipt test pending** | Author: bimahp | Date: 2026-07-01
+
+## Implementation record — 2026-07-01
+
+Implemented in the live Studio place:
+
+- SaveService schema v5.1, non-destructive `purchaseHistory` migration, removal of
+  the temporary 125-Shard login override, and save-confirmed idempotent receipt API.
+- `ShopConfig`, `ShopTransaction`, the single `ProcessReceipt` handler, policy
+  lookup/cache, fail-closed Item Mall visibility, dynamic regional price lookup,
+  and all four configured Developer Products.
+- Duplicate-aware Standard Pack generation and live per-draw odds from the same
+  pre-pack ownership snapshot, including all-capped rarity fallback.
+- Currency HUD, Item Mall page stack, and Vending Machine Pack Select → Detail →
+  Contents page stack while retaining the existing pack reveal lifecycle.
+- `GachaOddsSpec` and `ShopTransactionSpec`; all new and existing deterministic
+  acquisition tests pass. Studio Play starts without script errors, preserves the
+  pre-existing 75 Shards / 65 Dust test profile across rejoin, returns 105 live
+  eligible outcomes for that profile totaling approximately 100%, and resolves the
+  current policy as Item Mall allowed.
+
+The four Developer Products and both final currency icons are configured. The only
+remaining external verification is a published-place real purchase that exercises
+`ProcessReceipt` end to end.
+
+Live Marketplace metadata verification passed in Studio Play: all four IDs resolve
+to the intended products and default prices (50/99, 250/449, 500/849, 1000/1599),
+both currency icons replicate into the HUD, and the essential asset gate preloads
+14/14 assets successfully.
 
 ---
 
@@ -33,10 +61,10 @@ requirements rather than new product assumptions:
   while another card in that rarity remains eligible. If the entire rarity is
   capped, fallback makes every card in that rarity possible again, so those cards
   must reappear with their live odds.
-- Robux developer products are **not yet created** — this plan ends with exact
-  Creator Dashboard setup steps and placeholder product IDs in code.
-- Currency icons: reuse `AssetIds.Icons.ENERGY` as a placeholder for both Crystal
-  Shards and Crystal Dust, per the user's explicit instruction.
+- Robux Developer Products are configured in `ShopConfig`; their live regional
+  prices are still fetched from MarketplaceService rather than hard-coded.
+- Currency icons are `AssetIds.Icons.CRYSTAL_SHARD = 103621750170047` and
+  `AssetIds.Icons.CRYSTAL_DUST = 118745543637085`.
 - Odds shown in Pack Content Details are **per card draw**. Each of the five draws
   uses that distribution; this is not presented as the chance to see a card at
   least once somewhere in the full five-card pack.
@@ -45,12 +73,11 @@ requirements rather than new product assumptions:
   become Dust in `GachaTransaction`; the UI odds remain exact for every draw under
   that snapshot rule.
 
-## Phase 0 — Production-safety prerequisite
+## Phase 0 — Production-safety prerequisite (completed)
 
-Before enabling any Developer Product, remove the temporary SaveService test
-override that sets every loaded profile's Crystal Shards to `125`. Leaving it in
-place could overwrite paid currency on login. Verify fresh, existing, and
-receipt-granted profiles retain their authoritative Shard balance across rejoin.
+The temporary SaveService override that set every loaded profile's Crystal Shards
+to `125` has been removed. Existing currency persistence across rejoin was verified;
+receipt-granted persistence remains part of the published-place real-purchase test.
 
 ## Grounding (read directly from the live Studio place, not just docs)
 
@@ -96,9 +123,8 @@ receipt-granted profiles retain their authoritative Shard balance across rejoin.
   `InteractionAnchor/ProximityPrompt`, one `OfferDisplay/PackOfferSurface`. No
   per-pack-type data exists in the world yet — confirms "only Standard Pack for now"
   is the actual current state, not a design simplification.
-- `ReplicatedStorage.Modules.AssetIds` (full source read) — `Icons.ENERGY =
-  "rbxassetid://114305689596215"`, `InventoryIcon`, no Shards/Dust/pack-logo icons
-  exist yet.
+- `ReplicatedStorage.Modules.AssetIds` now has dedicated `CRYSTAL_SHARD` and
+  `CRYSTAL_DUST` icons. `PackArt.standard` still uses placeholder pack art.
 
 ## Architecture
 
@@ -107,7 +133,7 @@ receipt-granted profiles retain their authoritative Shard balance across rejoin.
 - Add a new sibling `Frame "CurrencyBar"` to `StarterGui.Hud`, anchored top-right
   above `TopRightAnchor` (`AnchorPoint=(1,0)`, `Position={1,-12},{0,12}`), holding
   two pill badges (`ShardsBadge`, `DustBadge`) each with an `ImageLabel` icon
-  (`AssetIds.Icons.ENERGY` placeholder, swap later) + `TextLabel` count, styled
+  (`AssetIds.Icons.CRYSTAL_SHARD` / `CRYSTAL_DUST`) + `TextLabel` count, styled
   like the reference image (rounded pill, icon left, number right).
 - Move `TopRightAnchor`'s `Position` down to clear the new bar's height (e.g.
   `{1,-12},{0,68}` — exact offset finalized in editor against the built badge height).
@@ -146,14 +172,13 @@ receipt-granted profiles retain their authoritative Shard balance across rejoin.
 - New `ReplicatedStorage/Modules/ShopConfig` — shared bundle definitions:
   ```lua
   ShopConfig.Bundles = {
-      { id = "shards_50",   productId = 0, shards = 50   }, -- FILL IN productId
-      { id = "shards_250",  productId = 0, shards = 250  }, -- FILL IN productId
-      { id = "shards_500",  productId = 0, shards = 500  }, -- FILL IN productId
-      { id = "shards_1000", productId = 0, shards = 1000 }, -- FILL IN productId
+      { id = "shards_50",   productId = 3607628806, shards = 50   },
+      { id = "shards_250",  productId = 3607628936, shards = 250  },
+      { id = "shards_500",  productId = 3607629100, shards = 500  },
+      { id = "shards_1000", productId = 3607629181, shards = 1000 },
   }
   ```
-  `productId` starts at a placeholder and gets filled in once the products exist
-  (see setup steps at the end). Robux prices are not stored in this config. The
+  Robux prices are not stored in this config. The
   client retrieves each player's live `PriceInRobux` with
   `MarketplaceService:GetProductInfoAsync(productId, Enum.InfoType.Product)` under
   `pcall`, so the label matches regional/optimized pricing. If lookup fails, the
@@ -324,21 +349,20 @@ accurate: "CARD PACK · 50 CRYSTAL SHARDS").
 `PackRevealController`, `CameraCardStage`, `CardVisuals`, `GachaTransaction`,
 `GachaConfig` are all reused unmodified.
 
-## Developer Product setup (must be done by the user — not API-creatable)
+## Developer Product setup (completed by the user)
 
 For each of the 4 bundles, in Roblox Studio: **Home → Monetization → Developer
 Products → Create**, or via the Creator Dashboard for the experience:
 
-| Name | Price (Robux) | Shards granted |
-|---|---:|---:|
-| Crystal Shards x50 | 99 | 50 |
-| Crystal Shards x250 | 449 | 250 |
-| Crystal Shards x500 | 849 | 500 |
-| Crystal Shards x1000 | 1599 | 1000 |
+| Name | Default price (Robux) | Shards | Product ID |
+|---|---:|---:|---:|
+| Crystal Shards x50 | 99 | 50 | 3607628806 |
+| Crystal Shards x250 | 449 | 250 | 3607628936 |
+| Crystal Shards x500 | 849 | 500 | 3607629100 |
+| Crystal Shards x1000 | 1599 | 1000 | 3607629181 |
 
-These are Creator Dashboard **default** prices. After creation, copy each product's
-numeric ID into `ShopConfig.Bundles[i].productId`
-(currently placeholder `0`). `MarketplaceService.ProcessReceipt` can only be set
+These are Creator Dashboard **default** prices; the IDs are installed in
+`ShopConfig.Bundles`. `MarketplaceService.ProcessReceipt` can only be set
 **once** per game session — if any other system later needs receipt processing,
 extend `RobuxShopController`'s single handler rather than adding a second one.
 The in-experience labels come from MarketplaceService at runtime, not this table.
@@ -358,8 +382,8 @@ The in-experience labels come from MarketplaceService at runtime, not this table
    same-pack repeats follow the documented snapshot rule and can become Dust.
 2. **Studio Play**: HUD currency bar updates live after a vending purchase; Item
    Mall remains hidden while policy is unresolved/restricted, opens only when
-   allowed, placeholder products stay disabled, and live product-price lookup has
-   an unavailable fallback. Buy prompts `PromptProductPurchase` (full receipt flow
+   allowed, configured products load live prices, and product-price lookup has an
+   unavailable fallback. Buy prompts `PromptProductPurchase` (full receipt flow
    needs a published place and test purchases cost real Robux); Vending Machine flow
    PackSelect → PackDetail → PackContents → Back → Back → Open → existing reveal
    sequence end-to-end; pull a card to 2 copies and confirm it both drops out of

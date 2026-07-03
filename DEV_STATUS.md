@@ -1,21 +1,23 @@
 # DEV_STATUS — Elemental TCG: Implementation State
 
-> Last updated: 2026-07-01 (monetization plan alignment; no monetization features implemented)
+> Last updated: 2026-07-01 (monetization configured; published receipt test pending)
 
-## Planned — Monetization and Vending Machine revamp
+## Monetization and Vending Machine revamp — configured, receipt test pending
 
-`PLAN_MONETIZATION.md` is the source of truth for the next acquisition/monetization
-work. It is **planning-only**: the current runtime still has the flat Vending
-Machine panel, static 70/25/5 rolling without duplicate-aware candidate exclusion,
-no Item Mall, no Developer Product receipt handler, and no persistent currency bar.
+`PLAN_MONETIZATION.md` is the implementation record and source of truth. The live
+place now has the persistent Shards/Dust HUD, leveled Vending Machine, live
+server-computed **per-card-draw** odds, same-rarity duplicate protection using one
+pre-pack ownership snapshot, policy-gated Item Mall, dynamic regional price lookup,
+schema v5.1 receipt history, and a single idempotent `ProcessReceipt` handler that
+waits for confirmed persistence before returning `PurchaseGranted`. The temporary
+`crystalShards = 125` login override is removed.
 
-The planned successor adds live server-computed **per-card-draw** odds, same-rarity
-duplicate protection using one pre-pack ownership snapshot, a leveled Vending
-Machine UI, and a policy-gated Developer Product mall for Crystal Shards. It must
-remove the temporary `crystalShards = 125` login override before paid currency is
-enabled. `ArePaidRandomItemsRestricted` hides and hard-disables the Item Mall while
-the unpaid, earnable-Shard Vending Machine path remains available. Receipt grants
-must be deduplicated and confirmed persisted before returning `PurchaseGranted`.
+All four Developer Product IDs and both dedicated currency icons are configured.
+The remaining external step is the published-place receipt test with real Robux.
+Existing acquisition, new odds, and Shop transaction specs pass, and Studio Play
+starts without monetization script errors. Live Marketplace metadata resolves all
+four products at the intended default prices, and the loading gate reports 14/14
+essential assets preloaded with the new icons included.
 
 ---
 
@@ -150,7 +152,8 @@ Battle Charge system** (`PLAN_BATTLE_CHARGE.md`). Summary of what changed:
   client Core surface (preview/drag/targeting/panel). `CrystalCores.lua` is orphaned.
 - Snapshots carry `chargeSlots`/`currentChargeSlot`/`chargeSeq`/`chargeEvents`
   (perspective-remapped); hero cards render two Charge sockets with emblem art.
-- SaveService schema **v5.0**: intentional major reset for canonical card IDs.
+- SaveService schema **v5.1**: v5.0 performed the intentional major reset for
+  canonical card IDs; v5.1 non-destructively adds Developer Product receipt history.
   Profiles below major version 5 are wiped to fresh onboarding data on load,
   preventing retired IDs from surviving in collections or decks.
 
@@ -188,12 +191,16 @@ renders, deck builder Core-free).
 | RewardService | `ServerScriptService/Modules/RewardService.lua` | ✅ Complete (policy only) — builds mode-aware reward payloads without persistence: PvE winner EXP/gold/NPC-deck card drop; PvE loser/npc no payload; PVP winner/loser placeholder messages for Phase 4 persistence |
 | TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp`. **Seating reliability (2026-06-22):** `seatPlayerAt` now clears stale seat/lock state before re-seating, **respects `awaitSeated`** (3s window + one retry), and on failure releases the reservation and returns false — a battle can never start with the player unseated ("in place"). `handleTalkToNpc` no longer returns silently: when no table is free or seating fails it fires `BattleUnseated` (clears the optimistic "Finding Table" overlay) and `Notify` with a reason. BattleUI records the active Seat CFrame and, after the SeatWeld releases, performs the final client-owned 3.5-stud side placement on `BattleUnseated`/`BattleOver`. |
 | ProfileStore | `ServerScriptService/Packages/ProfileStore.lua` | ✅ Vendored (loleris/MAD STUDIO, pinned commit `45c9847`) — session-locked DataStore lib; provenance/raw copy in repo `vendor/`. `DataStoreState="Access"` confirmed in this published place |
-| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete (Phase 4 + canonical-ID reset) — ProfileStore wrapper. Schema **v5.0** `{_version, archetype, collection, decks, activeDeckId, crystalShards, crystalDust, exp, level, pvp, activeMatch, quests}`; every older profile is reset so retired card IDs cannot survive. `applyCardPackPurchase` delegates one validated atomic mutation to `GachaTransaction`, marks the profile dirty, and schedules immediate persistence. Decks are Core-free; validates known + owned cards, max 2 copies, exact 30 for active decks, and 12-deck cap. |
+| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete — ProfileStore wrapper. Schema **v5.1** adds `purchaseHistory` non-destructively; the temporary login Shard override is removed. Card packs remain atomic, and Developer Product receipts are granted once and acknowledged only after `OnAfterSave`/`LastSavedData` confirms that PurchaseId persisted. |
 | GachaConfig | `ReplicatedStorage/Modules/GachaConfig.lua` | ✅ Complete — shared 50-Shard cost, five-card count, 70/25/5 weights, 5/20/80 duplicate Dust, 8-stud prompt range, server tolerance, and cooldown. |
 | GachaTransaction | `ServerScriptService/Modules/GachaTransaction.lua` | ✅ Complete — pure validate-first transaction; enforces the two-copy cap across existing and pending same-pack copies, converts later copies to Dust, and commits shards/cards/Dust together. |
-| GachaService | `ServerScriptService/Modules/GachaService.lua` | ✅ Complete — builds the unified 132-card collectible pool (excludes `the_coin`), generates weighted five-card rolls, and delegates persistence to SaveService. Exposes deterministic generation and pool summary for tests. |
-| GachaController | `ServerScriptService/GachaController.lua` | ✅ Complete — owns `OpenCardPack`; validates proximity to the named vending anchor, throttles requests, serializes one roll per player, and uses `xpcall` cleanup so failures cannot strand the lock. |
-| VendingMachineController | `StarterPlayer/StarterPlayerScripts/VendingMachineController.lua` | ✅ Complete — direct named prompt binding, fresh `GetQuestSnapshot` balance on open, authoritative response balances, protected RemoteFunction invocation, visible pack tear, pre-colored card stack, correct ability lookup, five-card reveal, Dust result, and reusable Continue lifecycle. |
+| GachaService | `ServerScriptService/Modules/GachaService.lua` | ✅ Complete — unified 132-card pool, weighted five-card rolls, pre-pack snapshot duplicate protection, all-capped rarity fallback, and live per-draw odds from the same candidate logic. |
+| GachaController | `ServerScriptService/GachaController.lua` | ✅ Complete — owns proximity/rate-limited `OpenCardPack` and `GetPackOdds`; serializes purchases and uses guarded cleanup. |
+| ShopConfig / ShopTransaction | `ReplicatedStorage/Modules/ShopConfig.lua`, `ServerScriptService/Modules/ShopTransaction.lua` | ✅ Configured — four Developer Product IDs; pure atomic PurchaseId dedupe + Shard grant. |
+| RobuxShopController | `ServerScriptService/RobuxShopController.lua` | ✅ Code complete — one `ProcessReceipt` handler, persisted acknowledgement, policy cache/remote, unknown-product deferral, and authoritative currency refresh. Published real-purchase test pending. |
+| VendingMachineController | `StarterPlayer/StarterPlayerScripts/VendingMachineController.lua` | ✅ Complete — Pack Select → Detail → live Contents page stack, per-draw disclosure, authoritative purchase, and existing reveal lifecycle. |
+| CurrencyBar / ItemMall | `StarterGui/Hud`, `StarterGui/ItemMallUI`, `StarterPlayerScripts/ItemMallController` | ✅ Configured — dedicated Shard/Dust icons, live balances, fail-closed policy gate, regional product prices, and battle-close behavior. |
+| GachaOddsSpec / ShopTransactionSpec | `TestService` | ✅ Passing — odds totals/tier weights, capped exclusion/fallback, protected generation, receipt dedupe/atomicity, and v5.0→v5.1 preservation. |
 | GachaAcquisitionSpec | `TestService/GachaAcquisitionSpec.lua` | ✅ Passing — verifies pool=132, five-card generation, same-pack cap/Dust behavior, insufficient-funds atomicity, and invalid-roll atomicity. |
 | CardVisuals | `StarterGui/BattleUI/Modules/CardVisuals` | ✅ Complete — emblems LEFT edge; `ChargeCostBadge` alongside `CostBadge`; `updateCardFrame` accepts `chargeCost`, `chargeCostColor` (STAT_DEBUFF when hand-taxed), `corrupted`, and board `status.shatterDisabled` opts; pure-Charge hides `CostBadge` and repositions `ChargeCostBadge` to Energy slot; disabled Shatter renders as a compact red `X` badge; CORRUPTED prefix `☠ ` in NameBar |
 | BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete — `buildCard` accepts `effChargeCost` and passes effective `chargeCost`/`chargeCostColor` to `updateCardFrame`; board render passes `shatterDisabled` status; hand render loop computes effective charge cost via `clientEffectiveChargeCost(state.player.chargeCostMods, ...)`; mobile hand dragging mirrors `CardData.playTarget(card)` zones and sends `opts.zone` for zone drops; `popChargeSocket` has distinct tweens for `board_end_turn` (gentle pulse), `drain` (sharp shrink), `destroy_slot` (scale-to-zero), `spend` (shrink), and other gains (pop). |
@@ -283,13 +290,12 @@ Effects[] engine implementing:
 (`SSS/Modules/SaveService`) wraps the vendored ProfileStore (`SSS/Packages/ProfileStore`,
 pinned commit `45c9847`).
 
-- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Schema **v5.0** (canonical card-ID reset):
+- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Schema **v5.1** (canonical card-ID reset + receipt history):
   `{_version={major,minor}, archetype, collection, decks, activeDeckId,
-  crystalShards, crystalDust, exp, level, pvp, activeMatch, quests}`. Profiles below major version 5 run
+  crystalShards, crystalDust, purchaseHistory, exp, level, pvp, activeMatch, quests}`. Profiles below major version 5 run
   `major_reset` and receive fresh onboarding data using canonical card IDs.
-- **Temporary test economy override:** every successful profile login sets
-  `crystalShards = 125` before the initial client snapshot. Pack spending still
-  persists normally during the session; the next login restores 125.
+- **Economy safety:** the former `crystalShards = 125` login override is removed;
+  loaded and purchased balances are no longer overwritten on rejoin.
 - **Lifecycle:** PlayerAdded → `StartSessionAsync` (session lock, `Cancel` on leave) →
   `migrate` (before `Reconcile`) → `Reconcile`. PlayerRemoving → `EndSession`.
   `OnSessionEnd` kicks on remote session steal. Connect-first + `Loading` guard.
