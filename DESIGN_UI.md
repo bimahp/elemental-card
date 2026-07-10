@@ -4,6 +4,9 @@
 
 Hybrid 3D/2D presentation. The 3D world shows the card shop and table setup. A 2D ScreenGui overlay handles all battle information during a duel.
 
+Economy labels and amounts must come from [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md)
+and [DESIGN_REWARD.md](DESIGN_REWARD.md). UI examples do not define reward values.
+
 ---
 
 ## UI Visual Standard
@@ -49,8 +52,8 @@ designed.
 - Main panel fill: dark blue-navy.
 - Inner panel fill: darker slate-navy.
 - Text: white primary, soft blue-gray secondary.
-- Accent colors come from the game identity: Crystal Shards cyan/blue, Dust
-  violet, SWIFT green, MIGHTY ruby, VITAL sapphire, and NEUTRAL quartz.
+- Accent colors come from the game identity: Card Fragments warm gold, Crystal
+  Shards cyan/blue, SWIFT green, MIGHTY ruby, VITAL sapphire, and NEUTRAL quartz.
 - Avoid one-note dark panels where background, panel, section, and empty state
   all share similar values.
 - Gradients may polish title bars, badges, and primary buttons, but contrast and
@@ -110,7 +113,7 @@ designed.
   icon footprint at the left; do not place it inside a circle or badge. The race
   overlays the top of the emblem, with `SPELL` used when race is absent.
 - Card names are white rounded display text with a thick contextual rarity
-  stroke: Common quartz, Rare cyan, and Epic violet. A dark percentage pill is
+  stroke: Common quartz, Rare cyan, Epic violet, and Legendary gold. A dark percentage pill is
   right aligned and displays up to four decimal places with trailing zeroes
   removed.
 - Odds retain server-calculated values and are displayed by rarity (Common,
@@ -173,6 +176,42 @@ designed.
   price lookup, or balance updates.
 - Test with long values such as `1000 Shards`, `1599 Robux`, `10.2K`, `999.9K`,
   and long card names.
+
+---
+
+## Mulligan
+
+After the table interaction seats both sides but before the first turn, each
+human seat sees a **"First Draw"** dialog (`MulliganUI`, built on the shared
+`Dialog`/`Scrim` shell — see [UI Visual Standard](#ui-visual-standard)): the
+dealt 5-card hand, each card with its own "Re-draw" button directly beneath it
+(parented to the card so it moves with it), a countdown mirroring the
+server's mulligan timeout, and a "Battle" button. Only **one** card total may
+be redrawn — tapping any card's Re-draw button swaps that card for a real new
+one immediately and irreversibly (a live server round trip, not a local
+mark), and removes every Re-draw button on every card. Battle then finalizes
+the seat (the redraw, if any, already happened) and closes the dialog once
+the server begins the real battle. In PvP, a side that finishes first sees a "waiting
+for opponent" state while the other side is still deciding. The dialog closes
+automatically — driven by the battle's first `UpdateBattleState`, not a
+dedicated close signal — once both sides have resolved (confirmed or timed
+out). The "Finding Table..." loading overlay from the preceding table
+interaction is cleared as soon as this dialog opens, not left showing behind
+it.
+
+Presentation order matters: `OfferMulligan` first puts the client into the
+seated battle camera/controls-locked state, then First Draw appears after a
+short settle beat. The player should already look seated and facing the opponent
+before choosing a mulligan.
+
+---
+
+## Turn Banner
+
+At the start of every turn a full-width "YOUR TURN" / "ENEMY TURN" banner
+plays center-screen (fade + scale in, brief hold, fade out) and locks battle
+input for its duration, before that turn's draw animation begins. It is pure
+UI — no card art or new image assets involved.
 
 ---
 
@@ -395,14 +434,16 @@ size):
 ### Status Overlays (board cards)
 
 - **Taunt** — large semi-transparent shield icon centered over the artwork.
-- **Stealth** — the whole card is dimmed/translucent.
+- **Stealth** — light cloud/fog icon over the artwork. Stealth does **not**
+  darken the whole card; it remains readable while still clearly marked.
 - **Summoning Sickness** — floating "Z" particles drift up from the
   top-right of the card and fade out, looping. A minion with **Charge**
   never shows this (it's never summoning-sick).
 - **Disabled Shatter** — a compact red `X` badge appears on a creature whose
   Shatter has been disabled by `disable_shatter`.
-- **Attacked this turn** — the whole card is dimmed (lighter than Stealth's
-  dim).
+- **Sleeping / exhausted this turn** — the whole card is dimmed. This is the
+  only status that uses the dark full-card overlay; Taunt, Stealth, and other
+  special attributes use icons/badges instead.
 - Hover (desktop) or tap-and-hold (mobile) a board minion to preview its full
   card — see [Board Card Preview](#board-card-preview).
 
@@ -483,6 +524,22 @@ targeting arrow and hint render in an always-visible overlay (`TargetingOverlay`
 so they appear in both desktop and mobile layouts, and the system targets the
 active layout's board frames (`UXMode`-driven). Board-card preview is suppressed
 while any card-play or attack drag is in progress.
+
+---
+
+## Cast Reveal & Effect VFX
+
+Playing a card locks battle input and plays a short beat sequence before the
+existing play/summon animation: the played card zooms to ~1.8x center-screen
+briefly, then (for the one implemented archetype so far — a single-target
+damage spell) a Battle-Type-tinted bolt travels from the caster's hero to the
+target before the existing impact/damage-pop feedback plays. Every other
+card (creatures, non-damage spells) is unaffected and plays the ordinary
+animation described under [Playing a Card](#playing-a-card). Visual
+archetype is resolved per effect (action/target/area), with an optional
+future per-card override; additional archetypes (AOE swipe, heal bloom, buff
+pulse, shield pulse, summon puff, shatter, rebirth) are a follow-up VFX-library
+pass, not yet built.
 
 ---
 
@@ -589,10 +646,7 @@ The top-right world HUD entry is **Card Library**. It opens one reusable
 │         YOU WON!               │
 │                                │
 │  +50 EXP                       │
-│  +25 Gold                      │
-│                                │
-│  Card Drop:                    │
-│  [Bonk Bear]                   │
+│  +3 Card Fragments             │
 │                                │
 │       [Continue]               │
 └────────────────────────────────┘
@@ -604,11 +658,17 @@ Or on loss:
 ┌────────────────────────────────┐
 │         YOU LOST.              │
 │                                │
+│  +1 Card Fragment              │
+│                                │
 │       [Continue]               │
 └────────────────────────────────┘
 ```
 
-Continue closes the Battle UI and returns the player to the world.
+The reward row is mode- and outcome-dependent and must use the authoritative
+server payload. Early forfeits, Local Battle, NPC Battle, first-clear bonuses, and
+the global daily cap may change or remove the Fragment row. Fixed card-drop and
+Crystal Dust rows do not exist. Continue closes the Battle UI and returns the
+player to the world.
 
 ---
 

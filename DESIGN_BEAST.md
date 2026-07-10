@@ -138,7 +138,7 @@ Neutral is a collection of independent creature groups.
 
 ## Dragons
 
-Legendary apex creatures.
+Legendary pinnacle creatures.
 
 ### Examples
 

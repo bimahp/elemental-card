@@ -2,6 +2,12 @@
 
 > Status: **implemented and validated** (2026-06-28).
 > Repaired after live Studio review; headless migration checks and a direct Play-mode onboarding test pass. See implementation notes at the bottom.
+>
+> **Reward scope superseded (2026-07-10):** This remains the onboarding
+> implementation record, but its Crystal Shard battle reward and card-drop details
+> are not current design. Use [DESIGN_REWARD.md](DESIGN_REWARD.md) for onboarding,
+> NPC, and battle rewards and [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) for currency
+> behavior.
 
 ---
 

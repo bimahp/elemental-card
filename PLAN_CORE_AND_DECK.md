@@ -1,5 +1,10 @@
 # PLAN_BACKEND — Server-Owned Battles, PVP, Persistence, Inventory
 
+> **Reward scope superseded (2026-07-10):** Reward payload examples in this
+> historical backend plan describe the implementation at that time. Current reward
+> policy is defined by [DESIGN_REWARD.md](DESIGN_REWARD.md), and current currency
+> behavior is defined by [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md).
+
 > Phased, multi-session build plan to take the alpha from "single-player vs NPC,
 > tested only with AI" to a **production-ready, server-authoritative** game with
 > same-server PVP, persistent saves, and an inventory panel.
@@ -7,7 +12,7 @@
 > Architecture context: [DESIGN_ENGINE.md](DESIGN_ENGINE.md),
 > [DESIGN_CORE.md](DESIGN_CORE.md), [IDEA_MATCHMAKING.md](IDEA_MATCHMAKING.md).
 > Current code state: [DEV_STATUS.md](DEV_STATUS.md). The alpha card/engine build
-> plan ([PLAN.md](PLAN.md)) is complete; this is the next plan.
+> plan (`PLAN.md`, no longer present) is complete; this is the next plan.
 >
 > **How to use:** work phases in order; each has an Acceptance gate (a testable
 > milestone) that must pass before the next. Check boxes as you go. This file is the

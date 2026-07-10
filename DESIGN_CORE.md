@@ -45,6 +45,24 @@ A Roblox digital card battle game. Players build decks, summon creatures onto a 
 
 ---
 
+## Mulligan
+
+Before the first turn, each side is dealt an opening 5-card hand and may
+redraw **at most one** of those cards, once: the replaced card shuffles back
+into the deck and a new card is drawn in its place. The choice is final —
+there is no undo once a card is picked for redraw. This is a one-time
+pre-battle stage, not part of the repeating turn loop above.
+
+- PvP mulligans are simultaneous — the real first turn does not begin until
+  **both** players have confirmed their mulligan (or timed out).
+- An unresponsive player auto-keeps their dealt hand after a server-enforced
+  timeout, so an AFK or disconnected opponent cannot stall the match.
+- The NPC opponent always keeps its dealt hand.
+- The Coin is granted to the second player only *after* mulligan resolves — it
+  is never a redraw candidate, since it doesn't exist in either hand yet.
+
+---
+
 ## Fatigue
 
 Drawing from an empty deck deals escalating direct Core damage: 1 the first time, 2 the second, 3 the third, and so on.

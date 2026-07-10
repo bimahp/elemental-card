@@ -1,23 +1,226 @@
 # DEV_STATUS — Elemental TCG: Implementation State
 
-> Last updated: 2026-07-01 (monetization configured; published receipt test pending)
+> Last updated: 2026-07-10 (Cross-server matchmaking + reconnect implemented)
 
-## Monetization and Vending Machine revamp — configured, receipt test pending
+## Cross-Server Matchmaking + Reconnect (PLAN_MATCHMAKING.md, 2026-07-10)
 
-`PLAN_MONETIZATION.md` is the implementation record and source of truth. The live
-place now has the persistent Shards/Dust HUD, leveled Vending Machine, live
-server-computed **per-card-draw** odds, same-rarity duplicate protection using one
-pre-pack ownership snapshot, policy-gated Item Mall, dynamic regional price lookup,
-schema v5.1 receipt history, and a single idempotent `ProcessReceipt` handler that
-waits for confirmed persistence before returning `PurchaseGranted`. The temporary
-`crystalShards = 125` login override is removed.
+All 6 phases implemented and verified — headless (`execute_luau`, Edit mode)
+where the code permits, and live in actual Studio Play (`start_stop_play`)
+with a real connected test player for everything that requires an actual
+running server (MemoryStore calls, real seating/teleport-adjacent logic).
+See `PLAN_MATCHMAKING.md` for full phase-by-phase detail, including two real
+architecture corrections found and fixed *during* implementation (not
+anticipated by the approved plan) and three real engine bugs found via live
+testing, not just inferred.
 
-All four Developer Product IDs and both dedicated currency icons are configured.
-The remaining external step is the published-place receipt test with real Robux.
-Existing acquisition, new odds, and Shop transaction specs pass, and Studio Play
-starts without monetization script errors. Live Marketplace metadata resolves all
-four products at the intended default prices, and the loading gate reports 14/14
-essential assets preloaded with the new icons included.
+**New cross-server queue + registry** (`ServerScriptService/Modules/
+Matchmaker.lua`, `ServerRegistry.lua`): a `MemoryStoreQueue`-backed global
+FIFO queue and a `MemoryStoreSortedMap`-backed per-server free-table
+heartbeat. Any server can pop a match; the popping server never assumes it
+can directly teleport either player (a server can only `TeleportAsync` a
+`Player` who is actually present on it) — it only writes instructions
+(`MM_PendingMatches` per matchId, `MM_PendingTeleports` per userId), and
+every server's own poll loop separately teleports only its own present
+players and seats only its own inbound matches. Destination selection checks
+a player's own current server directly via `TableManager.countFree()`
+(authoritative, instant) before falling back to the registry hint for other
+servers. The rare "no server anywhere has room" case uses
+`TeleportService:ReserveServer` purely as an internal convergence mechanism
+(not a private/invite-only server) so two independently-teleporting home
+servers land on the same new instance.
+
+**NPC fallback** (empty queue, or effectively immediate since `tryMatch`'s
+`"single"` result already *is* the empty-queue signal): goes through the
+identical destination/teleport/seating pipeline as a real match — no
+shortcut — reusing `TableManager.spawnNpcAt` and `startPvE` unmodified.
+
+**Reconnect**: disconnect no longer instantly forfeits a matchmaking-
+originated battle (`battle.matchmaking == true`) — `BattleController`'s
+`PlayerRemoving` now pauses it instead (skips `endBattle`/
+`Registry.removePlayer`, so `PlayerBattle[userId]` survives). The existing,
+unmodified turn-timeout/streak machinery (`DuelSession.TURN_TIMEOUT_SECONDS`,
+`MAX_TIMEOUTS_BEFORE_FORFEIT=2`) becomes the only forfeit trigger. On
+rejoin, `SaveService.onPlayerAdded` attempts `attemptReconnect` (same-server:
+direct `BattleRegistry` lookup + `reconnectSeat`; different-server:
+`TeleportAsync` toward the stored `jobId`) before falling through to a
+**mode-aware** abandonment penalty (`"pvp"` records a loss; `"pve"`
+NPC-fallback records none, matching how a normal PvE loss already carries
+none) — live-confirmed firing correctly for real during Phase 5 testing, not
+just headless. Local (non-matchmaking) PvP keeps today's exact
+instant-forfeit-on-disconnect behavior, unchanged. `BattleUIController`
+gained a new `BattleReconnected` client entry point since the existing
+client only ever knew how to enter a battle via `BattleSeated` → mulligan →
+first `UpdateBattleState`.
+
+**Matchmaking UI**: new `MatchmakingButton` HUD icon (asset
+`105294857091338`) added to `TopRightAnchor`, a new `MatchmakingUI` panel
+(Level display + Find Opponent/Cancel Matchmaking, following the
+`ItemMallUI`/`ItemMallController` shell pattern exactly), and a ticking
+elapsed-time icon label (adapted from `MulliganController`'s countdown
+pattern, counting up instead of down) driven by new `JoinMatchmaking`/
+`CancelMatchmaking`/`MatchmakingUpdate` remotes.
+
+**Real bugs found and fixed via live testing (not hypothetical):**
+`game.JobId` is an empty string in unpublished Studio Play (only a real
+published server gets a GUID), which broke `ServerRegistry.publish()`'s
+`MemoryStoreSortedMap` key — fixed with a one-time-warned guard.
+`getMatchesForThisServer()`'s full `HashMap:ListItemsAsync` scan running on
+the same fast cadence as cheap targeted queue/teleport checks hit a real
+`TotalRequestsOverLimit` MemoryStore throttle during live testing — fixed by
+splitting the poll loop into a fast (5s) and slow (20s) cadence.
+`TeleportService:ReserveServer` (and by extension every `TeleportService`
+method) throws `"...can only be called by the server"` when invoked from
+Edit-mode `execute_luau` — a stronger constraint than the previously-known
+"cross-instance targeting doesn't work in Studio Play" limitation.
+
+**What remains genuinely unverified** (see `PLAN_MATCHMAKING.md`'s Testing
+Constraint section): a real `TeleportAsync` call actually landing a player
+on a different running server instance, a destination server receiving a
+real player via `PlayerAdded`/`GetJoinData().TeleportData` from another live
+server, and the different-server reconnect branch. These require a
+published, multi-server-capable place to verify — recommended as a dedicated
+follow-up session.
+
+---
+
+## Battle Presentation Director + Full Mulligan (PLAN_CARD_BATTLE_REVAMP.md, 2026-07-08)
+
+All 9 phases implemented and verified (headless + live Studio Play). A
+2026-07-09 implementation review found four defects, now fixed in live Studio:
+PvP mulligan timeout tokening, full ordered `animEvents` replay, cancellable
+skip/fast-forward, and `cast_reveal` state restoration. See
+`PLAN_CARD_BATTLE_REVAMP.md` → "Post-Review Fix Pass (2026-07-09)" for details.
+
+The implemented revamp replaces
+the old before/after-snapshot diffing (hand-diff heuristics for Draw/Play,
+one board-diff heuristic gated to `state.lastAction=="attack"` for Attack)
+with an explicit server-emitted **animatable event log** and a client
+**Director + phase-registry** sequencer, and adds a full pre-battle
+**mulligan** stage.
+
+**Server:** `Effects/Ops.recordAnim(state, ev)` stamps a monotonic `animSeq`
+and appends to `state.pendingAnimEvents` from every animatable mutation
+(damage/heal/buff/summon/bounce/kill/draw/gain_armor). `BattleLogic.playCard`/
+`attack`/`startTurn` additionally push envelope events (`cast`, `attack`,
+`turn_start`) so the client knows a new sequence started before detail events
+arrive. `BattleRegistry.viewAnimEvents` relabels perspective exactly like the
+existing `viewChargeEvents`; `BattleController.broadcast` clears
+`pendingAnimEvents` after sending, same spot it already clears
+`pendingChargeEvents` — a fully separate, untouched channel.
+
+Mulligan is a genuine new pre-battle rules stage: `battle.status = "mulligan"`
+(distinct from `"active"`) holds the real turn loop until every human seat
+confirms a redraw selection or times out (30s, auto-keeps the dealt hand).
+NPC seats auto-resolve instantly. The Coin is granted to the second seat only
+after both seats resolve — it was never a redraw candidate. New remotes:
+`OfferMulligan` (S→C, dealt hand), `RedrawMulliganCard` (RemoteFunction, C→S
+index → S→C ok/newCardId, swaps in real time), `ConfirmMulligan` (C→S,
+finalizes the seat — no payload, since any redraw already happened via
+`RedrawMulliganCard`).
+
+**Client:** new `BattleDirector` (FIFO phase queue, single `isLocked()` input
+gate replacing the old scattered `handHoverDisabled`/`boardPreviewLocked`
+flags, per-phase timeout safety net, skip/fast-forward) and `PhaseRegistry`
+(handler-per-phase-type, mirroring the server's `Effects/Actions` registry):
+`draw`, `play`, `attack`, `turn_banner`, `cast_reveal`, `effect`. New
+`EffectVisuals.resolveVisualArchetype` maps an effect's action/target/area to
+a visual archetype (default + optional future per-card override); only the
+`projectile` archetype (single-target damage) is built for real this pass —
+zoom → traveling bolt → existing impact/damage-pop feedback. New `MulliganUI`
++ `MulliganController` drive the mulligan window on the shared `Dialog`/
+`Scrim` shell.
+
+**Draw/status polish fix pass (2026-07-09):** hand draw frames are now hidden
+until their `PhaseRegistry.draw` phase begins, so a drawn card no longer appears
+instantly in hand and then animates afterward as a duplicate/afterimage. The
+first active battle render after mulligan also reveals the starting hand via the
+same deck-to-hand draw phase instead of popping the full hand in place. If the
+player skips before a queued draw starts, `BattleDirector.skip()` runs queued
+phase cleanup hooks so hidden draw frames are safely revealed. Board status
+treatment was also clarified: Taunt keeps the shield icon, Stealth now uses a
+cloud/fog icon, and the dark full-card overlay is reserved for sleeping /
+exhausted cards only. Follow-up tuning: `OfferMulligan` now enters the seated
+battle camera/lock state before First Draw appears, and `MulliganController`
+delays the dialog briefly so the player is visually seated/facing the opponent;
+the Stealth cloud icon is now larger and centered over the artwork.
+
+**Post-completion fix pass (2026-07-08):** a live-session screenshot surfaced
+five issues, all fixed: the "Finding Table..." loading overlay showing behind
+the mulligan dialog (now cleared on `OfferMulligan`); mulligan redesigned to
+allow **at most one card redraw** (not any number), enforced both client-side
+(one "Re-draw" button per card, parented to the card so it moves with it —
+picking one is final and instantly removes every Re-draw button) and
+server-side (`DuelSession.confirmMulligan` only honors the first valid index);
+the dialog retitled "Mulligan" → "First Draw"; the button relabeled "Confirm"
+→ "Battle". This pass also closed the earlier click-simulation gap —
+`user_mouse_input` succeeded via `instance_path` targeting (previously only
+raw screen coordinates had been tried), verifying the real Re-draw and Battle
+click handlers end-to-end instead of by code inspection alone. The "dealt
+hand flies in" reveal beat from the original Phase 8 scope still isn't
+built — deferred as a polish item alongside the rest of the VFX library.
+
+**Second fix pass (2026-07-08):** two more issues from live testing. (1) Redraw
+was client-visual-only — picking a card just badged it "REPLACE" and deferred
+the actual swap to the Battle press. Now real-time: a new `RedrawMulliganCard`
+RemoteFunction swaps the hand slot in place on the server the instant a card
+is picked (`DuelSession.redrawMulliganCard`, enforced to at most one redraw
+per seat regardless of call count) and the client rebuilds that tile with the
+real new card immediately, not a label. `DuelSession.confirmMulligan` (Battle)
+now just finalizes the seat — the swap already happened. (2) A duplicate-
+looking Draw animation played on entering the real battle: dealing the
+opening hands during mulligan calls `Logic.drawCard`, which records
+`draw_card` anim events same as any live draw, but mulligan never broadcasts
+— so those 10 stray events (5 per side) sat in `pendingAnimEvents` until the
+real battle's first broadcast, where the client's Draw-phase logic (which
+counts `draw_card` events to decide how many cards to fly in) misread them as
+a fresh draw and replayed a fly-in over cards that were already sitting there
+statically. Fixed by clearing `state.pendingAnimEvents` in `beginRealBattle`
+right before the real turn starts, so only the genuinely-live turn_start/draw
+survive into that first broadcast. Verified headless (redraw swaps in place,
+rejects a second attempt, and the anim log drops from 10+ events to exactly
+the real turn's own event) and live (a stubbed `RedrawMulliganCard` response
+confirmed the client swaps in a real, different card with real stats —
+verified via a genuine simulated click, not code inspection).
+
+Full regression pass (headless, `execute_luau` Edit mode): mulligan → active
+transition, envelope/event-log shape, the Charge event channel confirmed
+structurally separate and untouched, spell-cast discard/graveyard growth
+with a matching `cast` envelope, and — critically — the Fatigue-death fix
+(`checkAndEnd` after `startTurn`/`endTurn`, `FOUND_BUGS.md`) still fires
+correctly through the new mulligan stage and event log: a fatigued-out hero
+still ends the battle immediately with no further broadcast for the dead
+side. SaveService has no mulligan-related code path — confirmed a no-op for
+migrated saves.
+
+Full VFX library (AOE swipe, heal bloom, buff pulse, shield pulse, summon
+puff, shatter, rebirth) and per-card VFX overrides remain a follow-up pass;
+see PLAN_CARD_BATTLE_REVAMP.md's "Out of Scope" section for the asset list.
+
+---
+
+## Economy and rewards — design locked, implementation migration pending
+
+[DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) and
+[DESIGN_REWARD.md](DESIGN_REWARD.md) are the design sources of truth.
+`PLAN_MONETIZATION.md` is obsolete and retained only as an implementation record.
+
+The live place still implements the superseded system: a 50-Shard Standard Pack,
+automatic Crystal Dust conversion, old Shard bundle sizes/prices, PvE Shard/card
+drop rewards, and placeholder PvP rewards. The existing transaction and receipt
+paths remain useful implementation history, but they do not represent the target
+economy.
+
+Migration work still required:
+
+- Add Card Fragments and the shared 200-Fragment daily battle cap.
+- Implement `3/1` matchmaking, `1/0` Local, `1/0` NPC, `50` first-clear, and
+  `3 x 30` daily quest rewards from `DESIGN_REWARD.md`.
+- Move random packs to Card Fragments (`200` per Core Pack), add the four alpha
+  rarities, and implement the authoritative pack pools/prices.
+- Remove Crystal Dust from schema, UI, transactions, and tests; manually destroyed
+  cards grant Crystal Shards.
+- Restrict Crystal Shards to deterministic crafting/utility and approved fixed
+  sources; replace the old Developer Product bundles with the source-document shop.
 
 ---
 
@@ -185,29 +388,36 @@ renders, deck builder Core-free).
 | Effects/Ops | `ServerScriptService/Modules/Effects/Ops.lua` | ✅ Complete — game-op mutation layer (healHero, healCreature, gainArmor, damageHero, damageCreature+`take_damage` event, killCreature+rebirth+`shatterDisabled` guard, buffCreature, drawCard+filter, bounce+`shatterDisabled` clear, summon, returnFromGraveyard, keyword helpers, cost system, gainEnergy, newInstance, destroyChargeSlot, drainCharge, addChargeCostMod with remaining-copy counts, clearChargeCostMod, effectiveChargeCost) |
 | BattleLogic | `ServerScriptService/Modules/BattleLogic.lua` | ✅ Complete (effects[] engine + Board-Generated Charge V2) — `newSide`/`newBattle` initializes two-slot Charge state + `chargeCostMods={}`; `playCard` atomically validates/pays Energy + effective charge (`Ops.effectiveChargeCost`), clears `chargeCostMods` entry on play, threads `chosenZone` through emerge/playBlock/cast contexts, resolves emerge/cast — no normal +1 grant; `endTurn` iterates owner board and calls `ChargeState.gainCharge` for each non-NEUTRAL creature where `canGainWithoutReplace` is true (reason `"board_end_turn"`); `attack` fires `deal_damage` event. |
 | NpcAI | `ServerScriptService/Modules/NpcAI.lua` | ✅ Complete (effects[] scoring, V2 action scoring, board-presence Charge bonus) — `takeTurn(state, Logic, who)`; `scoreCard` by action verb including contextual scoring for `destroy_charge_slot`, `drain_charge`, `disable_shatter`, `add_additional_charge_cost_to_player_hand`; creature scoring includes +1/+2 bonus for non-NEUTRAL types (board end-turn Charge generation); affordability uses `CardCost.canPay` with effective charge cost; `aiAttack` prefers lethal/clean kills and handles Taunt. |
-| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read active deck cards from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`, validate chosen targets and `opts.zone` against `playTarget`, reject targeted enemy Stealth, leave `UseCore` orphaned/unwired, cancel session timers on battle end, delegate rewards to `RewardService`; PvE persists via `SaveService.applyRewards` (present winners), PvP flags `beginPvpMatch` at start + records `recordPvpResult` at end (W/L, anti rage-quit); calls `SaveService.init()` at boot |
-| BattleRegistry | `ServerScriptService/Modules/BattleRegistry.lua` | ✅ Complete — `Battles[battleId]`, `PlayerBattle[userId]` reverse index, `spectators` set; `viewFor`/`viewForSpectator` perspective relabel (own seat→`player`), `remapOpts`; clients never send battleId; state views include Battle Charge fields (`chargeSlots`, `currentChargeSlot`, `chargeSeq`, `chargeEvents`, `chargeCostMods`) and server timer metadata |
-| DuelSession | `ServerScriptService/Modules/DuelSession.lua` | ✅ Complete — per-battle turn loop: `start`, `afterHumanAction`, `humanEndTurn`, internal `runNpcTurn`; token-guarded human turn timers with `TURN_TIMEOUT_SECONDS` and `MAX_TIMEOUTS_BEFORE_FORFEIT`; timeout auto-end and repeated-timeout auto-forfeit |
-| RewardService | `ServerScriptService/Modules/RewardService.lua` | ✅ Complete (policy only) — builds mode-aware reward payloads without persistence: PvE winner EXP/gold/NPC-deck card drop; PvE loser/npc no payload; PVP winner/loser placeholder messages for Phase 4 persistence |
-| TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp`. **Seating reliability (2026-06-22):** `seatPlayerAt` now clears stale seat/lock state before re-seating, **respects `awaitSeated`** (3s window + one retry), and on failure releases the reservation and returns false — a battle can never start with the player unseated ("in place"). `handleTalkToNpc` no longer returns silently: when no table is free or seating fails it fires `BattleUnseated` (clears the optimistic "Finding Table" overlay) and `Notify` with a reason. BattleUI records the active Seat CFrame and, after the SeatWeld releases, performs the final client-owned 3.5-stud side placement on `BattleUnseated`/`BattleOver`. |
+| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5 + PLAN_MATCHMAKING) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read active deck cards from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`, validate chosen targets and `opts.zone` against `playTarget`, reject targeted enemy Stealth, leave `UseCore` orphaned/unwired, cancel session timers on battle end, delegate rewards to `RewardService`; PvE persists via `SaveService.applyRewards` (present winners); `battle.matchmaking` flag (set only by `attemptSeatPendingMatches`) distinguishes matchmaking-originated battles from local ReadyUp PvP. `onMatchStart` (fired from `DuelSession.start` at mulligan-begin) calls `Save.beginMatch` for `mode=="pvp"` or any matchmaking battle. `attemptReconnect` (injected into `SaveService.init`) resumes a still-live same-server battle or attempts a different-server `TeleportAsync`. `PlayerRemoving` pauses (does not forfeit) a matchmaking battle still in progress — the existing turn-timeout/streak machinery becomes the only forfeit trigger; local PvP/normal PvE keep instant-forfeit-on-disconnect unchanged. `JoinMatchmaking`/`CancelMatchmaking` handlers + two poll loops (fast: queue pop/teleport processing; slow: expensive destination-side seating scan) wire `Matchmaker`/`ServerRegistry`. |
+| BattleRegistry | `ServerScriptService/Modules/BattleRegistry.lua` | ✅ Complete — `Battles[battleId]`, `PlayerBattle[userId]` reverse index, `spectators` set; `viewFor`/`viewForSpectator` perspective relabel (own seat→`player`), `remapOpts`; clients never send battleId; state views include Battle Charge fields (`chargeSlots`, `currentChargeSlot`, `chargeSeq`, `chargeEvents`, `chargeCostMods`) and server timer metadata. PLAN_MATCHMAKING adds `canonicalSeatByUserId` (matches by UserId, not Player-instance identity — needed since a paused battle's seat holds a stale/disconnected Player reference) and `reconnectSeat` (repoints a seat's Player reference on rejoin). |
+| DuelSession | `ServerScriptService/Modules/DuelSession.lua` | ✅ Complete — per-battle turn loop: `start` (deals hands, opens the `"mulligan"` pre-battle stage before the turn loop; PLAN_MATCHMAKING adds an optional `onMatchStart(battle)` callback fired right after `battle.status="mulligan"`), `confirmMulligan`, `afterHumanAction`, `humanEndTurn`, internal `runNpcTurn`/`startSeatTurn`; token-guarded human turn timers with `TURN_TIMEOUT_SECONDS` and `MAX_TIMEOUTS_BEFORE_FORFEIT` (this existing mechanism is now also the sole matchmaking-battle forfeit trigger, unmodified); mulligan timeout tokens are tracked per seat so simultaneous PvP mulligans force-resolve reliably; `checkAndEnd` runs after both `startTurn` (Fatigue) and `endTurn`. |
+| RewardService | `ServerScriptService/Modules/RewardService.lua` | ⚠️ Legacy policy pending reward migration — PvE winner EXP/Crystal Shards/NPC-deck card drop; PvE loser/NPC no payload; PvP winner/loser placeholder messages. Target values and modes are in `DESIGN_REWARD.md`. |
+| TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp`. **Seating reliability (2026-06-22):** `seatPlayerAt` now clears stale seat/lock state before re-seating, **respects `awaitSeated`** (3s window + one retry), and on failure releases the reservation and returns false — a battle can never start with the player unseated ("in place"). `handleTalkToNpc` no longer returns silently: when no table is free or seating fails it fires `BattleUnseated` (clears the optimistic "Finding Table" overlay) and `Notify` with a reason. BattleUI records the active Seat CFrame and, after the SeatWeld releases, performs the final client-owned 3.5-stud side placement on `BattleUnseated`/`BattleOver`. PLAN_MATCHMAKING adds `countFree()` (free-table count for `ServerRegistry`'s heartbeat). |
 | ProfileStore | `ServerScriptService/Packages/ProfileStore.lua` | ✅ Vendored (loleris/MAD STUDIO, pinned commit `45c9847`) — session-locked DataStore lib; provenance/raw copy in repo `vendor/`. `DataStoreState="Access"` confirmed in this published place |
-| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete — ProfileStore wrapper. Schema **v5.1** adds `purchaseHistory` non-destructively; the temporary login Shard override is removed. Card packs remain atomic, and Developer Product receipts are granted once and acknowledged only after `OnAfterSave`/`LastSavedData` confirms that PurchaseId persisted. |
-| GachaConfig | `ReplicatedStorage/Modules/GachaConfig.lua` | ✅ Complete — shared 50-Shard cost, five-card count, 70/25/5 weights, 5/20/80 duplicate Dust, 8-stud prompt range, server tolerance, and cooldown. |
-| GachaTransaction | `ServerScriptService/Modules/GachaTransaction.lua` | ✅ Complete — pure validate-first transaction; enforces the two-copy cap across existing and pending same-pack copies, converts later copies to Dust, and commits shards/cards/Dust together. |
-| GachaService | `ServerScriptService/Modules/GachaService.lua` | ✅ Complete — unified 132-card pool, weighted five-card rolls, pre-pack snapshot duplicate protection, all-capped rarity fallback, and live per-draw odds from the same candidate logic. |
-| GachaController | `ServerScriptService/GachaController.lua` | ✅ Complete — owns proximity/rate-limited `OpenCardPack` and `GetPackOdds`; serializes purchases and uses guarded cleanup. |
-| ShopConfig / ShopTransaction | `ReplicatedStorage/Modules/ShopConfig.lua`, `ServerScriptService/Modules/ShopTransaction.lua` | ✅ Configured — four Developer Product IDs; pure atomic PurchaseId dedupe + Shard grant. |
+| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete — ProfileStore wrapper. Schema **v5.2** (PLAN_MATCHMAKING) adds `jobId`/`mode` to `activeMatch` non-destructively; the temporary login Shard override is removed. Card packs remain atomic, and Developer Product receipts are granted once and acknowledged only after `OnAfterSave`/`LastSavedData` confirms that PurchaseId persisted. `beginPvpMatch` renamed `beginMatch(player, battleId, jobId, mode)` (no longer PVP-only — NPC-fallback matchmaking matches need reconnect tracking too); new `clearActiveMatch`. `onPlayerAdded`'s abandoned-match check now attempts reconnect first (via an injected `attemptReconnect` callback) and is mode-aware on the fallback penalty (`"pvp"` records a loss, `"pve"` records none) — live-confirmed firing correctly. |
+| Matchmaker | `ServerScriptService/Modules/Matchmaker.lua` | ✅ Complete (PLAN_MATCHMAKING) — `MemoryStoreQueue`-backed global FIFO queue (`enqueue`/`dequeue`/`tryMatch`/`consume`); destination selection (`selectDestination`/`selectDestinationForSingle`, authoritative self-check via `TableManager.countFree()` before falling back to the `ServerRegistry` hint); match creation (`createMatch`/`createNpcFallbackMatch`, writes `MM_PendingMatches`/`MM_PendingTeleports`, uses `TeleportService:ReserveServer` for the no-server-has-room case); per-server processing (`processPendingTeleportsForPlayers`, `getMatchesForThisServer`, `clearMatch`). |
+| ServerRegistry | `ServerScriptService/Modules/ServerRegistry.lua` | ✅ Complete (PLAN_MATCHMAKING) — per-server heartbeat to a `MemoryStoreSortedMap` (`publish`, 10s cadence, sort key = free-table count), `getCandidates()` (hint only, per the "never trust the registry" rule), `init(getFreeTableCount)`. Guards against `game.JobId==""` in unpublished Studio Play (confirmed real, not just Edit-mode) with a one-time warning instead of a repeating MemoryStore error. |
+| GachaConfig | `ReplicatedStorage/Modules/GachaConfig.lua` | ⚠️ Legacy configuration — still uses 50 Shards, three rarity weights, and Dust values. Must migrate to Fragment-priced packs and Common/Rare/Epic/Legendary. |
+| GachaTransaction | `ServerScriptService/Modules/GachaTransaction.lua` | ⚠️ Legacy transaction — still deducts Shards and creates Dust. Must deduct Card Fragments and preserve duplicates for manual Shard destruction. |
+| GachaService | `ServerScriptService/Modules/GachaService.lua` | ⚠️ Legacy pool/odds implementation — unified 132-card, three-rarity pool. Must adopt the source-document pack pools, four rarities, and duplicate protection. |
+| GachaController | `ServerScriptService/GachaController.lua` | ⚠️ Legacy purchase boundary — authoritative proximity/rate-limit structure remains reusable, but currency and result payloads require migration. |
+| ShopConfig / ShopTransaction | `ReplicatedStorage/Modules/ShopConfig.lua`, `ServerScriptService/Modules/ShopTransaction.lua` | ⚠️ Legacy product configuration — receipt dedupe/grant structure is reusable; bundle sizes and prices must be replaced from `DESIGN_ECONOMY.md`. |
 | RobuxShopController | `ServerScriptService/RobuxShopController.lua` | ✅ Code complete — one `ProcessReceipt` handler, persisted acknowledgement, policy cache/remote, unknown-product deferral, and authoritative currency refresh. Published real-purchase test pending. |
 | VendingMachineController | `StarterPlayer/StarterPlayerScripts/VendingMachineController.lua` | ✅ Complete — Pack Select → Detail → live Contents page stack, per-draw disclosure, authoritative purchase, and existing reveal lifecycle. |
-| CurrencyBar / ItemMall | `StarterGui/Hud`, `StarterGui/ItemMallUI`, `StarterPlayerScripts/ItemMallController` | ✅ Configured — dedicated Shard/Dust icons, live balances, fail-closed policy gate, regional product prices, and battle-close behavior. |
-| GachaOddsSpec / ShopTransactionSpec | `TestService` | ✅ Passing — odds totals/tier weights, capped exclusion/fallback, protected generation, receipt dedupe/atomicity, and v5.0→v5.1 preservation. |
-| GachaAcquisitionSpec | `TestService/GachaAcquisitionSpec.lua` | ✅ Passing — verifies pool=132, five-card generation, same-pack cap/Dust behavior, insufficient-funds atomicity, and invalid-roll atomicity. |
-| CardVisuals | `StarterGui/BattleUI/Modules/CardVisuals` | ✅ Complete — emblems LEFT edge; `ChargeCostBadge` alongside `CostBadge`; `updateCardFrame` accepts `chargeCost`, `chargeCostColor` (STAT_DEBUFF when hand-taxed), `corrupted`, and board `status.shatterDisabled` opts; pure-Charge hides `CostBadge` and repositions `ChargeCostBadge` to Energy slot; disabled Shatter renders as a compact red `X` badge; CORRUPTED prefix `☠ ` in NameBar |
-| BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete — `buildCard` accepts `effChargeCost` and passes effective `chargeCost`/`chargeCostColor` to `updateCardFrame`; board render passes `shatterDisabled` status; hand render loop computes effective charge cost via `clientEffectiveChargeCost(state.player.chargeCostMods, ...)`; mobile hand dragging mirrors `CardData.playTarget(card)` zones and sends `opts.zone` for zone drops; `popChargeSocket` has distinct tweens for `board_end_turn` (gentle pulse), `drain` (sharp shrink), `destroy_slot` (scale-to-zero), `spend` (shrink), and other gains (pop). |
-| TargetingSystem | `StarterGui/BattleUI/Modules/TargetingSystem` | ✅ Complete — `computeDropZones` driven by `CardData.playTarget(card)` across single targets and zone drops; `endDrag` sends `{slot=idx}`, `{target={side,slot}}`, or `{zone="..."}`; targeted enemy creatures with Stealth are excluded client-side |
+| CurrencyBar / ItemMall | `StarterGui/Hud`, `StarterGui/ItemMallUI`, `StarterPlayerScripts/ItemMallController` | ⚠️ Legacy economy UI — currently shows Shards/Dust and old products. Must replace Dust with Card Fragments and update deterministic Shard products. |
+| GachaOddsSpec / ShopTransactionSpec | `TestService` | ⚠️ Passing for the legacy economy; assertions require replacement during migration. |
+| GachaAcquisitionSpec | `TestService/GachaAcquisitionSpec.lua` | ⚠️ Passing for the legacy Shard/Dust transaction; assertions require replacement during migration. |
+| CardVisuals | `StarterGui/BattleUI/Modules/CardVisuals` | ✅ Complete — emblems LEFT edge; `ChargeCostBadge` alongside `CostBadge`; `updateCardFrame` accepts `chargeCost`, `chargeCostColor` (STAT_DEBUFF when hand-taxed), `corrupted`, and board status opts (`taunt`, `stealth`, `sick`, `shatterDisabled`); pure-Charge hides `CostBadge` and repositions `ChargeCostBadge` to Energy slot; Taunt uses a shield icon, Stealth uses a cloud/fog icon, disabled Shatter renders as a compact red `X` badge, and only sleeping/exhausted cards use the dark overlay; CORRUPTED prefix `☠ ` in NameBar |
+| BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete — `buildCard` accepts `effChargeCost`; board/hand/mobile rendering handles Battle Charge costs and targeting; `popChargeSocket` has distinct Charge tweens; event-log translation now stages draw/play/cast/effect/attack work and queues phases from the full `animEvents` list in server order, including later attacks/casts in batched NPC-turn broadcasts; draw cards are hidden until the draw phase starts, including the first active hand reveal after mulligan. PLAN_MATCHMAKING adds a `BattleReconnected` handler — the only client entry point that primes camera/lock state and renders directly from a full state snapshot without the normal `BattleSeated`→mulligan→first-`UpdateBattleState` sequence, since a reconnecting player's fresh client session has no such history to build on. |
+| MatchmakingUI + MatchmakingController | `StarterGui/MatchmakingUI` (+ `StarterPlayerScripts/MatchmakingController`) | ✅ Complete (PLAN_MATCHMAKING) — HUD icon (`TopRightAnchor.MatchmakingButton`, cloned from `ItemMallButton`'s structure) + panel (Level display + Find Opponent/Cancel Matchmaking, `ItemMallUI`/`ItemMallController` shell pattern) + ticking elapsed-time icon label (`MulliganController`'s countdown pattern, counting up). Server-confirmed state transitions only (`JoinMatchmaking`/`CancelMatchmaking`/`MatchmakingUpdate`), never purely optimistic. Live-verified: icon/label at rest, and server-fired synthetic `MatchmakingUpdate` events correctly start/stop the real ticking timer and open/close the panel. Panel body click-to-`FireServer` wiring itself not exercised via a real simulated click this pass (same known UI-click-simulation limitation as `MulliganUI` Phase 8). |
+| TargetingSystem | `StarterGui/BattleUI/Modules/TargetingSystem` | ✅ Complete — `computeDropZones` driven by `CardData.playTarget(card)` across single targets and zone drops; `endDrag` sends `{slot=idx}`, `{target={side,slot}}`, or `{zone="..."}`; targeted enemy creatures with Stealth are excluded client-side; Stealth no longer uses full-card dark dimming. |
 | GraveLogPanel | `StarterGui/BattleUI/Modules/GraveLogPanel` | ✅ Complete — uses `creature`/`spell` types; passes `race`, `chargeCost`, and `corrupted` to card opts; stray `CostBadge.Visible=true` override removed (was fighting pure-Charge badge logic) |
 | CardPreviewController | `StarterGui/BattleUI/Modules/CardPreviewController` | ✅ Complete — preview layer at ZIndex 50; `show(frame, opts, side)` supports above/left (auto-flips right near screen edge) |
 | UXMode | `StarterGui/BattleUI/Modules/UXMode` | ✅ Complete — Desktop/Mobile toggle driven by viewport width (<800px=Mobile) and LastInputType |
+| BattleDirector | `StarterGui/BattleUI/Modules/BattleDirector` | ✅ Complete — FIFO phase queue; single `isLocked()` input gate; per-phase `maxDuration` timeout safety net; `skip()` now clears queued work, marks the active phase cancelled, and cancels tracked tweens/connections before unlocking input. |
+| PhaseRegistry | `StarterGui/BattleUI/Modules/PhaseRegistry` | ✅ Complete — handler-per-phase-type registry (`draw`, `play`, `attack`, `turn_banner`, `cast_reveal`, `effect`), mirrors the server's `Effects/Actions` pattern. `cast_reveal` now restores parent/anchor/position/rotation/size/z-index and uses cancellation-aware delayed callbacks/tween tracking. |
+| EffectVisuals | `StarterGui/BattleUI/Modules/EffectVisuals` | ✅ Complete (mechanism only) — `resolveVisualArchetype(entry, card)`: default archetype from action/target/area, optional `card.vfx` override (unused by any current card); only the `projectile` archetype has a real handler so far |
+| MulliganUI + MulliganController | `StarterGui/MulliganUI` (+ `StarterPlayerScripts/MulliganController`) | ✅ Complete — "First Draw" dialog; dealt-hand tiles each with their own "Re-draw" button (parented to the card); picking one calls `RedrawMulliganCard` for a real, immediate in-place swap (final, at most one), then "Battle" (`ConfirmMulligan`, no payload) finalizes; closes on the battle's first `UpdateBattleState`. Verified via genuine simulated clicks (`user_mouse_input` + `instance_path` targeting), not code inspection |
 | InventoryService | `ServerScriptService/InventoryService` | ✅ Complete (Phase 5) — `GetInventory` RemoteFunction handler; returns the player's `collection` (cardId multiset) from `SaveService`; empty for no/inactive profile |
 | DeckService | `ServerScriptService/DeckService` | ✅ Complete — RemoteFunction wrapper for `GetDecks`, `CreateDeck`, `SaveDeckCards`, `RenameDeck`, `DeleteDeck`, and `SetActiveDeck`; responses use `{ok=true,data=...}` or `{ok=false,error=...}` |
 | Hud + HudController | `StarterGui/Hud` (+ `HudController`) | ✅ Complete — `TopRightAnchor` frame (horizontal UIListLayout) hosting world icons; `InventoryButton` now opens **Card Library**. `HudController` shows the anchor in free-roam, hides the whole group on `BattleLoading`/`BattleSeated`/`UpdateBattleState`, restores on `BattleOver`/`BattleUnseated`/respawn |
@@ -273,10 +483,17 @@ Effects[] engine implementing:
 | `StandUp` | Client → Server | — (stand from a seat; also auto-stand on disconnect) |
 | `ReadyUp` | Client → Server | — (PVP ready handshake) |
 | `UseCore` | Client → Server | **Orphaned** (Battle Charge migration) — no server handler; firing it does nothing. Kept as a migration artifact like `StartDuel`/`UseSkill` |
-| `UpdateBattleState` | Server → Client | sanitized, perspective-relabelled state snapshot (densified board arrays); player snapshot carries `costMods` (client effective-cost coloring); timer metadata = `serverNow`, `turnStartedAt`, `turnEndsAt`, `turnDuration`, `timeoutStreaks`; `warnings` = transient rejection reasons (energy/taunt/prerequisite/timeout), cleared after each broadcast |
-| `BattleOver` | Server → Client | `{ winner, rewards }`. PvE rewards = EXP/gold/card-drop (persisted via SaveService). PvP rewards `.message` = "Victory!/Defeat. Record: XW/YL" (W/L persisted via SaveService) |
+| `OfferMulligan` | Server → Client | dealt 5-card hand, sent once per human seat when `DuelSession.start` opens the mulligan window |
+| `RedrawMulliganCard` | Client → Server (RemoteFunction) | invoke with a 1-based hand index → `true, newCardId` on success (swaps that slot in place immediately) or `false, reason`; at most one success per seat per mulligan |
+| `ConfirmMulligan` | Client → Server | no payload — finalizes the seat's mulligan (any redraw already happened via `RedrawMulliganCard`) |
+| `UpdateBattleState` | Server → Client | sanitized, perspective-relabelled state snapshot (densified board arrays); player snapshot carries `costMods` (client effective-cost coloring); `animEvents` = ordered animatable event log (perspective-relabelled, cleared after each broadcast) driving `BattleDirector`; timer metadata = `serverNow`, `turnStartedAt`, `turnEndsAt`, `turnDuration`, `timeoutStreaks`; `warnings` = transient rejection reasons (energy/taunt/prerequisite/timeout), cleared after each broadcast |
+| `BattleOver` | Server → Client | `{ winner, rewards }`. Current legacy PvE rewards = EXP/Crystal Shards/card drop; current PvP rewards use placeholder messages. Target payloads must implement `DESIGN_REWARD.md`. |
 | `BattleSeated` | Server → Client | `tableId, chairIdx` — PVP pre-battle seat; shows SeatedOverlay |
 | `BattleUnseated` | Server → Client | — hides SeatedOverlay/loading, unlocks controls, restores local table prompts after stand-up or aborted seating |
+| `JoinMatchmaking` | Client → Server | no payload — enqueues the player into the cross-server matchmaking queue (PLAN_MATCHMAKING) |
+| `CancelMatchmaking` | Client → Server | no payload — dequeues the player |
+| `MatchmakingUpdate` | Server → Client | `"queued"\|"cancelled"\|"matched"` — server-confirmed matchmaking state transitions |
+| `BattleReconnected` | Server → Client | full state snapshot (`Registry.viewFor` shape) — fired instead of the normal `BattleSeated`→mulligan→`UpdateBattleState` sequence when a reconnecting player resumes an already-active matchmaking battle |
 | `BattleLoading` | Server → Client | — shows input-blocking PvE "Finding Table..." overlay; clears on battle state, unseat, battle over, timeout, or respawn |
 | `Notify` | Server → Client | `message` — free-roam toast (own `NotifyOverlay` ScreenGui, shows even when BattleUI is disabled). Used by `handleTalkToNpc` for "all tables busy" / "couldn't seat you" |
 | `GetInventory` | Client → Server (RemoteFunction) | invoke → returns the player's `collection` (cardId multiset) from `SaveService`; empty list if no active profile |
@@ -290,9 +507,9 @@ Effects[] engine implementing:
 (`SSS/Modules/SaveService`) wraps the vendored ProfileStore (`SSS/Packages/ProfileStore`,
 pinned commit `45c9847`).
 
-- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Schema **v5.1** (canonical card-ID reset + receipt history):
+- **Store:** `"PlayerProfiles"`, key `Player_<UserId>`. Current legacy schema **v5.1** (canonical card-ID reset + receipt history):
   `{_version={major,minor}, archetype, collection, decks, activeDeckId,
-  crystalShards, crystalDust, purchaseHistory, exp, level, pvp, activeMatch, quests}`. Profiles below major version 5 run
+  crystalShards, crystalDust, purchaseHistory, exp, level, pvp, activeMatch, quests}`. `crystalDust` must be removed and `cardFragments` added in the economy migration. Profiles below major version 5 run
   `major_reset` and receive fresh onboarding data using canonical card IDs.
 - **Economy safety:** the former `crystalShards = 125` login override is removed;
   loaded and purchased balances are no longer overwritten on rejoin.
@@ -303,13 +520,15 @@ pinned commit `45c9847`).
   archetype grants its 30-card starter collection and active starter deck.
 - **Autosave:** dirty-flag 60s pooled `Profile:Save()`; ProfileStore `AUTO_SAVE_PERIOD`
   (~300s) backstop; card drops and successful pack purchases schedule an immediate save.
-- **Pack purchase:** `GachaTransaction` validates the entire roll before mutation,
-  updates Shards/cards/Dust atomically, and returns authoritative balances. Same-pack
-  repeats participate in the two-copy cap.
+- **Pack purchase (legacy):** `GachaTransaction` currently validates the entire
+  roll, then updates Shards/cards/Dust atomically. It must migrate to Card Fragment
+  deduction, no automatic duplicate conversion, and the duplicate-protection rules
+  in `DESIGN_ECONOMY.md`.
 - **Migration:** `migrate(data)` — minor (`MINOR_MIGRATIONS` table) / major (guarded
   hard reset to starter, `ALLOW_MAJOR_RESET`) / ahead (served as-is).
-- **PvE rewards:** `BattleController.endBattle` → `SaveService.applyRewards` for present
-  human winners (EXP/Crystal Shards/card drop).
+- **PvE rewards (legacy):** `BattleController.endBattle` →
+  `SaveService.applyRewards` currently grants EXP/Crystal Shards/card drops to
+  present human winners. Replace with the NPC reward schema in `DESIGN_REWARD.md`.
 - **PvP W/L + anti rage-quit (v1.1):** `startPvP` → `SaveService.beginPvpMatch` flags both
   players `activeMatch` and **force-saves** it. `endBattle` → `recordPvpResult(player, won)`
   records `pvp.wins/losses` + clears the flag for present players (returns the running
@@ -335,6 +554,7 @@ pinned commit `45c9847`).
 | Card art missing for most cards | 🔴 High | All cards have `image_prompt` fields; art not yet generated/wired. Placeholder `rbxassetid://115543591799677` used for creatures; `rbxassetid://127780045941863` for spell circles |
 | Balance: VITAL too weak, MIGHTY too strong | 🔴 High | Headless sim (n=40/matchup, symmetric NpcAI): MIGHTY 71%, SWIFT 55%, VITAL 24%. MIGHTY vs VITAL 35–5. Naive AI doesn't pilot sustain/Lifesteal. Needs card tuning + smarter AI |
 | Full PVP Local Server smoke still needed | 🟡 Medium | Phase 3 implementation has single-client Play smoke and isolated timer simulation coverage. Still run Studio Local Server with 2 players: sit/ready/start, independent views, timer resync across mobile/desktop switches, invalid remote probes, forfeit/disconnect cleanup. |
+| Cross-server matchmaking/reconnect needs a published-place test | 🟡 Medium | PLAN_MATCHMAKING.md is fully implemented and verified single-server (real MemoryStore ops, real NPC-fallback seating, real disconnect-pauses-not-forfeits proof, real mode-aware abandonment firing). What's genuinely unverified: a real `TeleportAsync` landing a player on a different running server instance, a destination server receiving a real player via `PlayerAdded`/`GetJoinData().TeleportData`, and the different-server reconnect branch — Studio (published or not) cannot exercise cross-instance teleport by design. Needs a published, multi-server-capable place as a dedicated follow-up. |
 | Archived/unauthorized SOUND assets | 🟡 Medium | Studio play console spams `Failed to load sound rbxassetid://1914538756: Requested asset is archived` and `asset id 150463355 … User is not authorized` (also `150463355`). These are **sound** assets (out of scope of the image preloader); likely from the environment template / a UI sound. Find the referencing instances and replace with owned, non-archived sounds. |
 | World/decor textures are not explicitly pre-warmed | 🟢 Low | Roblox streams Workspace/Lighting assets normally. Bulk preloading them previously competed with the essential image gate; startup and exact-five reveal images are the explicit preload scope. |
 | Legacy remotes intentionally orphaned | 🟢 Low | `StartDuel`, `UseSkill`, and `UsePlayerSkill` still exist in Remotes with no live server handler in BattleController v5. Kept as migration artifacts for now; deletion deferred to a later cleanup. |

@@ -1,4 +1,17 @@
 Roblox TCG Matchmaking Architecture Summary
+
+> **Status: implemented.** See [PLAN_MATCHMAKING.md](PLAN_MATCHMAKING.md) for
+> the actual build (MemoryStore queue + server registry, destination
+> selection, NPC fallback, reconnect, and the matchmaking UI). This document
+> remains the original architecture sketch; one deliberate deviation from it:
+> Case C ("no tables available") below describes `ReserveServer(shopPlaceId)`
+> for a brand-new instance — the actual implementation still uses
+> `ReserveServer` for this specific narrow case (two independently-teleporting
+> home servers need to converge on the same new instance), but purely as
+> internal plumbing, not as the general reconnect mechanism; reconnect itself
+> always uses plain JobId + `TeleportAsync` against whatever instance a match
+> actually lands on, reserved or not.
+
 Core Idea
 
 There is no central matchmaking server.

@@ -74,9 +74,11 @@ Full trigger/action/target/condition vocabulary lives in
 
 ### Rarity
 
-`common`, `rare`, and `epic` are the current rarities. Rarity signals
-collectibility, drop weight, and build-around complexity; it does not mean
-"strictly stronger."
+`common`, `rare`, `epic`, and `legendary` are the alpha rarities. Rarity signals
+collectibility, pack weight, and build-around complexity; it does not mean
+"strictly stronger." Legendary cards use a one-copy protection threshold; the
+other rarities use two copies, as defined in
+[DESIGN_ECONOMY.md](DESIGN_ECONOMY.md).
 
 ---
 

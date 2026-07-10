@@ -1,27 +1,13 @@
 # Hearthstone Card Pack System Specification
 
-> **Project implementation note (2026-06-29):** This document remains a research
-> reference, not the Elemental Card runtime contract. The current alpha vending
-> machine uses one unified 132-card pool, five cards for 50 Crystal Shards,
-> 70/25/5 common/rare/epic odds, a two-copy ownership cap, and duplicate conversion
-> of 5/20/80 Crystal Dust. Purchases are committed atomically by
-> `GachaTransaction`; the server validates vending-machine proximity and returns
-> authoritative balances. The client uses a modal camera-space 3D
-> Skip/Reveal/Next/Done/Claim sequence with rigid SurfaceGui card faces, clean backs,
-> and delayed front-emblem fades. Shared art is warmed at login; the exact five
-> rolled card images are callback-verified immediately before the 3D stage. The
-> full reveal lifecycle also suppresses character movement and world prompts. See
-> [PLAN_CARD_ACQUISITION.md](PLAN_CARD_ACQUISITION.md)
-> for the implemented architecture and verification record.
-
-> **Implemented successor (2026-07-01):** [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md)
-> adds live server-computed per-draw odds, same-rarity duplicate protection, a
-> leveled Vending Machine UI, and a policy-gated Developer Product mall for
-> Crystal Shards. Product IDs and dedicated currency icons are configured; only
-> the published-place real-purchase receipt test remains.
-> It is duplicate protection, not an Epic/Legendary dry-streak or guaranteed-rarity
-> pity counter. The selected algorithm takes one ownership snapshot before all five
-> draws, so same-pack over-cap repeats can still convert to Dust.
+> **Research reference only (2026-07-10):** This document describes Hearthstone's
+> acquisition model and is not an Elemental TCG design contract. Elemental TCG pack
+> pricing, currencies, crafting, rarities, and duplicate protection are defined by
+> [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md); reward cadence is defined by
+> [DESIGN_REWARD.md](DESIGN_REWARD.md). The earlier Shard-priced pack and Crystal
+> Dust implementation is retained only in the superseded historical plans
+> [PLAN_CARD_ACQUISITION.md](PLAN_CARD_ACQUISITION.md) and
+> [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md).
 
 > Research reference for designing a digital trading-card pack and collection system.  
 > This document describes Hearthstone's general pack-opening structure, reward cadence, rarity guarantees, pity rules, duplicate protection, and crafting support.

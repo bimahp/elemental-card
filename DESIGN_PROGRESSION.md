@@ -4,41 +4,31 @@
 
 Progression is built around monster mastery and incremental collection. No stat inflation — stronger play comes from better deckbuilding and mastery unlocks, not upgraded numbers.
 
+This document owns mastery, EXP, and account-level progression. Currency and card
+acquisition are owned by [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md); battle and quest
+reward values are owned by [DESIGN_REWARD.md](DESIGN_REWARD.md).
+
 ---
 
 ## Battle Rewards
 
-Rewards are produced by a backend reward policy module. The policy receives the
-battle mode (`pve` or `pvp`), winner seat, recipient seat, and battle context, then
-returns a display/persistence payload. Phase 3 owns the policy shape; Phase 4 owns
-saving the payload to ProfileStore.
+The backend reward policy must implement [DESIGN_REWARD.md](DESIGN_REWARD.md).
+Locked Card Fragment values are `3/1` for valid matchmaking win/loss, `2/0` for
+winner/loser on an early forfeit, `1/0` for Local Battle, and `1/0` for repeat NPC
+battles. A first-time NPC clear awards `50 Card Fragments`; fixed NPC card drops
+are removed.
 
-### PvE Rewards
-
-Awarded to the **human winning player** after a completed PvE duel.
-
-| Reward | Amount |
-|---|---|
-| EXP | 50 |
-| Gold | 25 |
-| Card Drop | 1 card, randomly drawn from the NPC's deck pool |
-
-The losing human receives nothing in v0.1. The NPC seat never receives rewards.
-Consolation rewards are planned for a later version.
-
-### PVP Rewards
-
-PVP reward contents are intentionally separated from PvE before persistence lands.
-Phase 3 should return explicit placeholder payloads for PVP winner/loser outcomes
-so tuning PVP rewards later does not require changing battle cleanup or turn flow.
+Normal Matchmaking, Local, and repeat NPC rewards share a global
+`200 Card Fragments/day` cap. Repeat NPC rewards also have a 10-Fragment daily
+sub-cap. Quest rewards and first-time NPC clear bonuses are outside the battle cap.
 
 ---
 
-## NPC Drop Pools
+## NPC Progression Rewards
 
-Each NPC is associated with one archetype. Their drop pool is all unique identity cards from their deck (equal weight, unweighted).
-
-Drop pool expands as more NPCs and archetypes are added.
+NPCs may define one-time first-clear progression rewards. They do not grant fixed
+card drops. Repeat wins grant the Card Fragment reward defined in
+[DESIGN_REWARD.md](DESIGN_REWARD.md).
 
 ---
 
@@ -67,22 +57,24 @@ Player level is separate from monster mastery and tracks overall account progres
 
 ---
 
-## Crystal Currency Uses
+## Currency and Collection Progression
 
-- **Crystal Shards:** spend 50 at the Card Vending Machine to open five cards
-  (earnable through play; the policy-gated Robux bundle shop and product IDs are configured)
-- **Crystal Dust:** duplicate conversion currency (5 common / 20 rare / 80 epic);
-  spending and crafting remain future work
-- Cosmetic purchases
-- Trade facilitation
+- **Card Fragments:** unpaid gameplay currency used only for random card packs.
+- **Crystal Shards:** deterministic currency used for exact card/cosmetic crafting
+  and safe utility. Shards may come from Robux, manual card destruction, or fixed
+  quest rewards, but never from pack rolls or Fragment conversion.
+- **Crystal Dust:** removed from the game and must not appear in new schemas, UI,
+  rewards, or acquisition flows.
 
 ---
 
 ## Card Collection
 
 Players collect cards through:
-- NPC battle drops (v0.1)
-- Card Vending Machine packs (implemented: unified 132-card pool, five-card pulls)
+
+- Card Fragment packs
+- Exact Crystal Shard crafting
+- Starter/onboarding grants
 - Player trading (planned)
 - Tournament rewards (planned)
 
@@ -93,9 +85,6 @@ Players collect cards through:
 - Player levels with cosmetic unlocks
 - Seasonal ranked ladders
 - Tournament entry and prize pools
-- Additional pack banners, pity rules, and targeted pools
+- Additional named expansion pools
+- Weekly quests
 - Card trading between players
-
-Implemented acquisition support: duplicate-aware per-draw odds disclosure,
-same-rarity duplicate protection for the Standard Pack, and the policy-gated
-configured Developer Product shop (`PLAN_MONETIZATION.md`).

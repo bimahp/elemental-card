@@ -1,6 +1,13 @@
 # PLAN_MONETIZATION — Vending Machine Revamp + Robux Item Mall
 
-> Status: **implemented and configured; published receipt test pending** | Author: bimahp | Date: 2026-07-01
+> **OBSOLETE (2026-07-10):** Historical implementation record only. Its
+> Shard-priced random packs, Crystal Dust conversion, bundle sizes, prices, and
+> acquisition rules are superseded by [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) and
+> [DESIGN_REWARD.md](DESIGN_REWARD.md). Do not use this plan for current product or
+> implementation decisions.
+>
+> Historical status: implemented and configured; published receipt test was
+> pending. Author: bimahp | Date: 2026-07-01
 
 ## Implementation record — 2026-07-01
 

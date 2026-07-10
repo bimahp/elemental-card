@@ -1,8 +1,14 @@
 # PLAN — Card Vending Machine (Gacha)
 
+> **SUPERSEDED (2026-07-10):** Historical implementation record only. The
+> Shard-priced random pack and automatic Crystal Dust conversion described here
+> are obsolete. Current acquisition rules are defined by
+> [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md); reward inputs are defined by
+> [DESIGN_REWARD.md](DESIGN_REWARD.md).
+
 ## Implementation status — completed and verified 2026-06-29
 
-> Successor implementation note (2026-07-01): `PLAN_MONETIZATION.md` implements
+> Historical successor note (2026-07-01): `PLAN_MONETIZATION.md` implemented
 > the next Vending Machine UI, live per-draw odds, same-rarity duplicate protection,
 > and policy-gated Robux Shard mall. Those additions remain separate from this
 > original implementation record. The successor removed the temporary `125`

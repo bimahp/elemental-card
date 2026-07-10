@@ -32,7 +32,7 @@ Cards.embermaw = {
     cardType   = "creature",         -- creature | spell
     playTarget = "enemy_character",  -- spells only; client drop surface
     race       = "BEAR",             -- creatures only; BEAR | TREANT | GOLEM | ...
-    rarity     = "rare",             -- common | rare | epic   (legendary TBD)
+    rarity     = "rare",             -- common | rare | epic | legendary
     cost       = 4,
     atk        = 4, hp = 5,          -- creatures only
     keywords   = { "taunt" },        -- static, always-on states (see Keywords)
@@ -51,7 +51,7 @@ Cards.embermaw = {
 | `cardType` | ✅ | `creature` or `spell`. (Renamed from the engine's old `monster`/`action`.) |
 | `playTarget` | spells | Required on spells, forbidden on creatures. Defines the client drag/drop surface; the effect `target` fields still define what the rules resolve. |
 | `race` | creatures | Tribe. Omitted on spells. |
-| `rarity` | ✅ | `common` / `rare` / `epic`. |
+| `rarity` | ✅ | `common` / `rare` / `epic` / `legendary`. |
 | `cost` | ✅ | Energy cost. |
 | `chargeCost` | optional | Battle Charge cost: `{ battleType = "MIGHTY"\|"SWIFT"\|"VITAL", amount = N>0 }`. Paid and validated before the card resolves, so a card cannot use Charge it generates later. See [DESIGN_CORE.md](DESIGN_CORE.md) Battle Charge. |
 | `atk`, `hp` | creatures | — |
