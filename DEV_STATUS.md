@@ -1,6 +1,81 @@
 # DEV_STATUS — Elemental TCG: Implementation State
 
-> Last updated: 2026-07-10 (Cross-server matchmaking + reconnect implemented)
+> Last updated: 2026-07-11 (Card Vendor NPC — Craft/Buy/Destroy — implemented and verified)
+
+## Card Vendor NPC — Craft/Buy + Destroy-for-Shards (PLAN_CARD_VENDOR.md, 2026-07-11)
+
+Closes a real gap left by the economy revamp: Crystal Shards had **no
+free-to-play income path** (Robux only). Adds the missing `SaveService`-
+authoritative destroy-for-Shards system, plus a new "Card Vendor" NPC (the
+user placed `Workspace.Card Vendor` already) selling a rotating stock of
+specific cards two ways: **Craft** (Card Fragments, new pricing) and **Buy**
+(Crystal Shards, DESIGN_ECONOMY.md §10.1 rates x2). Full pricing tables,
+locked decisions, and phase-by-phase detail live in `PLAN_CARD_VENDOR.md`;
+new numbers are the source of truth in `DESIGN_ECONOMY.md` §10.4.
+
+**Phase 0/1 done (2026-07-11):** `GachaConfig.COST_CARD_FRAGMENTS` fixed
+160→200 to match the already-updated Standard Pack price. New
+`ReplicatedStorage/Modules/VendorConfig.lua` (all rates), new
+`ServerScriptService/Modules/VendorTransaction.lua` (pure craft/buy/destroy
+mutations, mirrors `GachaTransaction.lua`), new
+`ServerScriptService/Modules/VendorService.lua` (epoch-aligned deterministic
+rotation — `getRotationBucket()`/`getStockCardIds()`, zero persisted state,
+lands exactly on 00:00/08:00/16:00 across every server independently), and
+three new `SaveService` functions (`applyCardCraft`/`applyCardBuy`/
+`applyCardDestroy`) mirroring `applyCardPackPurchase`'s shape. No schema
+version bump needed — only mutates fields already in v5.3. Verified via
+direct `script_read`/`script_grep` after each edit (SaveService's own
+`script_grep` line numbers were found to be unreliable for this file this
+session — see PLAN_CARD_VENDOR.md Phase 1 for the workaround).
+
+**Phase 2/3/4 done (2026-07-11):** 4 new `RemoteFunction`s
+(`GetVendorStock`/`CraftCard`/`BuyCard`/`DestroyCards`) under
+`ReplicatedStorage.Remotes`, new `ServerScriptService/VendorController.lua`
+(mirrors `GachaController.lua`'s proximity/rate-limit shape; caught and
+fixed a real bug before shipping — `DestroyCards` must NOT require Vendor-
+NPC proximity since it's reachable from `InventoryController` anywhere, only
+Craft/Buy do). New `StarterGui.VendorUI` (cloned from `ItemMallUI`'s shell)
++ new `StarterPlayer.StarterPlayerScripts.VendorUIController.lua` combining
+the Card Vendor's dialogue trigger (reuses the existing generic
+`DialogueController`, zero changes to it or to `TrainerInteraction.lua`) and
+the Stock→Detail shop UI (reuses `CardVisuals`/`InventoryController`'s card-
+rendering pattern). New `UITheme.Accents.Vendor`. Fixed the Card Vendor
+NPC's stale `TalkPrompt.ObjectText="Noob"` (cloned-from-Noob leftover).
+
+**Phase 5/6 done (2026-07-11):** `InventoryController.lua`'s "My Cards" card-
+select handler gained a "Destroy 1 Copy (+N Shards)" button (fires
+`DestroyCards`, only spawns when copies exceed `DESTROY_PROTECTED_COPIES`
+for that rarity; one copy per click, not a quantity stepper — a disclosed
+scope simplification). Headless: 27/27 assertions across `VendorConfig`
+rates, `VendorService` rotation determinism, and `VendorTransaction`
+craft/buy/destroy atomicity. Live Studio Play (real connected test player,
+persisted across a session restart): real dialogue→shop flow, a real Craft
+failure (insufficient Fragments) and a real Buy success (Shards deducted,
+card added, confirmed maxed at 2 copies), a real Destroy success + a real
+protected-copy rejection, and confirmation that `DestroyCards` works from
+~111 studs away while `CraftCard`/`BuyCard` correctly require Vendor
+proximity. **A real bug found and fixed live:** the client's post-purchase
+Detail-page refresh re-rendered from a stale cached stock snapshot instead
+of re-fetching, so Craft/Buy buttons stayed wrongly enabled after a card
+became maxed — fixed by re-fetching stock before the refresh; the server-
+side max-copies gate itself was confirmed correct throughout (this was a
+client display bug only). **Known gap:** the Destroy button's positive case
+(spawning + being clicked for real inside `InventoryUI`) wasn't exercised —
+the test profile ran out of 3+-copy cards and had too few Fragments to roll
+more; the underlying remote it calls was independently verified multiple
+times. See `PLAN_CARD_VENDOR.md` for full detail. `DESIGN_ECONOMY.md` §10.4
+is now the source of truth for every Vendor rate.
+
+**Post-ship fix (2026-07-11):** the Card Vendor had no floating name/title
+nameplate like every other NPC — `NameplateController.lua`'s `NPC_DATA`
+table and NPC-scan simply never included it. Added `"Card Vendor"` →
+`{displayName="Card Vendor", title="Card Merchant"}` (same role-name-as-
+display-name pattern Noob uses) and a matching `suppressDisplay` call in
+`NameplateService.lua`. Live-verified: registered NPC count went 4→5, and
+direct inspection confirmed the real nameplate text and suppressed default
+Humanoid display match every other NPC exactly.
+
+---
 
 ## Cross-Server Matchmaking + Reconnect (PLAN_MATCHMAKING.md, 2026-07-10)
 
@@ -198,29 +273,107 @@ see PLAN_CARD_BATTLE_REVAMP.md's "Out of Scope" section for the asset list.
 
 ---
 
-## Economy and rewards — design locked, implementation migration pending
+## Economy revamp — Card Fragments, battle rewards, Result UI (PLAN_ECONOMY_REVAMP.md, 2026-07-10)
 
-[DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) and
-[DESIGN_REWARD.md](DESIGN_REWARD.md) are the design sources of truth.
-`PLAN_MONETIZATION.md` is obsolete and retained only as an implementation record.
+All 6 phases implemented and verified — headless (`execute_luau`, Edit mode,
+clone-and-rename technique) for every pure `ModuleScript`, and live in actual
+Studio Play (`start_stop_play`, real connected test player) for the pieces
+that touch a real `Player`/profile or client rendering. See
+`PLAN_ECONOMY_REVAMP.md` for full phase-by-phase detail, including a real
+Luau compiler bug found and fixed during implementation (not anticipated by
+the approved plan) and a newly-confirmed `execute_luau` isolation constraint.
 
-The live place still implements the superseded system: a 50-Shard Standard Pack,
-automatic Crystal Dust conversion, old Shard bundle sizes/prices, PvE Shard/card
-drop rewards, and placeholder PvP rewards. The existing transaction and receipt
-paths remain useful implementation history, but they do not represent the target
-economy.
+**New `cardFragments` currency** (`SaveService` schema **v5.3**) replaces
+`crystalDust` everywhere — free gameplay currency, random packs only, per
+`DESIGN_ECONOMY.md`. `crystalShards` is unchanged (paid/destroy/quest only)
+but battle rewards no longer grant it or a fixed card drop (`DESIGN_REWARD.md`
+§4.3). New per-profile fields: `dailyRewards` (day-bucketed
+`battleFragments`/`npcFragments`/`forfeitCount`, reset via
+`SaveService.dayBucket()`/`ensureDailyReset`), `matchmakingCooldownUntil`
+(epoch seconds, early-forfeit cooldown ladder), `pveFirstClear` (per-archetype
+MIGHTY/SWIFT/VITAL booleans).
 
-Migration work still required:
+**Reward engine.** New `ReplicatedStorage/Modules/RewardConfig.lua` centralizes
+every DESIGN_REWARD.md constant (Matchmaking `3/1/2/0`, Local `1/0`, NPC
+`1/0/50`, both daily caps, `EXP_PER_FRAGMENT=15`, the turn-4-or-2-actions
+validity gate, the 5-tier forfeit cooldown ladder). `RewardService.lua`
+rewritten as a pure classifier (`battle.mode`+`battle.matchmaking` →
+Matchmaking/Local/NPC category, `reason="win"|"forfeit"` → early/late forfeit
+split) with zero profile access. New `SaveService.applyBattleRewards` is the
+sole place a reward plan becomes a real mutation: resolves the NPC
+per-archetype first-clear bonus (bypasses both caps), clamps against the
+200/day global and 10/day NPC sub-caps, computes `exp = granted *
+EXP_PER_FRAGMENT` from the post-cap amount, force-saves. New
+`SaveService.registerEarlyForfeit` drives the cooldown ladder, checked by
+`JoinMatchmaking` (rejects with a `Notify` toast while active). PvP battles
+now earn rewards too (previously earned nothing). Confirmed with the user:
+NPC-fallback matchmaking (no human found) pays Matchmaking rates, not NPC
+rates. DESIGN_REWARD.md §11 abuse-monitoring metrics are an explicit `TODO`
+in `BattleController.lua`, not built this pass.
 
-- Add Card Fragments and the shared 200-Fragment daily battle cap.
-- Implement `3/1` matchmaking, `1/0` Local, `1/0` NPC, `50` first-clear, and
-  `3 x 30` daily quest rewards from `DESIGN_REWARD.md`.
-- Move random packs to Card Fragments (`200` per Core Pack), add the four alpha
-  rarities, and implement the authoritative pack pools/prices.
-- Remove Crystal Dust from schema, UI, transactions, and tests; manually destroyed
-  cards grant Crystal Shards.
-- Restrict Crystal Shards to deterministic crafting/utility and approved fixed
-  sources; replace the old Developer Product bundles with the source-document shop.
+**Vending machine + Crystal Dust removal.** `GachaConfig`/`GachaTransaction`/
+`GachaService` retarget the pack-purchase currency to `cardFragments`
+(`COST_CARD_FRAGMENTS=160`, Standard Pack price; archetype Core Packs stay 200); a
+duplicate roll is now added to the collection uncapped with `isDupe=true` and
+no currency compensation (DESIGN_ECONOMY §12.4), instead of being blocked and
+converted to Dust. `PackRevealController`'s summary screen (previously showed
+"Converted to +N Dust") now reports duplicate counts instead — a real
+regression caught and fixed, not just a missed file. `crystalDust` removed
+from every remaining site (`RobuxShopController`, `QuestService`,
+`CurrencyBarController`); the HUD's `DustBadge` Studio instance renamed
+in-place to `FragmentsBadge` (editor-first) with a new `Theme.Colors.Fragment`
+warm-gold accent.
+
+**Post-battle Result UI.** `StarterGui.BattleUI.PostBattle` restructured as
+real Studio instances onto the shared modal-panel language every other panel
+uses (`Scrim`/`TitleBar`/`Body`, `UIComponents.applyModalShell`), tinted
+Success/Danger per outcome, plus a new EXP progress bar (`LevelLabel` +
+`ExpBarTrack`/`Fill`) driven by a new generic
+`UIComponents.createProgressBar` primitive. `BattleUIController.lua`'s
+`BattleOver` handler consumes the new reward-plan shape and renders a reward
+line list (record message / Fragments / first-clear bonus / EXP) that
+degrades cleanly to "No reward this time." for zero-reward outcomes.
+
+**Real bugs found and fixed via live testing, not just inferred:** a Luau
+compiler "Out of local registers" crash (200-local-per-chunk ceiling) in
+`BattleUIController.lua` from adding ~12 new top-level locals to an
+already-large script — fixed by grouping the new Post-battle instance refs
+into one table and scoping one-time setup temporaries (`UI`/`Theme`) inside a
+`do...end` block instead of leaving them as persistent top-level locals.
+`multi_edit`'s `replace_all` silently no-op'd on 2 of 3 identical occurrences
+in `VendingMachineController.lua` despite reporting success — caught by
+verifying `Script.Source` directly rather than trusting the tool's report,
+and fixed via a direct `Script.Source` pattern replacement (this project's
+established workaround for this class of tooling gap). A previously-unknown
+`execute_luau` constraint: even `datamodel_type: "Server"` during real Studio
+Play runs in an isolated VM with its own `require` cache, separate from the
+actual running server threads — `Save.getProfile(player)` returns `nil`
+there even for a genuinely connected player, since that VM's `SaveService`
+module was never populated via a real `onPlayerAdded`. Worked around by
+exercising the real reward/currency paths through actual remotes
+(`GetQuestSnapshot`, `OpenCardPack`) fired from the real client instead.
+
+**What remains genuinely unverified:** a full multi-turn battle played to a
+real win/loss through simulated clicks (mulligan → turns → attack) end-to-end
+through `endBattle`/`applyBattleRewards` with a live profile — the equivalent
+server-side reward math was instead verified by calling
+`RewardService.buildBattleRewards` headlessly (14/14 assertions) and by
+confirming the real `GetQuestSnapshot`/`OpenCardPack` remotes round-trip
+correctly against the real live profile. The redesigned Result panel's exact
+on-screen visual layout was not confirmed via screenshot — the `screen_capture`
+tool did not render any `PlayerGui` `ScreenGui` content in this session (not
+even the pre-existing, unmodified HUD), a capture-tool limitation rather than
+a `PostBattle`-specific issue; confirmed instead via direct Instance-property
+inspection (`gui.Enabled`, `post.Visible`, `AbsolutePosition`/`AbsoluteSize`,
+`BackgroundTransparency`, `resultLabel.Text`) after firing a real `BattleOver`
+remote at the real connected client.
+
+Migration work still deferred (see `PLAN_ECONOMY_REVAMP.md`'s Next Steps):
+daily quests (3×30 Fragments, explicitly out of scope this pass); the full
+4-pack DESIGN_ECONOMY catalog (only one Standard-equivalent pack exists
+today); manual "Destroy Card → Crystal Shards" crafting (Shards have no
+gameplay income source until this exists); DESIGN_REWARD §11 abuse-monitoring
+metrics.
 
 ---
 
@@ -388,27 +541,33 @@ renders, deck builder Core-free).
 | Effects/Ops | `ServerScriptService/Modules/Effects/Ops.lua` | ✅ Complete — game-op mutation layer (healHero, healCreature, gainArmor, damageHero, damageCreature+`take_damage` event, killCreature+rebirth+`shatterDisabled` guard, buffCreature, drawCard+filter, bounce+`shatterDisabled` clear, summon, returnFromGraveyard, keyword helpers, cost system, gainEnergy, newInstance, destroyChargeSlot, drainCharge, addChargeCostMod with remaining-copy counts, clearChargeCostMod, effectiveChargeCost) |
 | BattleLogic | `ServerScriptService/Modules/BattleLogic.lua` | ✅ Complete (effects[] engine + Board-Generated Charge V2) — `newSide`/`newBattle` initializes two-slot Charge state + `chargeCostMods={}`; `playCard` atomically validates/pays Energy + effective charge (`Ops.effectiveChargeCost`), clears `chargeCostMods` entry on play, threads `chosenZone` through emerge/playBlock/cast contexts, resolves emerge/cast — no normal +1 grant; `endTurn` iterates owner board and calls `ChargeState.gainCharge` for each non-NEUTRAL creature where `canGainWithoutReplace` is true (reason `"board_end_turn"`); `attack` fires `deal_damage` event. |
 | NpcAI | `ServerScriptService/Modules/NpcAI.lua` | ✅ Complete (effects[] scoring, V2 action scoring, board-presence Charge bonus) — `takeTurn(state, Logic, who)`; `scoreCard` by action verb including contextual scoring for `destroy_charge_slot`, `drain_charge`, `disable_shatter`, `add_additional_charge_cost_to_player_hand`; creature scoring includes +1/+2 bonus for non-NEUTRAL types (board end-turn Charge generation); affordability uses `CardCost.canPay` with effective charge cost; `aiAttack` prefers lethal/clean kills and handles Taunt. |
-| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5 + PLAN_MATCHMAKING) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read active deck cards from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`, validate chosen targets and `opts.zone` against `playTarget`, reject targeted enemy Stealth, leave `UseCore` orphaned/unwired, cancel session timers on battle end, delegate rewards to `RewardService`; PvE persists via `SaveService.applyRewards` (present winners); `battle.matchmaking` flag (set only by `attemptSeatPendingMatches`) distinguishes matchmaking-originated battles from local ReadyUp PvP. `onMatchStart` (fired from `DuelSession.start` at mulligan-begin) calls `Save.beginMatch` for `mode=="pvp"` or any matchmaking battle. `attemptReconnect` (injected into `SaveService.init`) resumes a still-live same-server battle or attempts a different-server `TeleportAsync`. `PlayerRemoving` pauses (does not forfeit) a matchmaking battle still in progress — the existing turn-timeout/streak machinery becomes the only forfeit trigger; local PvP/normal PvE keep instant-forfeit-on-disconnect unchanged. `JoinMatchmaking`/`CancelMatchmaking` handlers + two poll loops (fast: queue pop/teleport processing; slow: expensive destination-side seating scan) wire `Matchmaker`/`ServerRegistry`. |
+| BattleController | `ServerScriptService/BattleController.lua` | ✅ Complete (v5 + PLAN_MATCHMAKING) — thin remote-wiring; battle records in `BattleRegistry`, turn loop in `DuelSession`, tables/seating in `TableManager`. `startPvE`/`startPvP` read active deck cards from `SaveService.getActiveBattleDeck`; Noob TalkPrompt wired; battle remotes derive seat/battle server-side, rate-limit lightly, validate `PlayCard`/`DeclareAttack`, validate chosen targets and `opts.zone` against `playTarget`, reject targeted enemy Stealth, leave `UseCore` orphaned/unwired, cancel session timers on battle end, delegate rewards to `RewardService`; every mode persists via `SaveService.applyBattleRewards` (PLAN_ECONOMY_REVAMP — PvP now earns rewards too, not just PvE), gates the early-forfeit cooldown ladder via `registerEarlyForfeit`, and includes `exp` progress in the `BattleOver` payload; `battle.matchmaking` flag (set only by `attemptSeatPendingMatches`) distinguishes matchmaking-originated battles from local ReadyUp PvP. `onMatchStart` (fired from `DuelSession.start` at mulligan-begin) calls `Save.beginMatch` for `mode=="pvp"` or any matchmaking battle. `attemptReconnect` (injected into `SaveService.init`) resumes a still-live same-server battle or attempts a different-server `TeleportAsync`. `PlayerRemoving` pauses (does not forfeit) a matchmaking battle still in progress — the existing turn-timeout/streak machinery becomes the only forfeit trigger; local PvP/normal PvE keep instant-forfeit-on-disconnect unchanged. `JoinMatchmaking`/`CancelMatchmaking` handlers + two poll loops (fast: queue pop/teleport processing; slow: expensive destination-side seating scan) wire `Matchmaker`/`ServerRegistry`. |
 | BattleRegistry | `ServerScriptService/Modules/BattleRegistry.lua` | ✅ Complete — `Battles[battleId]`, `PlayerBattle[userId]` reverse index, `spectators` set; `viewFor`/`viewForSpectator` perspective relabel (own seat→`player`), `remapOpts`; clients never send battleId; state views include Battle Charge fields (`chargeSlots`, `currentChargeSlot`, `chargeSeq`, `chargeEvents`, `chargeCostMods`) and server timer metadata. PLAN_MATCHMAKING adds `canonicalSeatByUserId` (matches by UserId, not Player-instance identity — needed since a paused battle's seat holds a stale/disconnected Player reference) and `reconnectSeat` (repoints a seat's Player reference on rejoin). |
 | DuelSession | `ServerScriptService/Modules/DuelSession.lua` | ✅ Complete — per-battle turn loop: `start` (deals hands, opens the `"mulligan"` pre-battle stage before the turn loop; PLAN_MATCHMAKING adds an optional `onMatchStart(battle)` callback fired right after `battle.status="mulligan"`), `confirmMulligan`, `afterHumanAction`, `humanEndTurn`, internal `runNpcTurn`/`startSeatTurn`; token-guarded human turn timers with `TURN_TIMEOUT_SECONDS` and `MAX_TIMEOUTS_BEFORE_FORFEIT` (this existing mechanism is now also the sole matchmaking-battle forfeit trigger, unmodified); mulligan timeout tokens are tracked per seat so simultaneous PvP mulligans force-resolve reliably; `checkAndEnd` runs after both `startTurn` (Fatigue) and `endTurn`. |
-| RewardService | `ServerScriptService/Modules/RewardService.lua` | ⚠️ Legacy policy pending reward migration — PvE winner EXP/Crystal Shards/NPC-deck card drop; PvE loser/NPC no payload; PvP winner/loser placeholder messages. Target values and modes are in `DESIGN_REWARD.md`. |
+| RewardService | `ServerScriptService/Modules/RewardService.lua` | ✅ Complete (PLAN_ECONOMY_REVAMP) — pure classifier, no profile access; `buildBattleRewards(ctx)` with `reason="win"\|"forfeit"` returns `{mode, category, outcome, forfeited, earlyForfeit, valid, baseCardFragments, archetype}` per DESIGN_REWARD.md's Matchmaking/Local/NPC tables and the turn-4-or-2-actions validity gate. Fixed card drops removed. |
 | TableManager | `ServerScriptService/Modules/TableManager.lua` | ✅ Complete — FREE/RESERVED/OCCUPIED tables; one table `ProximityPrompt` ("Sit"/disabled, no Stand Up); **chained `awaitSeated` seating, no HRP anchoring** (SeatWeld positions, jump-state+controls block eject); `spawnNpcAt` clones Noob to chair 2 for PvE; `handleTalkToNpc`/`handleReadyUp`/`handleStandUp`. **Seating reliability (2026-06-22):** `seatPlayerAt` now clears stale seat/lock state before re-seating, **respects `awaitSeated`** (3s window + one retry), and on failure releases the reservation and returns false — a battle can never start with the player unseated ("in place"). `handleTalkToNpc` no longer returns silently: when no table is free or seating fails it fires `BattleUnseated` (clears the optimistic "Finding Table" overlay) and `Notify` with a reason. BattleUI records the active Seat CFrame and, after the SeatWeld releases, performs the final client-owned 3.5-stud side placement on `BattleUnseated`/`BattleOver`. PLAN_MATCHMAKING adds `countFree()` (free-table count for `ServerRegistry`'s heartbeat). |
 | ProfileStore | `ServerScriptService/Packages/ProfileStore.lua` | ✅ Vendored (loleris/MAD STUDIO, pinned commit `45c9847`) — session-locked DataStore lib; provenance/raw copy in repo `vendor/`. `DataStoreState="Access"` confirmed in this published place |
-| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete — ProfileStore wrapper. Schema **v5.2** (PLAN_MATCHMAKING) adds `jobId`/`mode` to `activeMatch` non-destructively; the temporary login Shard override is removed. Card packs remain atomic, and Developer Product receipts are granted once and acknowledged only after `OnAfterSave`/`LastSavedData` confirms that PurchaseId persisted. `beginPvpMatch` renamed `beginMatch(player, battleId, jobId, mode)` (no longer PVP-only — NPC-fallback matchmaking matches need reconnect tracking too); new `clearActiveMatch`. `onPlayerAdded`'s abandoned-match check now attempts reconnect first (via an injected `attemptReconnect` callback) and is mode-aware on the fallback penalty (`"pvp"` records a loss, `"pve"` records none) — live-confirmed firing correctly. |
+| SaveService | `ServerScriptService/Modules/SaveService.lua` | ✅ Complete — ProfileStore wrapper. Schema **v5.3** (PLAN_ECONOMY_REVAMP) adds `cardFragments`, `dailyRewards` (day-bucketed caps/forfeit counter), `matchmakingCooldownUntil`, `pveFirstClear`; removes `crystalDust`. New `applyBattleRewards` (caps + first-clear + EXP scaling, the sole place a `RewardService` plan becomes a real mutation), `registerEarlyForfeit`, `getExpProgress`, `getMatchmakingCooldownRemaining`, `dayBucket`. The old `applyRewards` (Shards/card-drop grant) is removed. PLAN_MATCHMAKING's v5.2 `jobId`/`mode` on `activeMatch` and reconnect-before-abandonment logic (mode-aware, live-confirmed) are unchanged. PLAN_CARD_VENDOR adds `applyCardCraft`/`applyCardBuy`/`applyCardDestroy` (delegate to `VendorTransaction`, share a new `commitVendorResult` helper for the mark-Dirty/currency-refresh/immediate-Save tail) — no schema version bump, only mutates fields already in v5.3. |
 | Matchmaker | `ServerScriptService/Modules/Matchmaker.lua` | ✅ Complete (PLAN_MATCHMAKING) — `MemoryStoreQueue`-backed global FIFO queue (`enqueue`/`dequeue`/`tryMatch`/`consume`); destination selection (`selectDestination`/`selectDestinationForSingle`, authoritative self-check via `TableManager.countFree()` before falling back to the `ServerRegistry` hint); match creation (`createMatch`/`createNpcFallbackMatch`, writes `MM_PendingMatches`/`MM_PendingTeleports`, uses `TeleportService:ReserveServer` for the no-server-has-room case); per-server processing (`processPendingTeleportsForPlayers`, `getMatchesForThisServer`, `clearMatch`). |
 | ServerRegistry | `ServerScriptService/Modules/ServerRegistry.lua` | ✅ Complete (PLAN_MATCHMAKING) — per-server heartbeat to a `MemoryStoreSortedMap` (`publish`, 10s cadence, sort key = free-table count), `getCandidates()` (hint only, per the "never trust the registry" rule), `init(getFreeTableCount)`. Guards against `game.JobId==""` in unpublished Studio Play (confirmed real, not just Edit-mode) with a one-time warning instead of a repeating MemoryStore error. |
-| GachaConfig | `ReplicatedStorage/Modules/GachaConfig.lua` | ⚠️ Legacy configuration — still uses 50 Shards, three rarity weights, and Dust values. Must migrate to Fragment-priced packs and Common/Rare/Epic/Legendary. |
-| GachaTransaction | `ServerScriptService/Modules/GachaTransaction.lua` | ⚠️ Legacy transaction — still deducts Shards and creates Dust. Must deduct Card Fragments and preserve duplicates for manual Shard destruction. |
-| GachaService | `ServerScriptService/Modules/GachaService.lua` | ⚠️ Legacy pool/odds implementation — unified 132-card, three-rarity pool. Must adopt the source-document pack pools, four rarities, and duplicate protection. |
-| GachaController | `ServerScriptService/GachaController.lua` | ⚠️ Legacy purchase boundary — authoritative proximity/rate-limit structure remains reusable, but currency and result payloads require migration. |
+| GachaConfig | `ReplicatedStorage/Modules/GachaConfig.lua` | ✅ Complete (PLAN_ECONOMY_REVAMP; PLAN_CARD_VENDOR fixed the price) — `COST_CARD_FRAGMENTS=200` (Standard Pack price, matches Core Packs), three rarity weights unchanged, `DUPE_DUST` removed. ⚠️ Still a single unified 132-card pool — the full named 4-pack DESIGN_ECONOMY catalog (Core Mighty/Swift/Vital + Standard) is a separate, still-pending migration. |
+| GachaTransaction | `ServerScriptService/Modules/GachaTransaction.lua` | ✅ Complete (PLAN_ECONOMY_REVAMP) — deducts `cardFragments`; a duplicate roll is added to the collection uncapped with `isDupe=true` and no currency award (DESIGN_ECONOMY §12.4) instead of converting to Dust. Manual destroy-for-Shards now exists as of PLAN_CARD_VENDOR (see `VendorTransaction`/`VendorService` below) — this module itself is unchanged, dupes still aren't auto-converted on roll. |
+| GachaService | `ServerScriptService/Modules/GachaService.lua` | ✅ Currency migrated (PLAN_ECONOMY_REVAMP) — `roll()` charges `Config.COST_CARD_FRAGMENTS`. ⚠️ Still a unified 132-card, three-rarity pool; the source-document pack pools and four alpha rarities remain a separate pending migration. |
+| GachaController | `ServerScriptService/GachaController.lua` | ✅ Complete — authoritative proximity/rate-limit structure; currency now flows through as Card Fragments via `GachaService`/`SaveService.applyCardPackPurchase`/`GachaTransaction`. |
+| VendorConfig | `ReplicatedStorage/Modules/VendorConfig.lua` | ✅ Complete (PLAN_CARD_VENDOR) — centralizes Craft/Buy/Destroy rates and rotation constants per DESIGN_ECONOMY §9/§10.4; `MAX_USEFUL_COPIES=2` (Craft/Buy eligibility) is deliberately distinct from `DESTROY_PROTECTED_COPIES.legendary=1` (destroy eligibility). |
+| VendorTransaction | `ServerScriptService/Modules/VendorTransaction.lua` | ✅ Complete (PLAN_CARD_VENDOR) — pure `craft`/`buy` (shared `directPurchase` helper, differs only by currency field) and `destroy` (validates every request before mutating any, mirrors `GachaTransaction.apply`'s atomicity). No profile access, no game-state access. |
+| VendorService | `ServerScriptService/Modules/VendorService.lua` | ✅ Complete (PLAN_CARD_VENDOR) — epoch-aligned deterministic rotation (`getRotationBucket`/`getStockCardIds`, zero persisted state, exact 00:00/08:00/16:00 boundaries), `buildStockView` for client display, `craftCard`/`buyCard` re-validate against the *current* stock before delegating to `SaveService`. |
+| VendorController | `ServerScriptService/VendorController.lua` | ✅ Complete (PLAN_CARD_VENDOR) — mirrors `GachaController.lua`; `GetVendorStock`/`CraftCard`/`BuyCard` require Vendor-NPC proximity, `DestroyCards` deliberately does not (reachable from `InventoryController` anywhere). |
+| VendorUI / VendorUIController | `StarterGui/VendorUI`, `StarterPlayer/StarterPlayerScripts/VendorUIController.lua` | ✅ Complete (PLAN_CARD_VENDOR) — `VendorUI` cloned from `ItemMallUI`'s shell (editor-first); `VendorUIController.lua` combines the Card Vendor NPC's `DialogueController`-based talk trigger with a Stock→Detail page-stack shop UI (Craft/Buy buttons, maxed/error states); re-fetches stock before re-rendering Detail post-purchase (a real staleness bug, fixed and live-verified). |
+| InventoryController (Destroy) | `StarterGui/InventoryUI/InventoryController.lua` | ✅ Complete (PLAN_CARD_VENDOR) — "My Cards" card-select handler gains a "Destroy 1 Copy (+N Shards)" button, only spawned when owned copies exceed `VendorConfig.DESTROY_PROTECTED_COPIES` for that rarity; fires `DestroyCards`, reuses the existing `errorLabel` for feedback. One copy per click (disclosed simplification, not a quantity stepper). Live-verified via the underlying remote and the negative case (no button below the protection floor); the positive in-UI click wasn't exercised this pass (see Known Issues). |
 | ShopConfig / ShopTransaction | `ReplicatedStorage/Modules/ShopConfig.lua`, `ServerScriptService/Modules/ShopTransaction.lua` | ⚠️ Legacy product configuration — receipt dedupe/grant structure is reusable; bundle sizes and prices must be replaced from `DESIGN_ECONOMY.md`. |
 | RobuxShopController | `ServerScriptService/RobuxShopController.lua` | ✅ Code complete — one `ProcessReceipt` handler, persisted acknowledgement, policy cache/remote, unknown-product deferral, and authoritative currency refresh. Published real-purchase test pending. |
-| VendingMachineController | `StarterPlayer/StarterPlayerScripts/VendingMachineController.lua` | ✅ Complete — Pack Select → Detail → live Contents page stack, per-draw disclosure, authoritative purchase, and existing reveal lifecycle. |
-| CurrencyBar / ItemMall | `StarterGui/Hud`, `StarterGui/ItemMallUI`, `StarterPlayerScripts/ItemMallController` | ⚠️ Legacy economy UI — currently shows Shards/Dust and old products. Must replace Dust with Card Fragments and update deterministic Shard products. |
-| GachaOddsSpec / ShopTransactionSpec | `TestService` | ⚠️ Passing for the legacy economy; assertions require replacement during migration. |
-| GachaAcquisitionSpec | `TestService/GachaAcquisitionSpec.lua` | ⚠️ Passing for the legacy Shard/Dust transaction; assertions require replacement during migration. |
+| VendingMachineController | `StarterPlayer/StarterPlayerScripts/VendingMachineController.lua` | ✅ Complete — Pack Select → Detail → live Contents page stack, per-draw disclosure, authoritative purchase, existing reveal lifecycle. Balance display is Fragments-only now (PLAN_ECONOMY_REVAMP — Shards aren't relevant to pack purchases); duplicate-protection copy no longer mentions Dust. `PackRevealController`'s summary screen reports duplicate counts instead of a Dust total. |
+| CurrencyBar / ItemMall | `StarterGui/Hud`, `StarterGui/ItemMallUI`, `StarterPlayerScripts/ItemMallController` | ✅ Complete — `CurrencyBarController` shows Shards + Card Fragments (`FragmentsBadge`, renamed in-place from `DustBadge`, new `Theme.Colors.Fragment` warm-gold accent). ItemMall (Robux Shard shop) unaffected/unchanged — still deterministic Shard bundles. |
+| GachaOddsSpec / ShopTransactionSpec | `TestService` | ✅ Passing, unaffected by the economy revamp — neither touches `crystalDust`/`cardFragments`. |
+| GachaAcquisitionSpec | `TestService/GachaAcquisitionSpec.lua` | ✅ Complete (PLAN_ECONOMY_REVAMP) — assertions rewritten for `cardFragments` cost/balance and the uncapped-dupe-add-with-`isDupe`-flag transaction shape. |
 | CardVisuals | `StarterGui/BattleUI/Modules/CardVisuals` | ✅ Complete — emblems LEFT edge; `ChargeCostBadge` alongside `CostBadge`; `updateCardFrame` accepts `chargeCost`, `chargeCostColor` (STAT_DEBUFF when hand-taxed), `corrupted`, and board status opts (`taunt`, `stealth`, `sick`, `shatterDisabled`); pure-Charge hides `CostBadge` and repositions `ChargeCostBadge` to Energy slot; Taunt uses a shield icon, Stealth uses a cloud/fog icon, disabled Shatter renders as a compact red `X` badge, and only sleeping/exhausted cards use the dark overlay; CORRUPTED prefix `☠ ` in NameBar |
-| BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete — `buildCard` accepts `effChargeCost`; board/hand/mobile rendering handles Battle Charge costs and targeting; `popChargeSocket` has distinct Charge tweens; event-log translation now stages draw/play/cast/effect/attack work and queues phases from the full `animEvents` list in server order, including later attacks/casts in batched NPC-turn broadcasts; draw cards are hidden until the draw phase starts, including the first active hand reveal after mulligan. PLAN_MATCHMAKING adds a `BattleReconnected` handler — the only client entry point that primes camera/lock state and renders directly from a full state snapshot without the normal `BattleSeated`→mulligan→first-`UpdateBattleState` sequence, since a reconnecting player's fresh client session has no such history to build on. |
+| BattleUIController | `StarterGui/BattleUI/BattleUIController` | ✅ Complete — `buildCard` accepts `effChargeCost`; board/hand/mobile rendering handles Battle Charge costs and targeting; `popChargeSocket` has distinct Charge tweens; event-log translation now stages draw/play/cast/effect/attack work and queues phases from the full `animEvents` list in server order, including later attacks/casts in batched NPC-turn broadcasts; draw cards are hidden until the draw phase starts, including the first active hand reveal after mulligan. PLAN_ECONOMY_REVAMP: `PostBattle`'s `BattleOver` handler renders the new reward-plan shape (Fragments/first-clear/EXP line list) and the EXP progress bar; `ContinueBtn`/new `CloseButton` share a `dismissPostBattle` handler. PLAN_MATCHMAKING adds a `BattleReconnected` handler — the only client entry point that primes camera/lock state and renders directly from a full state snapshot without the normal `BattleSeated`→mulligan→first-`UpdateBattleState` sequence, since a reconnecting player's fresh client session has no such history to build on. |
 | MatchmakingUI + MatchmakingController | `StarterGui/MatchmakingUI` (+ `StarterPlayerScripts/MatchmakingController`) | ✅ Complete (PLAN_MATCHMAKING) — HUD icon (`TopRightAnchor.MatchmakingButton`, cloned from `ItemMallButton`'s structure) + panel (Level display + Find Opponent/Cancel Matchmaking, `ItemMallUI`/`ItemMallController` shell pattern) + ticking elapsed-time icon label (`MulliganController`'s countdown pattern, counting up). Server-confirmed state transitions only (`JoinMatchmaking`/`CancelMatchmaking`/`MatchmakingUpdate`), never purely optimistic. Live-verified: icon/label at rest, and server-fired synthetic `MatchmakingUpdate` events correctly start/stop the real ticking timer and open/close the panel. Panel body click-to-`FireServer` wiring itself not exercised via a real simulated click this pass (same known UI-click-simulation limitation as `MulliganUI` Phase 8). |
 | TargetingSystem | `StarterGui/BattleUI/Modules/TargetingSystem` | ✅ Complete — `computeDropZones` driven by `CardData.playTarget(card)` across single targets and zone drops; `endDrag` sends `{slot=idx}`, `{target={side,slot}}`, or `{zone="..."}`; targeted enemy creatures with Stealth are excluded client-side; Stealth no longer uses full-card dark dimming. |
 | GraveLogPanel | `StarterGui/BattleUI/Modules/GraveLogPanel` | ✅ Complete — uses `creature`/`spell` types; passes `race`, `chargeCost`, and `corrupted` to card opts; stray `CostBadge.Visible=true` override removed (was fighting pure-Charge badge logic) |
@@ -440,7 +599,7 @@ renders, deck builder Core-free).
   - `spirit_crush` (VITAL spell) — `drain_charge` (enemy current, 1)
   - `glassfang_seal` (SWIFT spell) — `disable_shatter` (enemy creature)
   - `shadow_smoke` (SWIFT spell) — `add_additional_charge_cost_to_player_hand` (enemy, all, +1)
-  - Cards with `take_damage` trigger: `rumbleclaw`, `scarback` (MIGHTY), `amber_golem` (NEUTRAL)
+  - Cards with `take_damage` trigger: `rumbleclaw`, `shardwake_stalwart` (MIGHTY), `amber_golem` (NEUTRAL)
 - **3 starter decks** from deck_starter.json: mighty (30), swift (30), vital (30)
 - **CrystalCores module remains orphaned**: 3 pure and 3 dual-type legacy Cores still exist in `ReplicatedStorage/Definitions/CrystalCores.lua` as a migration artifact, but no live code requires them.
 - No Invoker; no old 32-card CardData
@@ -561,3 +720,7 @@ pinned commit `45c9847`).
 | Stray empty image (`rbxassetid://0`) | 🟢 Low | One `ImageLabel`/`Decal` has `Image=""`/`rbxassetid://0` (surfaced during the asset audit). Harmless; clean up the leftover. |
 | Avatar thumbnails in info widgets | 🟢 Low | Main hero portrait uses `GetUserThumbnailAsync`; check remaining placeholder widgets before closing this. |
 | NPC foot orientation | 🟢 Low | Z-axis rotation fix pending |
+| Economy revamp: no full live battle-playthrough verification | 🟡 Medium | PLAN_ECONOMY_REVAMP.md's reward math is verified headless (`RewardService.buildBattleRewards`, 14/14 assertions) and the currency/snapshot plumbing is verified live via real `GetQuestSnapshot`/`OpenCardPack` remote round-trips against the real connected test player's profile — but no full multi-turn battle was played to a real win/loss through simulated clicks end-to-end through `endBattle`/`applyBattleRewards`. Also discovered: `execute_luau` with `datamodel_type="Server"` during real Studio Play is itself an isolated VM (separate `require` cache from the actual running server threads) — `SaveService.getProfile(player)` returns `nil` there even for a real connected player, extending the previously-known Edit-mode isolation limitation. |
+| Card Fragment icon is a reused placeholder | 🟢 Low | `AssetIds.Icons.CARD_FRAGMENT` reuses the former Crystal Dust icon asset (`rbxassetid://118745543637085`); no dedicated Fragment art exists yet, same class of gap as missing card art. |
+| Card Vendor: Destroy button's positive in-UI click unverified | 🟢 Low | The `DestroyCards` remote it calls was independently live-verified multiple times (success, protected-copy rejection, proximity-independence); only the literal "click the button inside `InventoryUI`'s My Cards page" step wasn't exercised, since the test profile ran out of 3+-copy cards and had too few Card Fragments (7) to roll a fresh duplicate this session. Retest once a 3+-copy card is available. |
+| Vendor icon is a reused placeholder | 🟢 Low | `VendorUI`'s header icon reuses `AssetIds.VendingIcon`; no dedicated Card Vendor icon exists yet, same class of gap as the Card Fragment icon. |

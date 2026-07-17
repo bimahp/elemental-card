@@ -577,6 +577,115 @@ UI, card art, VFX, status effects, abilities, and card illustrations should feel
 
 ---
 
+# Pack Icon and Emblem Prompts
+
+Use these prompts for the Card Vending Machine pack icons and Battle Type
+emblem refresh. Pack icons are square 1:1 shop/vending tiles that represent
+buyable packs, not full card-cover illustrations. Emblems should be generated
+as a matching family: compact sticker-like icons with a thick white outer
+cutline, a black inner rim/drop shadow, and a single centered low-poly crystal
+object.
+
+## Core Mighty Pack Icon
+
+Reference: `[EC] Card - Background 4.png`
+
+```text
+Subject: Create a square 1:1 fantasy vending-machine pack icon for the Core Mighty Pack: one sealed collectible card pack with deep sapphire-blue faceted wrapper panels, warm ivory-gold trim, and a large ruby-red crystal fist emblem mounted at the center. The pack should feel like a premium physical booster pack for Mighty cards, compact and readable as a shop icon.
+
+Style: Render it as polished stylized low-poly fantasy art matching the reference image, with clean polygonal forms, crisp planar shading, faceted gemstone surfaces, luminous cyan inner light, rich sapphire shadows, warm gold bevel highlights, and premium trading-card-game pack presentation.
+
+Composition: Compose for a circular crop: place the sealed pack upright at the exact center and contain the complete pack silhouette within an imaginary central circle. Keep the corners and outer edges quiet. Use the ruby fist emblem as the brightest focal point, with small red crystal accents and no visible circular crop.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no numbers, no logo, no border, no card frame, no UI, no characters, no hands, no background scene.
+```
+
+## Core Swift Pack Icon
+
+Reference: `[EC] Card - Background 4.png`
+
+```text
+Subject: Create a square 1:1 fantasy vending-machine pack icon for the Core Swift Pack: one sealed collectible card pack with deep sapphire-blue faceted wrapper panels, warm ivory-gold trim, and a large emerald-green crystal wing-feather emblem mounted at the center. The pack should feel like a premium physical booster pack for Swift cards, compact and readable as a shop icon.
+
+Style: Render it as polished stylized low-poly fantasy art matching the reference image, with clean polygonal forms, crisp planar shading, faceted gemstone surfaces, luminous cyan inner light, rich sapphire shadows, warm gold bevel highlights, and premium trading-card-game pack presentation. Use emerald highlights and speed-like angular wrapper folds without turning the icon into a weapon.
+
+Composition: Compose for a circular crop: place the sealed pack upright at the exact center and contain the complete pack silhouette within an imaginary central circle. Keep the corners and outer edges quiet. Use the emerald wing-feather emblem as the brightest focal point, with small green crystal accents and no visible circular crop.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no numbers, no logo, no border, no card frame, no UI, no characters, no hands, no background scene, no sword, no dagger, no weapon.
+```
+
+## Core Vital Pack Icon
+
+Reference: `[EC] Card - Background 4.png`
+
+```text
+Subject: Create a square 1:1 fantasy vending-machine pack icon for the Core Vital Pack: one sealed collectible card pack with deep sapphire-blue faceted wrapper panels, warm ivory-gold trim, and a large sapphire-blue crystal droplet emblem mounted at the center. The pack should feel like a premium physical booster pack for Vital cards, compact and readable as a shop icon.
+
+Style: Render it as polished stylized low-poly fantasy art matching the reference image, with clean polygonal forms, crisp planar shading, faceted gemstone surfaces, luminous cyan inner light, rich sapphire shadows, warm gold bevel highlights, and premium trading-card-game pack presentation. Use cool blue healing glow and protective crystal highlights.
+
+Composition: Compose for a circular crop: place the sealed pack upright at the exact center and contain the complete pack silhouette within an imaginary central circle. Keep the corners and outer edges quiet. Use the sapphire droplet emblem as the brightest focal point, with small blue crystal accents and no visible circular crop.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no numbers, no logo, no border, no card frame, no UI, no characters, no hands, no background scene.
+```
+
+## Standard Pack Icon
+
+Reference: `[EC] Card - Background 4.png`
+
+```text
+Subject: Create a square 1:1 fantasy vending-machine pack icon for the Standard Pack: one sealed collectible card pack inspired by the provided Elemental TCG card-back reference, with deep sapphire-blue faceted wrapper panels, angular royal-blue beveled armor, warm ivory-gold trim, four small purple corner crystals, and one large glowing cyan diamond crystal at the center. The pack should feel broad and all-purpose rather than tied to one battle type.
+
+Style: Render it as polished stylized low-poly fantasy art matching the reference image, with clean polygonal forms, crisp planar shading, faceted gemstone surfaces, luminous cyan inner light, rich sapphire shadows, warm gold bevel highlights, subtle violet crystal accents, and premium trading-card-game pack presentation.
+
+Composition: Compose for a circular crop: place the sealed pack upright at the exact center and contain the complete pack silhouette within an imaginary central circle. Keep the corners and outer edges quiet. Use the central cyan diamond as the brightest focal point, with balanced red, green, and blue micro-reflections suggesting all battle types without adding separate symbols. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no numbers, no logo, no border, no card frame, no UI, no characters, no hands, no background scene.
+```
+
+## Mighty Emblem
+
+Reference: `[EC] Emblem - Mighty.png`
+
+```text
+Subject: Create a square 1:1 fantasy Battle Type emblem for Mighty: a compact clenched fist made entirely of faceted ruby crystal, with chunky knuckles, a broad palm, and a short wrist cuff. The fist should resemble the current Mighty emblem: powerful, centered, sticker-like, and clearly readable at small UI size.
+
+Style: Render it as stylized low-poly fantasy icon art with clean polygonal forms, crisp planar shading, saturated ruby-red crystal, bright white facet highlights, deep red internal shadows, and a glowing near-white light source at the center of the palm. Match the premium crystal-sticker look of the existing Mighty and Vital emblems.
+
+Composition: Compose for a circular crop: place the complete fist at the exact center and contain every important shape within an imaginary central circle. Use a thick white outer cutline and a black inner rim/drop shadow around the silhouette. Keep the corners and outer edges quiet. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no letters, no numbers, no logo, no border, no card frame, no UI, no weapon, no character.
+```
+
+## Swift Emblem
+
+Reference: `[EC] Emblem - Mighty.png`, `[EC] Emblem - Vital.png`
+
+```text
+Subject: Create a square 1:1 fantasy Battle Type emblem for Swift: a compact emerald crystal wing shaped like a sharp curved feather, with layered faceted feather segments sweeping upward and inward around a bright central star. It should communicate speed, agility, wind, and precision without using a sword. The silhouette must be compact like the Mighty fist and Vital droplet emblems, not long or diagonal.
+
+Style: Render it as stylized low-poly fantasy icon art with clean polygonal forms, crisp planar shading, saturated emerald-green crystal, lime-green inner glow, bright white facet highlights, and deep green internal shadows. Match the same premium crystal-sticker look, outline thickness, lighting intensity, and small-icon readability as the existing Mighty and Vital emblems.
+
+Composition: Compose for a circular crop: place the complete wing-feather emblem at the exact center and contain every important shape within an imaginary central circle. Use a thick white outer cutline and a black inner rim/drop shadow around the silhouette. Keep the corners and outer edges quiet. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no letters, no numbers, no logo, no border, no card frame, no UI, no sword, no dagger, no weapon, no character.
+```
+
+## Vital Emblem
+
+Reference: `[EC] Emblem - Vital.png`
+
+```text
+Subject: Create a square 1:1 fantasy Battle Type emblem for Vital: a single large sapphire-blue crystal water droplet, rounded at the base and pointed at the top, with a bright healing light glowing from its center. The droplet should resemble the current Vital emblem: calm, protective, centered, sticker-like, and clearly readable at small UI size.
+
+Style: Render it as stylized low-poly fantasy icon art with clean polygonal forms, crisp planar shading, saturated sapphire and cyan crystal, bright white facet highlights, deep blue internal shadows, and a radiant near-white healing core. Match the premium crystal-sticker look of the existing Mighty and Vital emblems.
+
+Composition: Compose for a circular crop: place the complete droplet at the exact center and contain every important shape within an imaginary central circle. Use a thick white outer cutline and a black inner rim/drop shadow around the silhouette. Keep the corners and outer edges quiet. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no letters, no numbers, no logo, no border, no card frame, no UI, no weapon, no character.
+```
+
+---
+
 # Universal AI Prompt Suffix
 
 crystal fantasy world, anthropomorphic animal hero, magical creature companion, crystal-powered ecosystem, glowing crystal energy, faceted gemstone structures, premium trading card game artwork, painterly fantasy illustration, expressive eyes, collectible creature design, strong silhouette, highly readable card art, family-friendly fantasy adventure, vibrant magical lighting

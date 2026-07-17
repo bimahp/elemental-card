@@ -15,7 +15,7 @@
         "cost": 1,
         "atk": 1,
         "hp": 2,
-        "image_asset": "",
+        "image_asset": "100620813066520",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Bristlecub, a young stocky clan bear with short ruby bristles along its shoulders and a stubborn, ready expression. Show it holding a compact defensive stance with both paws raised. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its broad feet on packed earth near the clan den, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -35,8 +35,8 @@
             "value": 2
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Sparkhide, a small ember-brown clan bear whose glowing red fur sheds sparks that gather into fresh protective bristles along its forearms. Make it fierce despite its size. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet on packed earth with a faint ember glow, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "138026101171929",
+      "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Sparkhide, a small ember-brown clan bear scout caught mid-dash in a low three-quarter side view. Its glowing pelt throws off bright sparks from the shoulders, back, and heels, leaving a short comet-like trail while ember shards swirl behind it into a brief protective shell. Make it quick, alert, and wiry rather than stocky. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Avoid a front-facing raised-paw guard pose, clenched fists, shoulder bristle stance, or any composition that resembles Bristlecub.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining motion within the upper 80% of the image. Use the lowest 20% for its running feet kicking sparks across packed earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "denwatcher",
@@ -51,7 +51,7 @@
         "keywords": [
           "taunt"
         ],
-        "image_asset": "",
+        "image_asset": "105037760658904",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Denwatcher, a compact young guardian bear with a thick ridge of dark russet fur and blunt ruby bristles. Show it planted squarely with crossed forearms at the clan den entrance, daring anything to pass. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for sturdy feet on packed earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -64,7 +64,7 @@
         "cost": 2,
         "atk": 3,
         "hp": 2,
-        "image_asset": "",
+        "image_asset": "95935871162958",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Vangorn, an athletic mauler with heavy ruby knuckle guards and a focused animal snarl. Show it driving one powerful punch forward with its whole body behind the motion. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for one planted foot, broken gravel, and a short impact shadow, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -84,7 +84,7 @@
             "value": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "111809399033318",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Thickpelt Guard, a disciplined bear guard whose dense dark pelt rises into protective ridges across its shoulders and forearms around small ruby clasps. Show it arriving in a calm protective stance. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broad feet at a timber-framed den threshold, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -105,8 +105,8 @@
             "atk": 1
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Rumbleclaw, a battered arena brawler with cracked crystal gauntlets and old marks across its fur. Show the red glow inside its armor growing brighter as it absorbs pain and prepares to strike back. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a firm fighting stance on worn rock, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "131662135424883",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Rumbleclaw, a rugged arena brawler with sturdy faceted crystal gauntlets and thick dark fur. Show the red glow inside its armor growing brighter as it absorbs a clean impact and prepares to strike back with determined energy. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a firm fighting stance on worn rock, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no gore, no blood, no wounds, no scars, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "forgeclaw_initiate",
@@ -126,7 +126,7 @@
             "atk": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "115873347628277",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Forgeclaw Initiate, a determined young clan bear with one ember-red claw guard and simple training wraps. Show it practicing a controlled stance as the claw gradually burns brighter with gathered strength. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for wrapped feet on a worn clan training floor, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -147,7 +147,7 @@
             "atk": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "135109179629995",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Redpelt Elder, a broad shaggy clan bear with deep russet fur, old battle marks, and warm ruby beads woven into its coat. Show a steady red aura building around its body like patient protective strength. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for heavy feet beside the clan fire, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -168,7 +168,7 @@
             "value": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "86141474443445",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Clan Grappler, a powerful bear wrestler with leather-wrapped forearms and compact ruby knuckle guards. Show it finishing a ground slam that sends one clean ring of force outward. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for both feet braced on a worn clan sparring floor, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -191,12 +191,12 @@
             "value": 2
           }
         ],
-        "image_asset": "",
+        "image_asset": "110800759258072",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Broadback Shieldbear, a massive clan guardian with a broad furred back and one powerful forearm protected by layered hide and ruby bracers. Show it stepping forward to block the path. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for planted feet at the clan gate, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
-        "id": "scarback",
-        "name": "Scarback",
+        "id": "shardwake_stalwart",
+        "name": "Shardwake Stalwart",
         "battleType": "MIGHTY",
         "cardType": "creature",
         "race": "BEAR",
@@ -211,8 +211,8 @@
             "value": 2
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Scarback, a scarred frontline warrior with torn fur and chipped ruby armor. Show fresh crystal plates forming over an old wound as its posture becomes more defiant. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a forward step through loose battlefield stone, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "87248136628005",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Shardwake Stalwart, a steadfast clan bear standing in a low braced stance after absorbing a heavy blow. Instead of wearing crystal armor, show mostly dark russet fur, simple leather straps, and loose ruby shards rising from the cracked ground behind it in a sweeping wave-shaped barrier. The bear should look calm, stubborn, and grounded, with one broad forepaw pressed to the stone as the shard wave forms from the impact. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Avoid smooth overlapping body plates, full-body ruby hide, shell armor, or any design that resembles Rubyhide.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, grounded paw, and rising shard-wave barrier within the upper 80% of the image. Use the lowest 20% for cracked clean stone and scattered glowing crystal fragments, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no gore, no blood, no wounds, no scars, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "embermaw",
@@ -232,7 +232,7 @@
             "value": 2
           }
         ],
-        "image_asset": "",
+        "image_asset": "129173615551805",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Embermaw, a fierce mature bear with a glowing ember-crystal jaw and powerful claw guards. Show it roaring forward as a compact burst of red heat gathers around its mouth. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for wide-set feet on black volcanic rock, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -256,7 +256,7 @@
             "value": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "124417149444559",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Rubyhide, a resilient bear almost fully covered in smooth overlapping ruby-hide plates, with only its expressive animal face and thick fur visible. Show the armor locking into place. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for armored feet on a clean crystal-veined slab, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -272,7 +272,7 @@
         "keywords": [
           "taunt"
         ],
-        "image_asset": "",
+        "image_asset": "86076286547325",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Denwarden, a huge clan guardian with oversized paws, thick hide cuffs, and a patient unmovable expression. Show it standing like a living gate with both arms lowered and ready. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for massive feet spanning the clan den entrance, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -293,7 +293,7 @@
             "atk": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "98846570599150",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Grondal, a veteran bear captain wearing practical dark armor and a short ruby command mantle. Show it raising one crystal-clad paw in a confident rallying gesture. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a simple warcamp stone platform and folded red cloth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -320,7 +320,7 @@
             "value": 4
           }
         ],
-        "image_asset": "",
+        "image_asset": "75073151577028",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Clan Bulwark, an immense bear with a square silhouette, dense layered fur, and broad ruby-braced hide guards across its chest and arms. Show it locking into an immovable defensive stance. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet planted before the clan banner, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -336,8 +336,8 @@
         "keywords": [
           "taunt"
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Clan Sentinel, a solemn veteran bear with dark heavy fur, ruby shoulder guards, and thick protective forearms. Show it watching forward with calm vigilance and arms crossed low. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm den lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for broad feet on a timber clan watch platform, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "99738284494174",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Clan Sentinel, a lean solemn watchbear with dark wind-ruffled fur, a narrow ruby brow crest, and a long crystal-tipped signal spear held upright beside it. Show it in a three-quarter side view on an elevated wooden lookout platform, head turned toward a distant threat while one paw shades a glowing ruby lantern. Make the silhouette tall, watchful, and patrol-like rather than broad, square, crossed-arm, or wall-like. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human. Avoid heavy chest armor, bulky forearm guards, indoor den stance, clan banner framing, or any pose that resembles Clan Bulwark.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and cool moonlit mountain-watch lighting with a small warm lantern glow.\n\nComposition: Keep the face, upper body, signal spear, and ruby lantern within the upper 80% of the image. Use the lowest 20% for narrow planted feet on a timber watch platform with distant dark hills behind, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "garnara",
@@ -357,7 +357,7 @@
             "hp": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "137726608465543",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Garnara, a powerful elder warmother with deep auburn fur, ruby beads, and a gentle red hearth-glow within her chest armor. Show her spreading a steady strengthening aura. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a warm stone dais with subtle clan cloth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -382,7 +382,7 @@
             "value": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "115877884690369",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Warmaul, a muscular siege bear wearing heavy ruby bracers over its massive forearms. Show it launching into a crushing shoulder charge with both paws ready to maul through the enemy line. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm battlefield lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for one foot driving forward through churned earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -405,8 +405,8 @@
             "value": 1
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Elder Bristleback, a colossal old bear with a towering ridge of crimson bristles across its back and dense scarred fur protecting its body. Show the bristled ridge rising more fiercely where an impact has struck. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm clan-fire lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for enormous feet planted on churned earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "133907146047938",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Elder Bristleback, a colossal old bear with a towering ridge of crimson crystal bristles across its back and dense weathered fur protecting its body. Show the bristled ridge flaring brighter as a clean red impact ripple glances off it, turning the force into fresh protective shards. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm clan-fire lighting.\n\nComposition: Keep the face, upper body, flaring bristle ridge, and protective shard effect within the upper 80% of the image. Use the lowest 20% for enormous feet planted on packed earth near the clan fire, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no gore, no blood, no wounds, no scars, no injuries, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "urvangor",
@@ -426,8 +426,8 @@
             "atk": 2
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Urvangor, an ancient massive bear with weathered fur, old ruby plates, and deep amber eyes. Show its crystals awakening brighter as it endures an attack, making the creature feel increasingly dangerous. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for rooted feet on an age-worn cliff platform, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "81633204183163",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Urvangor, an ancient massive bear with deep amber eyes, heavy storm-dark fur, and a crown of old ruby crystals rising from its shoulders like mountain spires. Show it standing untouched on a high cliff as the crystals awaken with controlled crimson lightning, making the bear feel ancient, patient, and increasingly dangerous in a clean ceremonial scene rather than active combat. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, amber eyes, and awakened shoulder crystals within the upper 80% of the image. Use the lowest 20% for rooted feet on an age-worn cliff platform with clean glowing rune cracks, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no gore, no blood, no wounds, no scars, no injuries, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "vangorn_apex",
@@ -452,7 +452,7 @@
             "value": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "127767796597214",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Vangorn Apex, the apex form of Vangorn, a towering ruby-armored bear with a crown-like crystal ridge and overwhelming physical presence. Show a controlled red shockwave radiating from its arrival. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm mountain lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for a broad impact crater and lifted stone fragments, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -475,8 +475,8 @@
             }
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Greatmaul Ursar, a gigantic elder warrior bear with massive forearms, battle-scarred fur, and jagged ruby hand guards. Show it finishing one overwhelming downward maul, emphasizing raw decisive power. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm battlefield lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for its feet planted firmly in churned earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
+        "image_asset": "133185696091067",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Greatmaul Ursar, a gigantic elder warrior bear with massive forearms, thick wind-worn fur, and jagged ruby hand guards. Show it bringing down one overwhelming ruby-charged strike onto clean stone, emphasizing raw decisive power through shockwaves and flying rock fragments. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm battlefield lighting.\n\nComposition: Keep the face, upper body, ruby hand guards, and clean impact wave within the upper 80% of the image. Use the lowest 20% for its feet planted firmly in churned earth, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no gore, no blood, no wounds, no scars, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
         "id": "rubyheart_guardian",
@@ -502,7 +502,7 @@
             "value": 8
           }
         ],
-        "image_asset": "",
+        "image_asset": "123826465574257",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy card illustration of Rubyheart Guardian, an enormous bear guardian with a brilliant ruby glow shining through the dense fur over its chest. Show the heart-light surging outward and raising fresh protective bristles across its body. The character must be an upright, bipedal fantasy bear creature with a powerful bear head, expressive forepaws, plantigrade legs, and visible fur - not a normal four-legged bear and not a human.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, a strong readable silhouette, faceted crimson accents, and warm clan-fire lighting.\n\nComposition: Keep the face, upper body, and defining action within the upper 80% of the image. Use the lowest 20% for immense feet before the clan's central fire, keeping the full artwork complete but safe beneath a translucent description panel.\n\nOutput: Family-friendly, clearly ursine, no humans, no photorealism, no text, no logo, no border, no card frame, no UI."
       },
       {
@@ -520,7 +520,7 @@
             "value": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "130701835257340",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Bristleplate: a fan of short crimson crystal bristles growing into a compact protective plate around a warm red core.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -539,7 +539,7 @@
             "value": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "79671597435862",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Vangorn Slam: a gigantic ruby-clad bear paw striking stone at the center of one clean circular impact wave.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -559,8 +559,8 @@
             "hp": 2
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Thickpelt Oath: dense dark bear fur and glowing ruby bristles weaving together into a strong protective forearm guard.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+        "image_asset": "102308364207911",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Thickpelt Oath: dense dark bear fur, broad bear-paw silhouettes, and glowing ruby bristles weaving together into a protective mantle around a small ruby-lit bear spirit. The image must read as a magical bear-fur ward, not armor on a body part. Do not show human arms, human hands, wrists, forearms, sleeves, or any humanoid limb.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical bear-fur ward at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, clearly bear-themed, no humans, no human limbs, no arms, no hands, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "defiant_roar",
@@ -580,7 +580,7 @@
             }
           }
         ],
-        "image_asset": "",
+        "image_asset": "128471229260382",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Defiant Roar: a bright red roar wave expanding from a bear-shaped energy core while two memory crystals appear inside the sound rings.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -601,8 +601,8 @@
             }
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Mauler's Finish: one massive ruby-braced bear paw delivering a decisive downward strike against the silhouette of an already wounded foe.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+        "image_asset": "107193935677755",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Mauler's Finish: three jagged ruby bear-claw sigils closing around a dark enemy-shaped shadow while short crystal chains snap into place, creating a clean decisive red flash. Make it read as a magical finishing seal, not a physical paw slam. Do not show a giant bear paw striking stone, a circular ground impact wave, or flying rock as the main focus.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the shadow target, closing ruby claw sigils, and crystal-chain seal at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no gore, no blood, no wounds, no injuries, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
         "id": "thunderous_roar",
@@ -621,7 +621,7 @@
             "value": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "91108561543413",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Thunderous Roar: a powerful bear muzzle at the center releasing a broad circular crimson shockwave that strikes several enemy silhouettes evenly outward.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -639,8 +639,8 @@
             "value": 2
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Clan Memory: two warm ruby memory stones revealing soft ancestral bear reflections within their facets.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+        "image_asset": "112586753093093",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Clan Memory: an open heavy clan record book with thick dark leather covers, a clear embossed bear-head emblem on the front cover, and bright ruby corner caps, clasps, and page markers. Show warm red memory light rising from the pages as simple bear-paw glyphs and ruby motes, readable even at small card size. Do not rely on tiny reflections inside crystals.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the open book, large bear emblem, ruby accents, and rising memory light at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no humans, no photorealism, no text, no readable letters, no logo, no border, no card frame, no UI."
       },
       {
         "id": "bristle_banner",
@@ -664,7 +664,7 @@
             "hp": 1
           }
         ],
-        "image_asset": "",
+        "image_asset": "85085697495608",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Bristle Banner: a compact clan banner tipped with crimson crystal, releasing a steady strengthening glow in all directions.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -683,7 +683,7 @@
             "hp": 4
           }
         ],
-        "image_asset": "",
+        "image_asset": "109232931718360",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Clanhide Rite: thick layers of spectral bear fur and crimson bristles closing protectively around a ruby-lit bear silhouette.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -710,8 +710,8 @@
             "value": 1
           }
         ],
-        "image_asset": "",
-        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Clan Rally: a ruby beacon horn releasing one clear call wave while a single glowing memory crystal rises from its center.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
+        "image_asset": "93617609422090",
+        "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Clan Rally: a broad round clan war drum with dark hide stretched across it, ruby studs around the rim, and a bold bear-paw emblem glowing at the center. Show two stylized bear-paw spirit shapes striking the drum from opposite sides as red sound rings and small ruby motes pulse outward. Make it read as a rallying drumbeat, not a banner, flag, pole, standard, or beacon horn.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the round drum, bear-paw emblem, striking spirit paws, and pulsing sound rings at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no humans, no photorealism, no text, no readable letters, no logo, no border, no card frame, no UI."
       },
       {
         "id": "vangorn_charge",
@@ -739,7 +739,7 @@
             "atk": 2
           }
         ],
-        "image_asset": "",
+        "image_asset": "130673280894881",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Vangorn Charge: a bear-shaped mass of crimson energy compressing into one forward-rushing form with a bright leading edge.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -757,7 +757,7 @@
             "value": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "89759748616121",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Den Reserves: three stored ruby supply crystals rising from a dark stone den cache in a balanced triangular arrangement.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -779,7 +779,7 @@
             "value": 12
           }
         ],
-        "image_asset": "",
+        "image_asset": "131417555815306",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Unbroken Guard: a circle of towering spectral clan bears locking shoulders around a brilliant ruby heart-light, their dense fur forming an unyielding protective barrier.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -801,7 +801,7 @@
             }
           }
         ],
-        "image_asset": "",
+        "image_asset": "96369413794151",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Crush the Mighty: two enormous crimson bear paws closing around the silhouette of a powerful enemy and forcing it down with overwhelming strength.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson accents, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete action at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -825,7 +825,7 @@
             "value": 4
           }
         ],
-        "image_asset": "",
+        "image_asset": "99566582978551",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Last Stand: a lone ruby shield-core holding firm as four powerful red shockwaves burst outward around it.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       },
       {
@@ -849,7 +849,7 @@
             "atk": 3
           }
         ],
-        "image_asset": "",
+        "image_asset": "79644242526992",
         "image_prompt": "Subject: Create a vertical 3:4 fantasy spell-card illustration of Crimson Overrun: a wide crimson surge of layered claw-shaped energy sweeping forward as one unstoppable wave.\n\nStyle: Render it as stylized low-poly fantasy art with clean polygonal forms, crisp planar shading, faceted crimson crystal, and focused magical lighting.\n\nComposition: Compose for a circular crop: place the complete magical event at the exact center and contain every important shape within an imaginary central circle. Keep the corners and outer edges quiet. Do not draw a visible circle.\n\nOutput: Family-friendly, no photorealism, no text, no symbols, no logo, no border, no card frame, no UI."
       }
     ]

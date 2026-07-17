@@ -112,7 +112,7 @@ end
 | `gain_armor` effect on own hero | Own HP ≥ 28 | −2 (waste — already healthy) |
 | `buff` targeting own board / ally | 2+ friendlies alive | +2 |
 | `buff` targeting own board / ally | 0–1 friendlies | 0 (no mass payoff) |
-| Creature with `take_damage` trigger (rumbleclaw, scarback) | Own HP < 20 | +2 (triggers sooner when taking hits) |
+| Creature with `take_damage` trigger (rumbleclaw, shardwake_stalwart) | Own HP < 20 | +2 (triggers sooner when taking hits) |
 
 ### Mighty attack behavior
 

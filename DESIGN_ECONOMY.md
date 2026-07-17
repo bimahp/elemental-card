@@ -422,6 +422,62 @@ Not allowed:
 Robux -> Crystal Shards -> Random pack
 ```
 
+### 10.4 Card Vendor NPC — Rotating Stock, Craft (Fragments) & Buy (Shards)
+
+A "Card Vendor" NPC sells a rotating selection of specific cards directly,
+giving players a choice between two guaranteed-acquisition paths for the
+same card, alongside random rolling:
+
+```text
+Roll (Fragments, random)   -> cheapest per card, no certainty
+Craft (Fragments, exact)   -> guaranteed, priced as a real premium over rolling
+Buy   (Shards, exact)      -> guaranteed, faster than Craft, costs Shards instead
+```
+
+**Rotating stock:** 6 cards at a time (3 Common / 2 Rare / 1 Epic), resetting
+3x/day at 00:00 / 08:00 / 16:00 server time. The same stock is shown to every
+player (not personalized). Legendary is included in the pricing model below
+for when a Legendary card ships, but cannot appear in the rotation yet since
+no Legendary cards exist in the current 132-card catalog.
+
+**Craft (Card Fragments) — new, not derived from §10.1.** Blind-roll EV to
+target one specific card is enormous (tens of thousands of Fragments for
+Rare/Epic against the full pack pool) — pricing Craft as a "premium over
+that EV" would make it a multi-month grind and effectively unusable. Instead
+Craft is priced off a pack's flat cost-per-card-slot (200 Fragments / 5 =
+40), scaled by rarity, landing in the hundreds-to-low-thousands range:
+
+| Rarity | Craft Cost (Card Fragments) | Days at 200 Fragments/day cap |
+| --- | ---: | ---: |
+| Common | 500 | ~2.5 |
+| Rare | 1,500 | ~7.5 |
+| Epic | 4,000 | ~20 |
+| Legendary | 15,000 | ~75 |
+
+**Buy (Crystal Shards) — §10.1 rates x2, a deliberate design call, not a
+§10.1 typo fix.** The Vendor's Buy price is double the base crafting rate
+in §10.1, to keep "pay Shards for exactly this card" meaningfully pricier
+than the general crafting rate and to widen the gap between what destroying
+duplicates funds and what Buy costs:
+
+| Rarity | Buy Cost (Crystal Shards) | vs. §9.2 Destroy Value |
+| --- | ---: | ---: |
+| Common | 40 | 20x |
+| Rare | 160 | 20x |
+| Epic | 600 | 20x |
+| Legendary | 2,400 | 20x |
+
+This means funding one Buy purchase via manually destroyed duplicates now
+takes 20 destroyed copies per rarity (not the 10 that §10.1's base rate
+would imply) — a real, intentional tightening of the free-to-play Shard
+path versus the general §10.1 crafting rate, not a distinct mechanic.
+
+Both Craft and Buy stop being offered once a player already owns 2 copies
+of that card (the flat deck-building max, DESIGN_CORE.md) — **not** §9.1's
+Legendary-protects-only-1 rule, which governs destroy eligibility only, so a
+Legendary can still be Crafted/Bought up to 2 owned copies even though only
+the 1st copy is destroy-protected.
+
 ---
 
 ## 11. Crystal Shard Shop Pricing
@@ -462,6 +518,102 @@ The optional 25-Shard product can be added later if players need a cheaper entry
 ```
 
 This is clearer and safer than selling random pack pulls.
+
+### 11.3 Currency and Bundle Icon Art Prompts
+
+Use one consistent visual ladder for the shop:
+
+```text
+Single shard -> Small stack -> Pouch -> Large satchel -> Chest -> Grand coffer
+```
+
+The single-currency icons establish the canonical objects. Bundle art may repeat
+the canonical Crystal Shard inside a stack or container, but must not redesign its
+shape between products.
+
+#### Crystal Shard
+
+```text
+Subject: Create a square 1:1 fantasy currency icon of one Crystal Shard: a single elongated spear-shaped crystal with a pointed top, a short asymmetrical broken base, luminous cyan front facets, and deep sapphire-blue side facets. Show exactly one continuous crystal with no secondary shards.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, bold faceted geometry, cyan inner light, subtle violet refraction, bright edge highlights, and strong small-icon readability.
+
+Composition: Compose for a circular crop: place the complete shard upright at the exact center and contain its full silhouette within an imaginary central circle. Let it occupy roughly 70% of the canvas. Keep the corners and outer edges empty. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no symbol, no logo, no border, no frame, no UI, no pedestal, no ground, no floating particles, no crystal cluster, and no additional shards.
+```
+
+#### Card Fragment
+
+```text
+Subject: Create a square 1:1 fantasy currency icon of one Card Fragment: a single broad irregular pentagonal piece broken from an enchanted card back. Give it visible thickness, a deep navy and royal-blue faceted face, one partial warm ivory-gold beveled border along two edges, and a cyan crystalline reflection within the surface. Show exactly one solid fragment, not a complete card.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, angular sapphire geometry, warm gold bevels, controlled cyan illumination, and strong small-icon readability. Its broad silhouette must be clearly different from the tall Crystal Shard.
+
+Composition: Compose for a circular crop: tilt the fragment slightly in a three-quarter view and place its complete silhouette at the exact center within an imaginary central circle. Let it occupy roughly 70% of the canvas. Keep the corners and outer edges empty. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no symbol, no logo, no border, no card frame, no UI, no complete card, no additional fragments, no fragment pile, no floating chips, and no detached particles.
+```
+
+#### 100 Shards Bundle
+
+```text
+Subject: Create a square 1:1 fantasy shop icon representing the smallest Crystal Shard bundle: a tidy compact stack of three identical spear-shaped cyan Crystal Shards resting together in one controlled arrangement. Use the exact same canonical shard shape as the single Crystal Shard currency icon. The bundle should feel modest and affordable.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, luminous cyan facets, deep sapphire side planes, subtle violet refraction, and focused magical lighting.
+
+Composition: Compose for a circular crop: place the complete compact stack at the exact center and contain every shard within an imaginary central circle. Keep the silhouette simple and readable, with no shard extending toward the corners. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no currency symbol, no logo, no border, no frame, no UI, no bag, no chest, no floating shards, no detached particles, and no excessive crystal cluster.
+```
+
+#### 320 Shards Bundle
+
+```text
+Subject: Create a square 1:1 fantasy shop icon of a small Crystal Shard pouch: one compact deep-sapphire drawstring pouch with warm gold trim, opened slightly at the top, with two canonical cyan Crystal Shards visibly emerging from the opening. The pouch is the main silhouette and should communicate a practical medium-small purchase.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, angular folded cloth, faceted cyan crystals, deep navy-blue material, warm ivory-gold trim, and focused magical lighting.
+
+Composition: Compose for a circular crop: place the complete pouch upright at the exact center and contain the pouch and visible shards within an imaginary central circle. Keep the opening clearly visible while leaving the corners quiet. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no currency symbol, no logo, no border, no frame, no UI, no coins, no loose pile, no floating shards, no detached particles, and no spilled contents.
+```
+
+#### 700 Shards Bundle
+
+```text
+Subject: Create a square 1:1 fantasy shop icon of a large Crystal Shard satchel: one substantial royal-blue merchant bag with reinforced warm-gold corners, a folded open top, and several canonical cyan Crystal Shards packed visibly inside. The bag should look fuller, heavier, and more valuable than the small pouch without becoming an overflowing pile.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, chunky angular construction, faceted cyan crystals, sapphire-blue material, polished gold reinforcement, and controlled magical glow.
+
+Composition: Compose for a circular crop: place the complete satchel at the exact center in a slight three-quarter view and contain every important shape within an imaginary central circle. Keep the contents compact and the outer edges quiet. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no currency symbol, no logo, no border, no frame, no UI, no coins, no chest, no loose shard pile, no floating shards, and no detached particles.
+```
+
+#### 1,300 Shards Bundle
+
+```text
+Subject: Create a square 1:1 fantasy shop icon of an open Crystal Shard treasure chest: one compact deep-sapphire chest with thick warm ivory-gold bands, angular low-poly construction, and a raised lid revealing many canonical cyan Crystal Shards neatly packed inside. The chest should feel premium and clearly more valuable than either pouch.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with clean polygonal forms, crisp planar shading, faceted sapphire panels, polished gold bevels, luminous cyan crystal contents, subtle violet refraction, and focused magical lighting.
+
+Composition: Compose for a circular crop: place the complete open chest at the exact center in a slight three-quarter view and contain the lid, body, and contents within an imaginary central circle. Keep the chest compact and avoid shapes reaching into the corners. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no currency symbol, no logo, no border, no frame, no UI, no coins, no loose external pile, no floating shards, no detached particles, and no scenery.
+```
+
+#### 3,000 Shards Bundle
+
+```text
+Subject: Create a square 1:1 fantasy shop icon of a grand Crystal Shard coffer: one large prestigious royal-blue vault chest with broad warm-gold reinforcement, a central cyan crystal clasp, and an open lid revealing an abundant treasury of canonical cyan Crystal Shards. Make it feel like the highest-value bundle through its larger construction, richer trim, brighter internal glow, and densely filled interior.
+
+Style: Render it as polished stylized low-poly fantasy art matching the Elemental TCG card back, with bold polygonal forms, crisp planar shading, elaborate sapphire geometry, thick polished ivory-gold bevels, intensely luminous cyan crystals, restrained violet refraction, and dramatic but controlled magical lighting.
+
+Composition: Compose for a circular crop: place the complete grand coffer at the exact center in a heroic three-quarter view and contain its entire silhouette and crystal contents within an imaginary central circle. Keep the corners quiet and preserve a strong readable silhouette. Do not draw a visible circle.
+
+Output: Transparent background, family-friendly, no photorealism, no text, no number, no currency symbol, no logo, no border, no frame, no UI, no coins, no separate containers, no floating shards, no detached particles, no scenery, and no external crystal pile.
+```
 
 ---
 
