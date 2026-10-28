@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [docs/UI.md](../UI.md) §7–8 and [GAME_DESIGN.md](../GAME_DESIGN.md) §3. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # Roblox TCG Battle UX & Animation Specification (Locked V1)
 
 ## Design Principles

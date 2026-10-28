@@ -1,13 +1,15 @@
+> **Outside reference, not project design.** Research notes on Hearthstone's pack system (formerly `DESIGN_CARD_ACQUISITION.md`). The project's own rules are in [MONETIZATION.md](../MONETIZATION.md).
+
 # Hearthstone Card Pack System Specification
 
 > **Research reference only (2026-07-10):** This document describes Hearthstone's
 > acquisition model and is not an Elemental TCG design contract. Elemental TCG pack
 > pricing, currencies, crafting, rarities, and duplicate protection are defined by
-> [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md); reward cadence is defined by
-> [DESIGN_REWARD.md](DESIGN_REWARD.md). The earlier Shard-priced pack and Crystal
+> [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md); reward cadence is defined by
+> [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md). The earlier Shard-priced pack and Crystal
 > Dust implementation is retained only in the superseded historical plans
-> [PLAN_CARD_ACQUISITION.md](PLAN_CARD_ACQUISITION.md) and
-> [PLAN_MONETIZATION.md](PLAN_MONETIZATION.md).
+> [PLAN_CARD_ACQUISITION.md](../plans/PLAN_CARD_ACQUISITION.md) and
+> [PLAN_MONETIZATION.md](../plans/PLAN_MONETIZATION.md).
 
 > Research reference for designing a digital trading-card pack and collection system.  
 > This document describes Hearthstone's general pack-opening structure, reward cadence, rarity guarantees, pity rules, duplicate protection, and crafting support.

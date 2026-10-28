@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [GAME_DESIGN.md](../GAME_DESIGN.md) §6 and [MONETIZATION.md](../MONETIZATION.md). Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_PROGRESSION — Elemental TCG: Progression & Rewards
 
 ## Overview
@@ -53,7 +55,26 @@ Monsters gain mastery through use in battles.
 
 ## Player EXP and Leveling
 
-Player level is separate from monster mastery and tracks overall account progression. Level thresholds and unlocks are TBD.
+Player level is separate from monster mastery and tracks overall account
+progression. Levels use the shared `LevelConfig` curve and cap at level 100.
+Player Status displays EXP within the current level; level 100 is rendered as a
+stable maximum state.
+
+---
+
+## Cosmetic Titles
+
+Titles are permanent cosmetic milestone unlocks. They never alter card stats,
+Energy, Battle Charge, rewards, matchmaking, or battle rules.
+
+- Every player owns `Beta Tester`.
+- Completing onboarding grants the matching elemental disciple title.
+- Clearing all three trainers grants `Trainer Champion`.
+- 10 and 50 PvP wins grant `Duelist` and `Battle Veteran`.
+- Owning 50 and 100 unique collectible cards grants `Crystal Collector` and
+  `Crystal Archivist`; duplicates and the non-collectible Coin do not count.
+- Once unlocked, a title remains owned if collection size later decreases.
+- One owned title is equipped at a time and appears on the world nameplate.
 
 ---
 
@@ -82,7 +103,7 @@ Players collect cards through:
 
 ## Planned Progression Features (Post-v0.1)
 
-- Player levels with cosmetic unlocks
+- Additional level and seasonal cosmetic titles
 - Seasonal ranked ladders
 - Tournament entry and prize pools
 - Additional named expansion pools

@@ -2,9 +2,9 @@
 
 > Status: **implemented and verified** (headless for every pure ModuleScript; live Studio Play / real remotes for profile- and client-dependent pieces — one full multi-turn battle playthrough remains unverified, see Phase 6) | Author: bimahp (with Claude) | Date: 2026-07-10
 >
-> Implements [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) (Card Fragments / Crystal
+> Implements [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md) (Card Fragments / Crystal
 > Shards separation, Crystal Dust removal, vending machine currency) and
-> [DESIGN_REWARD.md](DESIGN_REWARD.md) (per-mode battle rewards, validity
+> [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md) (per-mode battle rewards, validity
 > gate, forfeit rules, daily caps) end-to-end. Daily quests are explicitly
 > **out of scope** — next step once this lands. DESIGN_REWARD §11
 > abuse-monitoring metrics are explicitly deferred (TODO left in code).

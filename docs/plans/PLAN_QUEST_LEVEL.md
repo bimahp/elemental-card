@@ -5,8 +5,8 @@
 >
 > **Reward scope superseded (2026-07-10):** This remains the onboarding
 > implementation record, but its Crystal Shard battle reward and card-drop details
-> are not current design. Use [DESIGN_REWARD.md](DESIGN_REWARD.md) for onboarding,
-> NPC, and battle rewards and [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) for currency
+> are not current design. Use [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md) for onboarding,
+> NPC, and battle rewards and [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md) for currency
 > behavior.
 
 ---
@@ -310,7 +310,7 @@ Fresh join
 
 11. **Quest mark layout**: NPC nameplates use three rows (`!` / title / name) at 3.4 studs high. The quest row occupies 36% of the plate with a 48 px mark, keeping the indicator large, camera-facing, and scaled consistently with the existing nameplate system.
 
-12. **Chair exit placement**: BattleUI records the occupied Seat CFrame during pre-battle and battle-state events. On `BattleUnseated` or `BattleOver`, the owning client waits for the SeatWeld to release, then moves the character 3.5 studs along the previous chair's local side while preserving pivot height and facing. This prevents post-battle overlap with the chair and avoids server/client character-ownership snapback.
+12. **Chair exit placement**: `TableManager` owns exit placement. It clears any remaining SeatWeld, confirms the humanoid is released, then moves the character 3.5 studs along the previous chair's local side while preserving pivot height and facing. Client-side exit teleports are deliberately absent so a delayed callback cannot move an anchored Seat through the character weld and corrupt the next battle's position.
 
 13. **Intentional v4.0 save reset**: SaveService's schema version is bumped from v3.1 to v4.0 with the guarded major-reset path enabled. Existing profiles are wiped instead of applying the obsolete `sudden_death` card-ID repair.
 

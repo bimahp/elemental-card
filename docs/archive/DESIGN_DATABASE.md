@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [CARDS.md](../CARDS.md) §5 and [ARCHITECTURE.md](../ARCHITECTURE.md). Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_DATABASE — Card Schema & Data Architecture
 
 > Status: **implemented** (2026-06-20). Engine fully migrated to this schema.

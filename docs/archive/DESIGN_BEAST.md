@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [CARDS.md](../CARDS.md) §3 and [docs/ART.md](../ART.md) §3. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # Elemental Crystal TCG — Race & Tribe Structure
 
 ## Design Philosophy

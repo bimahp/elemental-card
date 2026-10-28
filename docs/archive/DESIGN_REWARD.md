@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [MONETIZATION.md](../MONETIZATION.md) §3–4 and [GAME_DESIGN.md](../GAME_DESIGN.md) §5.4–5.5. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # Battle Reward & Valid Battle Specification
 
 > Finalized battle reward rules for Card Fragments, valid battle detection, forfeit handling, local/NPC rewards, daily caps, and anti-abuse monitoring.

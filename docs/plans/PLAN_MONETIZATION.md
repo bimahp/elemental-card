@@ -2,8 +2,8 @@
 
 > **OBSOLETE (2026-07-10):** Historical implementation record only. Its
 > Shard-priced random packs, Crystal Dust conversion, bundle sizes, prices, and
-> acquisition rules are superseded by [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md) and
-> [DESIGN_REWARD.md](DESIGN_REWARD.md). Do not use this plan for current product or
+> acquisition rules are superseded by [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md) and
+> [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md). Do not use this plan for current product or
 > implementation decisions.
 >
 > Historical status: implemented and configured; published receipt test was

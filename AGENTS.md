@@ -1,0 +1,47 @@
+# Project memory
+
+Owner decisions for every agent (Claude and Codex), newest first. Instructions are in [CLAUDE.md](CLAUDE.md); status is in [docs/HANDOFF.md](docs/HANDOFF.md). Record a decision here when the owner makes one that a future session could otherwise re-open.
+
+## Docs of record — user decision, 2026-10-28
+
+The docs follow the ant-verse pattern, with every doc in `docs/`: six docs of record (`GAME_DESIGN`, `CARDS`, `MONETIZATION`, `ARCHITECTURE`, `UI`, `ART`), a lean `HANDOFF`, build records in `plans/`. Only `README`, `CLAUDE` and `AGENTS` stay at the root, where GitHub, Claude Code and Codex look for them. The old `DESIGN_*`, `IDEA_*`, `DEV_STATUS` and `FOUND_BUGS` were merged and moved to `docs/archive/`. Card data moved to `data/`. `assets/` (card images and other art) is gitignored. The owner is revisiting the project with a new inspiration; the merged docs are the baseline for it.
+
+## Player Status and titles — 2026-08-25
+
+Titles are permanent cosmetic milestones that never change gameplay. One equipped title shows on the world nameplate. The Profile icon sits far left in the HUD, Deck centre, Matchmaking right.
+
+## Recycle and Legendary deck limit — user decision, 2026-07-11
+
+The My Cards destroy button was too hidden and the protected-copy rule confusing. Recycle is its own Card Library page with multi-select queueing. **No protected-copy floor**: unused cards can be recycled to zero; the only block is a recycle that would break a saved deck ("Cant add card, used on deck"). Legendaries are max 1 per deck; other rarities max 2.
+
+## Card Vendor — user decision, 2026-07-11 (do not re-litigate)
+
+- No automatic duplicate conversion; Recycle is a deliberate manual action and the only free Shard source.
+- **Buy = twice the original base crafting rate** (the owner tried ×4 and brought it back to ×2): 40 / 160 / 600 / 2,400 Shards.
+- **Craft is priced off a pack's cost per card slot**, not blind-roll expected value (that would put an Epic past two months at the daily cap, which is not fun): 500 / 1,500 / 4,000 / 15,000 Card Fragments.
+- Legendary is wired everywhere although no Legendary exists yet.
+- Stock is 6 cards (3 Common, 2 Rare, 1 Epic), global, rotating at 00:00 / 08:00 / 16:00.
+
+## Economy revamp scope — user decision, 2026-07-10
+
+Card Fragments replaced Crystal Dust. An NPC fallback found through matchmaking pays Matchmaking rates. **Deferred on purpose:** daily quests (the next step after the revamp), abuse-monitoring metrics (a `TODO` in `BattleController`), the full four-product pack catalog, and the same-opponent reward cooldown (after alpha).
+
+## Matchmaking disconnects — user decision, 2026-07-10
+
+A disconnect in a matchmaking battle pauses the seat instead of forfeiting; only the normal turn-timeout streak (2 timeouts) forfeits. Local PvP keeps instant forfeit on disconnect.
+
+## Abandon detection — 2026-06-21
+
+Penalise rage-quits reliably by marking both players in-match (force-saved) at match start and resolving a still-marked match as a loss on the player's next login, not at disconnect.
+
+## Battle Charge sockets — user decision
+
+The two Charge sockets on the hero card must be as prominent as the board ATK/HP emblems, never tiny dots.
+
+## Editor-first UI — user decision
+
+Build every UI as real `StarterGui` instances in Studio, not in code. Image-icon outlines use a layered dark copy of the image, not `UIStroke`.
+
+## Working style — user decision
+
+The owner wants direct, unvarnished critique of design ideas, not validation. Flag architecture corrections mid-build instead of deciding silently.

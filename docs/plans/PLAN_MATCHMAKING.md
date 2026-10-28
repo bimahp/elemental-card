@@ -4,12 +4,12 @@
 >
 > Matchmaking transport and reconnect behavior remain authoritative here. Reward
 > amounts, battle validity, forfeits, and caps are owned by
-> [DESIGN_REWARD.md](DESIGN_REWARD.md); currency behavior is owned by
-> [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md).
+> [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md); currency behavior is owned by
+> [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md).
 >
-> Architecture context: [IDEA_MATCHMAKING.md](IDEA_MATCHMAKING.md) (the original
-> cross-server sketch this plan implements), [DESIGN_CORE.md](DESIGN_CORE.md).
-> Current code state: [DEV_STATUS.md](DEV_STATUS.md). This plan is kept up to
+> Architecture context: [IDEA_MATCHMAKING.md](../archive/IDEA_MATCHMAKING.md) (the original
+> cross-server sketch this plan implements), [DESIGN_CORE.md](../archive/DESIGN_CORE.md).
+> Current code state: [DEV_STATUS.md](../archive/DEV_STATUS.md). This plan is kept up to
 > date through implementation — each phase's checklist line and Tests/Result
 > are updated as it completes, mirroring how `PLAN_BATTLE_CHARGE_V2.md`/
 > `PLAN_CARD_BATTLE_REVAMP.md` track their own rollout.

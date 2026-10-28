@@ -3,8 +3,8 @@
 > **SUPERSEDED (2026-07-10):** Historical implementation record only. The
 > Shard-priced random pack and automatic Crystal Dust conversion described here
 > are obsolete. Current acquisition rules are defined by
-> [DESIGN_ECONOMY.md](DESIGN_ECONOMY.md); reward inputs are defined by
-> [DESIGN_REWARD.md](DESIGN_REWARD.md).
+> [DESIGN_ECONOMY.md](../archive/DESIGN_ECONOMY.md); reward inputs are defined by
+> [DESIGN_REWARD.md](../archive/DESIGN_REWARD.md).
 
 ## Implementation status — completed and verified 2026-06-29
 

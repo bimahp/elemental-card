@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [ARCHITECTURE.md](../ARCHITECTURE.md) §4. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_ENGINE — Battle Engine Architecture & Rework Plan
 
 > The runtime battle engine: how cards execute, and how it stays scalable for future
@@ -30,7 +32,7 @@
   gating, full retaliation (except vs. quickstrike lethal). 30 HP, energy 0→10,
   hand cap 10, fatigue, Coin all unchanged.
 - **The four packs fully replace the old 32 cards.** Playtest decks come from
-  [deck_starter.json](deck_starter.json) (one per archetype).
+  [deck_starter.json](../../data/deck_starter.json) (one per archetype).
 
 ---
 

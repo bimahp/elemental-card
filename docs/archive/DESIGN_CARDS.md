@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [CARDS.md](../CARDS.md). Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_CARDS - Card Philosophy & Pack Catalog Pointers
 
 > Card design philosophy lives here. Literal card lists do not.
@@ -13,13 +15,13 @@
 - **Runtime canonical:** `ReplicatedStorage/Definitions/Cards.lua` inside Roblox
   Studio.
 - **Starter decks:** `ReplicatedStorage/Definitions/Decks.lua`, generated from
-  [deck_starter.json](deck_starter.json). Current alpha starters are 30 cards
+  [deck_starter.json](../../data/deck_starter.json). Current alpha starters are 30 cards
   each.
 - **Literal pack catalog:** the pack JSON files in the repo root:
-  - [pack_ruby_bear.json](pack_ruby_bear.json) - MIGHTY / Ruby Bear
-  - [pack_emerald_cat.json](pack_emerald_cat.json) - SWIFT / Emerald Cat
-  - [pack_sapphire_frog.json](pack_sapphire_frog.json) - VITAL / Sapphire Frog
-  - [pack_stonebark.json](pack_stonebark.json) - NEUTRAL / Stonebark
+  - [pack_ruby_bear.json](../../data/pack_ruby_bear.json) - MIGHTY / Ruby Bear
+  - [pack_emerald_cat.json](../../data/pack_emerald_cat.json) - SWIFT / Emerald Cat
+  - [pack_sapphire_frog.json](../../data/pack_sapphire_frog.json) - VITAL / Sapphire Frog
+  - [pack_stonebark.json](../../data/pack_stonebark.json) - NEUTRAL / Stonebark
 
 This document intentionally does not duplicate card tables. If a literal card
 name, cost, stat line, keyword, effect, rarity, or image prompt is needed, use
@@ -115,10 +117,10 @@ The alpha set is authored across four packs:
 
 | Pack JSON | BattleType | Runtime pack |
 |---|---|---|
-| [pack_ruby_bear.json](pack_ruby_bear.json) | MIGHTY | `ruby_bear_pack` |
-| [pack_emerald_cat.json](pack_emerald_cat.json) | SWIFT | `emerald_cat_pack` |
-| [pack_sapphire_frog.json](pack_sapphire_frog.json) | VITAL | `sapphire_frog_pack` |
-| [pack_stonebark.json](pack_stonebark.json) | NEUTRAL | `stonebark_pack` |
+| [pack_ruby_bear.json](../../data/pack_ruby_bear.json) | MIGHTY | `ruby_bear_pack` |
+| [pack_emerald_cat.json](../../data/pack_emerald_cat.json) | SWIFT | `emerald_cat_pack` |
+| [pack_sapphire_frog.json](../../data/pack_sapphire_frog.json) | VITAL | `sapphire_frog_pack` |
+| [pack_stonebark.json](../../data/pack_stonebark.json) | NEUTRAL | `stonebark_pack` |
 
 Current runtime validation, as of 2026-06-25:
 

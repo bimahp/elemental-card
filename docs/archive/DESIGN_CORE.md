@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [GAME_DESIGN.md](../GAME_DESIGN.md) §3–4. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_CORE — Elemental TCG
 
 > The ruleset — single source of truth for how the game plays. Card data schema

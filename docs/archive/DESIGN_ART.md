@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [docs/ART.md](../ART.md). Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # Elemental Crystal TCG — Art Direction Guide
 
 ## Core Vision

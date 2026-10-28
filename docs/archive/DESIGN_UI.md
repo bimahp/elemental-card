@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [docs/UI.md](../UI.md). Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # DESIGN_UI — Elemental TCG: UI & Presentation
 
 ## Overview

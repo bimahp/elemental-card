@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [MONETIZATION.md](../MONETIZATION.md) and [docs/ART.md](../ART.md) §8. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 # Card Economy & Currency Specification
 
 > Finalized economy specification for TCG card acquisition, crafting, duplicate handling, and paid/unpaid currency separation.

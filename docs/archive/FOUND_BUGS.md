@@ -1,3 +1,5 @@
+> **Archived 2026-10-28 — do not use.** Merged into [docs/HANDOFF.md](../HANDOFF.md) §4. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 ### Critical
 
 ### Major

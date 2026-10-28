@@ -1,0 +1,13 @@
+# Art and other large binaries (card images, icons, source files)
+assets/
+
+# Local agent settings
+.claude/settings.local.json
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Downloaded reference data (re-fetch from api.hearthstonejson.com)
+docs/research/*.json

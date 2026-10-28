@@ -1,6 +1,8 @@
+> **Archived 2026-10-28 — do not use.** Merged into [ARCHITECTURE.md](../ARCHITECTURE.md) §8. Kept only until the merge is reviewed; the doc of record wins on any difference.
+
 Roblox TCG Matchmaking Architecture Summary
 
-> **Status: implemented.** See [PLAN_MATCHMAKING.md](PLAN_MATCHMAKING.md) for
+> **Status: implemented.** See [PLAN_MATCHMAKING.md](../plans/PLAN_MATCHMAKING.md) for
 > the actual build (MemoryStore queue + server registry, destination
 > selection, NPC fallback, reconnect, and the matchmaking UI). This document
 > remains the original architecture sketch; one deliberate deviation from it:
