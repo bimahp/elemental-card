@@ -26,7 +26,7 @@ local TEXT = {
 	"TextScaled", "TextSize", "TextStrokeColor3", "TextStrokeTransparency",
 	"TextTransparency", "TextTruncate", "TextWrapped", "TextXAlignment", "TextYAlignment",
 }
-local BUTTON = { "AutoButtonColor", "Modal", "Selected" }
+local BUTTON = { "AutoButtonColor", "InputSink", "Modal", "Selected" }
 local IMAGE = {
 	"Image", "ImageColor3", "ImageRectOffset", "ImageRectSize", "ImageTransparency",
 	"ResampleMode", "ScaleType", "SliceCenter", "SliceScale", "TileSize",
@@ -68,6 +68,7 @@ local PROPS = {
 	UIStroke = { "ApplyStrokeMode", "Color", "Enabled", "LineJoinMode", "Thickness", "Transparency" },
 	UIGradient = { "Color", "Enabled", "Offset", "Rotation", "Transparency" },
 	UIScale = { "Scale" },
+	UIShadow = { "BlurRadius", "Color", "Offset", "Spread", "Transparency", "ZIndex" },
 	UIPadding = { "PaddingBottom", "PaddingLeft", "PaddingRight", "PaddingTop" },
 	UIListLayout = {
 		"FillDirection", "HorizontalAlignment", "HorizontalFlex", "ItemLineAlignment", "Padding",
@@ -496,7 +497,8 @@ local ok, result = pcall(function()
 		for _, path in ipairs(roots) do
 			table.insert(out, "=== " .. path .. "\n" .. exportRoot(resolve(path), path))
 		end
-		return chunked(table.concat(out))
+		-- "#end" marks the real end; the padding makes the MCP save even a small export to a file.
+		return chunked(table.concat(out)) .. "\n#end\n" .. string.rep("#pad\n", 20000)
 	elseif mode == "verify" then
 		local out = {}
 		for _, path in ipairs(roots) do

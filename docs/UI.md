@@ -317,7 +317,8 @@ One ScreenGui per job, not one per screen:
 
 **Scale decides size; mode decides layout.**
 
-- Every layer is authored on a **1280 × 720 reference canvas** and holds one `UIScale`. The scale is `clamp(shortSide / ref, 0.55, 1.5) × UI size`, with `ref` 720 for touch and 1000 for a pointer. The layer's root is sized `1 / scale`, so children always see about 1280 × 720. Starting values; they live in `UIScaleConfig`.
+- Every layer is authored on a **1280 × 720 reference canvas** and holds one `UIScale`. The scale is `clamp(min(height / refHeight, width / refWidth), 0.55, 1.5) × UI size`. The reference is 1280 × 720 for touch and 1777 × 1000 for a pointer, so desktop gets more room and smaller UI. The layer's root is sized `1 / scale`, so children see at least the reference canvas, minus insets. The width term keeps a 4:3 tablet at 0.8 instead of overflowing it. Starting values; they live in `UIScaleConfig`.
+- **Panel room:** the Panels layer loses the Roblox top bar and the notch. On the smallest phone (640 × 360) that leaves about **1160 × 549** at the reference, so a panel is authored at most **1120 × 540**. `Kit.PanelFrame` starts at 1040 × 540.
 - **Authoring floors** at the reference: every tap target is at least 80 px and body text at least 26 px. On a phone these come out at about 44 pt and 14 pt.
 - A layer is either fully on the scale rule or not on it. No layer mixes scaled and raw-pixel children.
 - **Mode** (desktop or mobile layout) is only for screens whose arrangement changes, today only the battle (§5.3). It comes from `PreferredInput` and screen size, never from the last input.
@@ -325,7 +326,9 @@ One ScreenGui per job, not one per screen:
 
 ### 10.3 Kit
 
-One folder of authored, hidden templates (`ReplicatedStorage.Kit`) that every screen clones: primary and secondary buttons, icon button, panel frame, popup, toast, backdrop, currency pill, progress bar, tab, toggle, slider row, empty state and the card (§6). Colours and sizes are attributes on the folder (tokens), taken from today's `UITheme`.
+One folder of authored, hidden templates (`ReplicatedStorage.Kit`) that every screen clones: primary and secondary buttons, icon button, panel frame, popup, toast, backdrop, currency pill, progress bar, tab, toggle, slider row, empty state and the card (§6). Colours, sizes and fonts are attributes on the folder (tokens), taken from today's `UITheme`. **Built 2026-10-29:** the panel frame, both buttons, the toast and the backdrop. The others are added by the plan that first needs them.
+
+- **Panel frame:** title bar 96 px with an 80 px icon or Back slot on the left and an 80 px close button on the right, title text 40 px, body inset 24 px.
 
 - Templates keep the crystal-navy look of §2; only the mechanism comes from ant-verse.
 - **Buttons:** a press lock ignores taps within 0.4 s of a state change, so a double tap on End Turn, Forfeit, Buy, Craft or Recycle cannot fire twice. A disabled button still takes taps and says why instead of doing nothing.

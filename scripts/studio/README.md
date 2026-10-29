@@ -19,7 +19,8 @@ Authoring scripts here may call `Instance.new` for GUI: they are the editor that
 | `ui-json.luau` | `export`, `verify` and `import` of UI roots as deterministic JSON | `import` only |
 | `split-export.ps1` | splits a saved export into `ui/<Root>.json` | no |
 | `check-ui.luau` | touch-target and phone-frame checks | no |
-| `<area>-v<n>.luau` | migrations, one per UI change (none yet) | yes |
+| `kit-v1.luau` | builds `ReplicatedStorage.Kit` (tokens and templates); `rebuild = true` replaces a kit-v1 Kit | yes |
+| `<area>-v<n>.luau` | migrations, one per UI change | yes |
 
 ## ui-json.luau
 
@@ -41,7 +42,7 @@ Saving an export into `ui/`:
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/studio/split-export.ps1 "<saved result file>"
 ```
 
-Add `-Only VendorUI,Hud` to write some roots only. The splitter refuses a truncated or chunked file. A result short enough to come back inline is written to `ui/<Root>.json` by hand, without the `===` line.
+Add `-Only VendorUI,Hud` to write some roots only. An export ends with an `#end` line and padding, so even a small one is saved to a file. The splitter refuses a file without `#end` (truncated) or a single chunk.
 
 **When to export:** after every migration, export each root it changed and commit the JSON with the script.
 

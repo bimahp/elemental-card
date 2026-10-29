@@ -261,8 +261,9 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 
 ### 12.2 Kit runtime
 
-- Templates live in `ReplicatedStorage.Kit`, with tokens as attributes on the folder ([UI §10.3](UI.md)). The tokens replace `UITheme`.
-- `ReplicatedStorage.Modules.UIKit` is the only runtime helper: `clone`, `setVariant`, `setEnabled`, `bindPress` (press lock), `setIcon`, `setShare` (bars). It switches states and never builds a visual tree.
+- Templates live in `ReplicatedStorage.Kit`, with tokens as attributes on the folder ([UI §10.3](UI.md)), built by `scripts/studio/kit-v1.luau`. The tokens replace `UITheme`; `UITheme` stays until its last user is converted.
+- `ReplicatedStorage.Modules.UIKit` is the only runtime helper. It switches states and never builds a visual tree. **Built 2026-10-29:** `kit`, `token`, `clone`, `setVariant`, `setEnabled`, `isEnabled`, `press` and `bindPress`, covered by `TestService.UIKitSpec`. **Not built:** `setIcon` and `setShare` (bars).
+- `press` is the one tap path. It ignores taps within `PressLockSeconds` (0.4) of a state change or of an accepted tap, and it calls the why handler instead of the action on a disabled button. `bindPress` runs it on `Activated` and adds the press scale.
 - `setVariant` repaints from the tokens on every state change. Colours baked into a template at authoring still need a recolour migration when a token changes.
 - `UIComponents` is retired screen by screen as each screen moves to the kit.
 

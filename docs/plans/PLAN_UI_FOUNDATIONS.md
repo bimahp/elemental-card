@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Step 1 done on 2026-10-29; steps 2–9 not started.
+**Status:** Steps 1 and 2 done on 2026-10-29; steps 3–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -96,7 +96,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - Everything else comes from the Matchmaking and Profile shells, which code sizes at runtime ([README](../../scripts/studio/README.md)).
 - **Not covered:** scripts up to about 16 KB of code were sent without trouble, but `execute_luau`'s limit on input size is still unknown.
 
-### Step 2 — Kit (`kit-v1`)
+### Step 2 — Kit (`kit-v1`, done 2026-10-29)
 
 - Create `ReplicatedStorage.Kit` with the tokens copied from `UITheme` as attributes: colours, stroke widths, corner radius, fonts, `PressLockSeconds = 0.4` and `BackdropTransparency`.
 - Templates, all hidden:
@@ -119,6 +119,21 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - `setVariant` sets the token colours.
 - Export `Kit`.
 
+**Result:**
+- **Kit:** `kit-v1` built `ReplicatedStorage.Kit` with 51 tokens and 5 templates. The tokens are 31 colours (all of `UITheme`'s; `Dust` is renamed `Epic`), 15 numbers, 4 fonts and the panel texture.
+- **Spec:** `UIKitSpec` passes. It also asserts the authoring floors over every template: buttons at least 80 px, text at least 26 px.
+- **Push:** `UIKit` and `UIKitSpec` are new files in `src/`, pushed with `execute_luau`. Checksums show 88 of 88 matching, the first verified repo-to-Studio push.
+- **Export:** `verify` passed for the Kit (36 instances), which needed `UIShadow` and `InputSink` added to `ui-json.luau`. `ui/Kit.json` is written.
+- **Scale correction found in the build:** a fit probe of `PanelFrame` on the eight devices showed two faults in the step 4 scale rule.
+  - At 1040 × 600 the panel fit no phone. The Panels layer loses the top bar, which leaves only 549–587 px of reference height.
+  - Scaling by the short side alone gave a 4:3 tablet only 960 reference px of width.
+- **What changed:**
+  - The template is now 1040 × 540.
+  - The rule became `min(height / refHeight, width / refWidth)` with the reference 1280 × 720 for touch and 1777 × 1000 for pointer ([UI §10.2](../UI.md)).
+  - `check-ui.luau` uses the same rule.
+- **After the change:** the panel fits all eight devices, and its close button is at least 44 pt on every touch device.
+- **Also changed:** `split-export.ps1` and the export now use an `#end` marker and padding, so even a small export is saved to a file.
+
 ### Step 3 — Layers (`layers-v1`)
 
 | ScreenGui | Insets | DisplayOrder | `AutoScale` |
@@ -138,7 +153,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 
 ### Step 4 — Scale and input
 
-- `ReplicatedStorage.Modules.UIScaleRules` is pure. `scaleFor(shortSide, input, uiSize)` returns `clamp(shortSide / ref, 0.55, 1.5) × uiSize`, with `ref` 720 for touch and 1000 for pointer. The starting values live in `UIScaleConfig`.
+- `ReplicatedStorage.Modules.UIScaleRules` is pure. `scaleFor(width, height, input, uiSize)` returns `clamp(min(height / refHeight, width / refWidth), 0.55, 1.5) × uiSize`, with the reference 1280 × 720 for touch and 1777 × 1000 for pointer (corrected in step 2). The starting values live in `UIScaleConfig`.
 - `UIScaleController` is a client script. On every viewport or input change it does four things:
   - it sets each `AutoScale` layer's `UIScale`;
   - it sizes `Root` at `1 / scale`;

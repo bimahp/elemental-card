@@ -18,6 +18,9 @@ if ($raw.TrimStart().StartsWith("[")) {
 if ($raw.StartsWith("#chunk")) {
 	throw "This is one chunk of a longer export. Join all chunks (without their #chunk lines) before splitting."
 }
+$end = $raw.IndexOf("`n#end`n")
+if ($end -lt 0) { throw "No #end marker: the export was truncated." }
+$raw = $raw.Substring(0, $end) # the "`n" before #end is the separator, not part of the last JSON
 
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 $sections = [regex]::Split($raw, "(?m)^=== ") | Where-Object { $_ -ne "" }

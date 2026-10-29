@@ -31,7 +31,7 @@ Alpha, playable in Studio, not public. SaveService schema **v5.4**.
 ## 2. Next
 
 1. **The owner is revisiting the project with a new inspiration.** Settle the new direction in the docs of record first, then plan.
-   - UI/UX infrastructure: designed in [UI §10](UI.md) and [ARCHITECTURE §12](ARCHITECTURE.md) (from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md)). Building [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md): step 1 (export and checks, [scripts/studio/](../scripts/studio/README.md)) is done; next is step 2, the kit. Settings ship with a profile wipe (approved). Open: [UI §11](UI.md).
+   - UI/UX infrastructure: designed in [UI §10](UI.md) and [ARCHITECTURE §12](ARCHITECTURE.md) (from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md)). Building [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md): steps 1 (export and checks) and 2 (`ReplicatedStorage.Kit` and `UIKit`) are done; next is step 3, the layers. Settings ship with a profile wipe (approved). Open: [UI §11](UI.md).
 2. Work through the open decisions: [GAME_DESIGN §9](GAME_DESIGN.md) and [MONETIZATION §10](MONETIZATION.md).
 3. Then the queued work from before the pause: daily quests, then [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md).
 
@@ -94,6 +94,6 @@ Plans are build records: how something was built and verified, with its decision
 | [PLAN_CARD_VENDOR](plans/PLAN_CARD_VENDOR.md) | Card Vendor, Craft/Buy, Recycle | Done |
 | [PLAN_PLAYER_STATUS](plans/PLAN_PLAYER_STATUS.md) | Profile panel, titles, nameplates | Done |
 | [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md) | Archetype AI, Noob/Pro, trainer dialogue | Planning |
-| [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) | UI pipeline, kit, layers, scale, coordinator, movement lock, feedback; Matchmaking panel | Step 1 of 9 done |
+| [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) | UI pipeline, kit, layers, scale, coordinator, movement lock, feedback; Matchmaking panel | Steps 1–2 of 9 done |
 
 [archive/](archive/) holds the pre-2026-10-28 design docs, `DEV_STATUS` and `FOUND_BUGS`, kept only until the merge is reviewed. Do not use them.

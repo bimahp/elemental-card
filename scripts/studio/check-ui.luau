@@ -51,15 +51,15 @@ local function resolve(path: string): Instance
 	return current
 end
 
--- Uses the real rules once UIScaleRules exists (plan step 4); same formula until then.
-local function scaleFor(shortSide: number, input: string): number
+-- Uses the real rules once UIScaleRules exists (plan step 4); same formula until then (UI §10.2).
+local function scaleFor(width: number, height: number, input: string): number
 	local modules = ReplicatedStorage:FindFirstChild("Modules")
 	local rules = modules and modules:FindFirstChild("UIScaleRules")
 	if rules then
-		return (require(rules) :: any).scaleFor(shortSide, input, 1)
+		return (require(rules) :: any).scaleFor(width, height, input, 1)
 	end
-	local ref = input == "touch" and 720 or 1000
-	return math.clamp(shortSide / ref, 0.55, 1.5)
+	local refHeight = input == "touch" and 720 or 1000
+	return math.clamp(math.min(height / refHeight, width / (refHeight * 16 / 9)), 0.55, 1.5)
 end
 
 local function insetRect(gui: ScreenGui, d)
@@ -272,7 +272,7 @@ local function runDevice(device, roots, checks, show)
 		local uiScale = scaled and scaled:FindFirstChildOfClass("UIScale")
 		local layerRoot = layer:FindFirstChild("Root")
 		if root:GetAttribute("AutoScale") and uiScale and layerRoot then
-			local scale = scaleFor(math.min(device.w, device.h), device.input)
+			local scale = scaleFor(device.w, device.h, device.input)
 			layerRoot.Size = UDim2.fromScale(1 / scale, 1 / scale);
 			(layerRoot:FindFirstChildOfClass("UIScale") :: UIScale).Scale = scale
 		end
