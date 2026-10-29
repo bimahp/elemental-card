@@ -1,0 +1,558 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.BattleUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "BattleUI",
+    "props": {"ClipToDeviceSafeArea": false, "Enabled": false, "IgnoreGuiInset": true, "ResetOnSpawn": false, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "LocalScript",
+        "name": "BattleUIController",
+        "skipped": "code"
+      },
+      {
+        "class": "Frame",
+        "name": "Main",
+        "props": {
+          "BackgroundTransparency": 1,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "ActionButtons",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [1, -192, 0, 232]},
+              "Size": {"t": "UDim2", "v": [0, 128, 0, 148]},
+              "ZIndex": 5
+            },
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "EndTurnBtn",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "124612"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 54]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 48]},
+                  "Text": "End Turn",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextScaled": true,
+                  "TextWrapped": true
+                },
+                "children": [{
+                    "class": "UICorner",
+                    "name": "UICorner"
+                  }]
+              },
+              {
+                "class": "TextButton",
+                "name": "ForfeitBtn",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "340A0A"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 108]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 32]},
+                  "Text": "Forfeit",
+                  "TextColor3": {"t": "Color3", "v": "C39B9B"},
+                  "TextSize": 13
+                },
+                "children": [{
+                    "class": "UICorner",
+                    "name": "UICorner"
+                  }]
+              }
+            ]
+          },
+          {
+            "class": "Frame",
+            "name": "BoardContainer",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0, 8, 0, 8]},
+              "Size": {"t": "UDim2", "v": [1, -124, 1, -16]}
+            },
+            "children": [
+              {
+                "class": "Frame",
+                "name": "DividerRow",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0, 0.5]},
+                  "BackgroundColor3": {"t": "Color3", "v": "3C3C50"},
+                  "BorderSizePixel": 0,
+                  "Position": {"t": "UDim2", "v": [0, 0, 0.5, 0]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 2]}
+                }
+              },
+              {
+                "class": "Frame",
+                "name": "EnemySection",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0]},
+                  "BackgroundTransparency": 1,
+                  "BorderSizePixel": 0,
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0, 0]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 440]}
+                },
+                "children": [
+                  {
+                    "class": "Frame",
+                    "name": "EnemyBenchRow",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "BorderSizePixel": 0,
+                      "LayoutOrder": 2,
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 188]}
+                    },
+                    "children": [
+                      {
+                        "class": "Frame",
+                        "name": "Inner",
+                        "props": {
+                          "BackgroundTransparency": 1,
+                          "BorderSizePixel": 0,
+                          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+                        },
+                        "children": [
+                          {
+                            "class": "UIListLayout",
+                            "name": "UIListLayout",
+                            "props": {
+                              "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+                              "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                              "Padding": {"t": "UDim", "v": [0, 6]},
+                              "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"},
+                              "VerticalAlignment": {"t": "Enum", "v": "VerticalAlignment.Center"}
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "class": "Frame",
+                    "name": "EnemyHandRow",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "BorderSizePixel": 0,
+                      "LayoutOrder": 1,
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 162]}
+                    },
+                    "children": [
+                      {
+                        "class": "Frame",
+                        "name": "Inner",
+                        "props": {
+                          "BackgroundTransparency": 1,
+                          "BorderSizePixel": 0,
+                          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+                        },
+                        "children": [
+                          {
+                            "class": "UIListLayout",
+                            "name": "UIListLayout",
+                            "props": {
+                              "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+                              "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                              "Padding": {"t": "UDim", "v": [0, 6]},
+                              "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"},
+                              "VerticalAlignment": {"t": "Enum", "v": "VerticalAlignment.Center"}
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "class": "UIListLayout",
+                    "name": "UIListLayout",
+                    "props": {
+                      "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                      "Padding": {"t": "UDim", "v": [0, 12]},
+                      "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "Frame",
+                "name": "PlayerSection",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundTransparency": 1,
+                  "BorderSizePixel": 0,
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, 0]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 440]}
+                },
+                "children": [
+                  {
+                    "class": "Frame",
+                    "name": "PlayerBenchRow",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "BorderSizePixel": 0,
+                      "LayoutOrder": 2,
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 188]}
+                    },
+                    "children": [
+                      {
+                        "class": "Frame",
+                        "name": "Inner",
+                        "props": {
+                          "BackgroundTransparency": 1,
+                          "BorderSizePixel": 0,
+                          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+                        },
+                        "children": [
+                          {
+                            "class": "UIListLayout",
+                            "name": "UIListLayout",
+                            "props": {
+                              "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+                              "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                              "Padding": {"t": "UDim", "v": [0, 6]},
+                              "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"},
+                              "VerticalAlignment": {"t": "Enum", "v": "VerticalAlignment.Center"}
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "class": "Frame",
+                    "name": "PlayerHandRow",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "BorderSizePixel": 0,
+                      "LayoutOrder": 3,
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 162]}
+                    },
+                    "children": [
+                      {
+                        "class": "ScrollingFrame",
+                        "name": "HandScroll",
+                        "props": {
+                          "BackgroundTransparency": 1,
+                          "BorderSizePixel": 0,
+                          "CanvasSize": {"t": "UDim2", "v": [0, 0, 0, 0]},
+                          "ClipsDescendants": false,
+                          "Position": {"t": "UDim2", "v": [0, 8, 0, 4]},
+                          "ScrollBarThickness": 0,
+                          "ScrollingDirection": {"t": "Enum", "v": "ScrollingDirection.X"},
+                          "ScrollingEnabled": false,
+                          "Size": {"t": "UDim2", "v": [1, -16, 1, -8]}
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "class": "UIListLayout",
+                    "name": "UIListLayout",
+                    "props": {
+                      "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                      "Padding": {"t": "UDim", "v": [0, 12]},
+                      "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "class": "Frame",
+            "name": "DeckPanel",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [1, 0]},
+              "BackgroundColor3": {"t": "Color3", "v": "5C3E26"},
+              "BorderSizePixel": 0,
+              "Position": {"t": "UDim2", "v": [1, -8, 0, 134]},
+              "Size": {"t": "UDim2", "v": [0, 116, 0, 90]},
+              "ZIndex": 5
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "Count",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 1, -32]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 28]},
+                  "Text": "30",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextScaled": true,
+                  "TextWrapped": true
+                }
+              },
+              {
+                "class": "ImageLabel",
+                "name": "ImageLabel",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://129230024133869",
+                  "ImageColor3": {"t": "Color3", "v": "3C2818"},
+                  "ImageTransparency": 0.35,
+                  "Position": {"t": "UDim2", "v": [0.225, 0, 0.06, 0]},
+                  "Size": {"t": "UDim2", "v": [0.55, 0, 0.55, 0]}
+                }
+              },
+              {
+                "class": "TextLabel",
+                "name": "TextLabel",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 4]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 16]},
+                  "Text": "DECK",
+                  "TextColor3": {"t": "Color3", "v": "FFEBD2"},
+                  "TextSize": 11
+                }
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner"
+              },
+              {
+                "class": "UIGradient",
+                "name": "UIGradient",
+                "props": {
+                  "Color": {
+                    "t": "ColorSequence",
+                    "v": [[0, "785834"], [1, "402A18"]]
+                  },
+                  "Rotation": 60
+                }
+              },
+              {
+                "class": "UIStroke",
+                "name": "UIStroke",
+                "props": {"Color": {"t": "Color3", "v": "3A2616"}, "Thickness": 1.5}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "class": "Folder",
+        "name": "Modules",
+        "children": [{
+            "class": "ModuleScript",
+            "name": "BattleDirector",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "CardPreviewController",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "CardVisuals",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "EffectVisuals",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "GraveLogPanel",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "PhaseRegistry",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "PostBattleController",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "SeatedOverlayController",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "TargetingSystem",
+            "skipped": "code"
+          }, {
+            "class": "ModuleScript",
+            "name": "UXMode",
+            "skipped": "code"
+          }]
+      },
+      {
+        "class": "Frame",
+        "name": "PostBattle",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+          "BackgroundColor3": {"t": "Color3", "v": "0C0C16"},
+          "BorderSizePixel": 0,
+          "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+          "Size": {"t": "UDim2", "v": [0, 460, 0, 460]},
+          "Visible": false,
+          "ZIndex": 30
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "Body",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0, 18, 0, 76]},
+              "Size": {"t": "UDim2", "v": [1, -36, 1, -104]}
+            },
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "ContinueBtn",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "2A64B9"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0.25, 0, 0, 196]},
+                  "Size": {"t": "UDim2", "v": [0.5, 0, 0, 50]},
+                  "Text": "Continue",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextScaled": true,
+                  "TextWrapped": true,
+                  "ZIndex": 30
+                },
+                "children": [{
+                    "class": "UICorner",
+                    "name": "UICorner"
+                  }]
+              },
+              {
+                "class": "Frame",
+                "name": "ExpBarTrack",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "0D121F"},
+                  "BorderSizePixel": 0,
+                  "ClipsDescendants": true,
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 160]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 18]}
+                },
+                "children": [
+                  {
+                    "class": "Frame",
+                    "name": "Fill",
+                    "props": {
+                      "BackgroundColor3": {"t": "Color3", "v": "FFC43C"},
+                      "BorderSizePixel": 0,
+                      "Size": {"t": "UDim2", "v": [0, 0, 1, 0]},
+                      "ZIndex": 2
+                    },
+                    "children": [
+                      {
+                        "class": "UICorner",
+                        "name": "UICorner",
+                        "props": {
+                          "CornerRadius": {"t": "UDim", "v": [0, 9]}
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 9]}
+                    }
+                  },
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"Color": {"t": "Color3", "v": "354674"}, "Thickness": 2}
+                  }
+                ]
+              },
+              {
+                "class": "TextLabel",
+                "name": "LevelLabel",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 134]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 22]},
+                  "Text": "Level 1",
+                  "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                  "TextSize": 15,
+                  "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"}
+                }
+              },
+              {
+                "class": "TextLabel",
+                "name": "ResultLabel",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 50]},
+                  "Text": "YOU WON!",
+                  "TextColor3": {"t": "Color3", "v": "FFD73C"},
+                  "TextScaled": true,
+                  "TextWrapped": true,
+                  "ZIndex": 30
+                }
+              },
+              {
+                "class": "TextLabel",
+                "name": "RewardLabel",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 54]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 76]},
+                  "Text": "",
+                  "TextColor3": {"t": "Color3", "v": "DCDCDC"},
+                  "TextSize": 15,
+                  "TextWrapped": true,
+                  "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+                  "TextYAlignment": {"t": "Enum", "v": "TextYAlignment.Top"},
+                  "ZIndex": 30
+                }
+              }
+            ]
+          },
+          {
+            "class": "Frame",
+            "name": "TitleBar",
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "CloseButton"
+              },
+              {
+                "class": "TextLabel",
+                "name": "Title",
+                "props": {"Text": "Battle Result"}
+              }
+            ]
+          },
+          {
+            "class": "UICorner",
+            "name": "UICorner",
+            "props": {
+              "CornerRadius": {"t": "UDim", "v": [0, 14]}
+            }
+          },
+          {
+            "class": "UIStroke",
+            "name": "UIStroke",
+            "props": {"Color": {"t": "Color3", "v": "505082"}}
+          }
+        ]
+      },
+      {
+        "class": "TextButton",
+        "name": "PostBattleScrim",
+        "props": {
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+          "ZIndex": 29
+        }
+      }
+    ]
+  }
+}

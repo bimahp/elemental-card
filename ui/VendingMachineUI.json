@@ -1,0 +1,149 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.VendingMachineUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "VendingMachineUI",
+    "props": {"DisplayOrder": 12, "Enabled": false, "ResetOnSpawn": false, "SafeAreaCompatibility": {"t": "Enum", "v": "SafeAreaCompatibility.None"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "Dialog",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+          "BackgroundColor3": {"t": "Color3", "v": "181B2C"},
+          "BorderSizePixel": 0,
+          "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+          "Size": {"t": "UDim2", "v": [0.82, 0, 0.8, 0]},
+          "ZIndex": 2
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "Body",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0, 18, 0, 76]},
+              "Size": {"t": "UDim2", "v": [1, -36, 1, -104]},
+              "ZIndex": 2
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "TitleBar",
+            "props": {
+              "BackgroundColor3": {"t": "Color3", "v": "1F9A69"},
+              "BackgroundTransparency": 1,
+              "BorderSizePixel": 0,
+              "Size": {"t": "UDim2", "v": [1, 0, 0, 64]},
+              "ZIndex": 2
+            },
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "CloseButton",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [1, 0.5]},
+                  "BackgroundColor3": {"t": "Color3", "v": "1C263C"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [1, -14, 0.5, 0]},
+                  "Size": {"t": "UDim2", "v": [0, 42, 0, 42]},
+                  "Text": "X",
+                  "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                  "TextSize": 24,
+                  "ZIndex": 2
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 10]}
+                    }
+                  },
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2}
+                  }
+                ]
+              },
+              {
+                "class": "TextLabel",
+                "name": "Title",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Size": {"t": "UDim2", "v": [1, -48, 1, 0]},
+                  "Text": "Card Vending Machine",
+                  "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                  "TextSize": 28,
+                  "TextStrokeColor3": {"t": "Color3", "v": "070A1C"},
+                  "TextStrokeTransparency": 0.35,
+                  "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+                  "ZIndex": 2
+                }
+              },
+              {
+                "class": "UIGradient",
+                "name": "TitleGradient",
+                "props": {
+                  "Color": {
+                    "t": "ColorSequence",
+                    "v": [
+                      [0, [0.2269804, 0.651451, 0.4823529]],
+                      [1, [0.09482353, 0.4710588, 0.3211765]]
+                    ]
+                  },
+                  "Rotation": 90
+                }
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 20]}
+                }
+              }
+            ]
+          },
+          {
+            "class": "UICorner",
+            "name": "UICorner",
+            "props": {
+              "CornerRadius": {"t": "UDim", "v": [0, 20]}
+            }
+          },
+          {
+            "class": "UIPadding",
+            "name": "UIPadding",
+            "props": {
+              "PaddingBottom": {"t": "UDim", "v": [0, 12]},
+              "PaddingLeft": {"t": "UDim", "v": [0, 12]},
+              "PaddingRight": {"t": "UDim", "v": [0, 12]},
+              "PaddingTop": {"t": "UDim", "v": [0, 10]}
+            }
+          },
+          {
+            "class": "UIStroke",
+            "name": "UIStroke",
+            "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 4}
+          }
+        ]
+      },
+      {
+        "class": "TextButton",
+        "name": "Scrim",
+        "props": {
+          "AutoButtonColor": false,
+          "BackgroundColor3": {"t": "Color3", "v": "000000"},
+          "BackgroundTransparency": 0.34,
+          "BorderSizePixel": 0,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+          "Text": ""
+        }
+      }
+    ]
+  }
+}

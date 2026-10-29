@@ -9,8 +9,10 @@
 
 ## 1. Where the code is
 
-- **All game code lives in the Roblox Studio place.** There is no Rojo; game code is read and changed through the Roblox Studio MCP.
-- This repo holds the docs, the card data ([data/](../data/)), the vendored ProfileStore source ([vendor/](../vendor/)), the UI migration scripts and exports (§12.1) and, outside git, the art in `assets/`.
+- **The repo is the source of truth for game code.** [src/](../src/) mirrors the DataModel: the first folder is the service, and the file name sets the script class (`Name.server.luau` Script, `Name.client.luau` LocalScript, `Name.luau` ModuleScript; `.disabled` before the suffix marks a disabled script). There is no Rojo.
+- **Change code in `src/` first**, then push the same change into Studio through the Roblox Studio MCP (`multi_edit`). Before editing, compare checksums; a Studio-only edit is pulled back into `src/` first. After pushing, the checksums must match again ([scripts/README.md](../scripts/README.md)).
+- `src/` covers every script outside Workspace: 86 scripts, first pulled on 2026-10-29 with all checksums matching. Workspace holds only free-model leftovers (§11).
+- This repo also holds the docs, the card data ([data/](../data/)), the Studio tooling ([scripts/](../scripts/)), the UI exports ([ui/](../ui/), §12.1) and, outside git, the art in `assets/`.
 - **Editor-first UI.** Every UI element is a real instance authored in Studio. Code clones, fills, positions, animates and switches state; it does not build GUI with `Instance.new`. **Not built:** client code still creates GUI at about 364 places; it is migrated screen by screen, battle last (§12).
 
 ## 2. Principles
@@ -77,7 +79,7 @@ ServerScriptService/
     VendorService, VendorTransaction     stock rotation; craft / buy / recycle
     ShopTransaction                      receipt dedupe and grants
   Packages/
-    ProfileStore       vendored (loleris, pinned 45c9847; source copy in vendor/)
+    ProfileStore       vendored (loleris, pinned 45c9847; ProfileStore.VERSION.txt beside it in src/)
   BattleController     thin remote wiring for battles, matchmaking and rewards
   InventoryService     GetInventory
   DeckService          deck remotes and validation
@@ -232,7 +234,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 - **`screen_capture` may not show `PlayerGui` UI.** Verify UI through instance properties (`Visible`, `AbsolutePosition`, `AbsoluteSize`, `Text`).
 - **Luau has a 200-local limit per function.** `BattleUIController` hit it; group new references into tables and scope one-time setup in `do … end`.
 - Cross-server teleport and reconnect cannot be exercised in Studio; they need a published-place test.
-- **UI checks (Not built):** a touch-target audit (every visible interactive element under 44 pt at phone scale), a phone-frame harness (clones the layers into simulated landscape devices and reads `AbsolutePosition` and `AbsoluteSize` for overlaps and off-screen elements), a `debugInfo()` on each UI controller for MCP inspection, and Studio-only debug attributes (for example `DebugDialogue`).
+- **UI checks:** `scripts/studio/check-ui.luau` copies UI roots into eight simulated landscape devices in Edit mode and reports buttons under 44 pt, elements outside the safe area, text that does not fit, and overlaps ([scripts/studio/README.md](../scripts/studio/README.md)). **Not built:** a `debugInfo()` on each UI controller for MCP inspection, and Studio-only debug attributes (for example `DebugDialogue`).
 
 ## 11. Legacy
 
@@ -240,7 +242,8 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 |---|---|
 | `Definitions/CrystalCores`, `UseCore` | Orphaned since the Battle Charge migration |
 | `StartDuel`, `UseSkill`, `UsePlayerSkill` remotes | Orphaned |
-| `NpcSit`, `ChairInteraction` | Retired (scripts disabled); replaced by `TableManager` |
+| `NpcSit`, `ChairInteraction` | Retired (scripts disabled, `.disabled` files in `src/`); replaced by `TableManager` |
+| Workspace scripts | 55 free-model leftovers in `Battle Stations` and `Coffee Shop Cafe Store Building` (`Animate`, `Seat Sound`, `Script`, `Welding`): stubs reading "Server scripts can NOT be decompiled" plus one `print("Hello world!")`. Outside `src/`; delete in a cleanup pass |
 | Code comments | Many scripts cite `DESIGN_REWARD.md`, `DESIGN_ECONOMY.md` and other archived docs; read them as pointers to MONETIZATION and GAME_DESIGN |
 | `corrupted` trait, `CardTraits` | Kept for schema compatibility; no current card uses it |
 | `Gacha*` names | The pack system; "gacha" names are historical, nothing is paid-random |
@@ -253,8 +256,8 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 ### 12.1 Versioning
 
 - Every UI change is an **idempotent migration script** in `scripts/studio/` (`<area>-v<n>.luau`), run once in Studio through the MCP. Running it again changes nothing.
-- After a migration, an export script writes each changed root to `ui/<Root>.json`, so git shows what changed in the tree. Only changed roots are exported, never the whole place.
-- Controllers stay in Studio like all other code (§1).
+- After a migration, `scripts/studio/ui-json.luau` exports each changed root to `ui/<Root>.json`, so git shows what changed in the tree. Only UI roots are exported, never the whole place. **Built 2026-10-29**, with a baseline of all 12 StarterGui ScreenGuis.
+- Controllers and modules live in `src/` like all other code (§1). A migration never deletes a script inside a UI root; `ui-json.luau` exports scripts only as `"skipped": "code"`.
 
 ### 12.2 Kit runtime
 

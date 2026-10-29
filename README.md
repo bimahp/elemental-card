@@ -2,7 +2,7 @@
 
 A Roblox digital card battle game set inside a 3D TCG card shop. Players collect creature cards of three crystal affinities (Ruby Bears, Emerald Cats, Sapphire Frogs), build 30-card decks, and duel NPCs and other players at the shop's tables, using Energy and a two-slot Battle Charge built by the creatures they keep alive. Random packs are earned through play only; Robux buys exact items, never randomness.
 
-**Engine:** Roblox Studio (no Rojo; code lives in the place) | **Language:** Luau | **Phase:** alpha
+**Engine:** Roblox Studio (no Rojo; `src/` is pushed through the Studio MCP) | **Language:** Luau | **Phase:** alpha
 
 ## Documentation
 
@@ -23,6 +23,8 @@ Start with [docs/HANDOFF.md](docs/HANDOFF.md) for the current status.
 ```text
 data/       card sets (pack_*.json) and starter decks; the human-readable catalog
 docs/       HANDOFF and the docs of record; plans/ (build records), research/, archive/ (superseded)
-vendor/     ProfileStore source, pinned
+src/        every game script, mirroring the Studio DataModel (source of truth)
+scripts/    Studio tooling: pull, checksums, UI export and checks
+ui/         JSON exports of the authored UI trees
 assets/     card images and other art (gitignored)
 ```

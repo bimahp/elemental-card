@@ -1,0 +1,5 @@
+# Game code, UI exports and Studio scripts keep LF: Studio stores LF, and the
+# checksums compare bytes, so a CRLF checkout would make every script differ.
+src/** text eol=lf
+ui/*.json text eol=lf
+scripts/studio/*.luau text eol=lf

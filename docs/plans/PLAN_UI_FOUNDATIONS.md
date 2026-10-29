@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Planning, 2026-10-29. Nothing built.
+**Status:** Step 1 done on 2026-10-29; steps 2–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -46,29 +46,30 @@ Checked on 2026-10-29 in "Crystal Element Battle Cards" (placeId 73986817887222)
 ## 3. Repo layout
 
 ```text
+.gitattributes             LF for ui/*.json and scripts/studio/*.luau
 scripts/studio/
-  README.md                how to run a migration and an export
-  kit-v1.luau              Kit folder, tokens, first templates
-  layers-v1.luau           Panels, PanelBackdrop, Popups ScreenGuis
-  matchmaking-ui-v1.luau   Matchmaking panel in Panels; HUD elapsed label
-  export-ui.luau           writes the named roots as JSON
-  check-touch-targets.luau
-  check-phone-frames.luau
+  README.md                how to run scripts, export and check
+  ui-json.luau             export / verify / import UI roots as JSON
+  split-export.ps1         splits a saved export into ui/<Root>.json
+  check-ui.luau            touch-target and phone-frame checks
+  kit-v1.luau              Kit folder, tokens, first templates (step 2)
+  layers-v1.luau           Panels, PanelBackdrop, Popups ScreenGuis (step 3)
+  matchmaking-ui-v1.luau   Matchmaking panel in Panels; HUD elapsed label (step 8)
 ui/
-  Kit.json, Panels.json, PanelBackdrop.json, Popups.json, Hud.json
+  one baseline JSON per StarterGui ScreenGui (12), then Kit, Panels, PanelBackdrop, Popups
 ```
 
-- **Running a script:** read the file from the repo and send its text through `execute_luau` in Edit mode. Each script stamps a `Migration` attribute (`"kit-v1"`) on the root it builds and returns early if the stamp is already there. A rebuild deletes and recreates only its own root.
-- **Export:** Luau cannot list an instance's properties, so `export-ui.luau` keeps a property list per class: `Frame`, `TextLabel`, `TextButton`, `ImageLabel`, `ImageButton`, `ScrollingFrame`, `UICorner`, `UIStroke`, `UIGradient`, `UIScale`, `UIPadding`, `UIListLayout`, `UIGridLayout` and `ScreenGui`. It also writes all attributes. It prints the JSON, and the agent saves it into `ui/`. A class missing from the list fails the export loudly, so nothing is dropped without notice.
-- Controllers and modules stay in Studio and are edited through the MCP as usual ([ARCHITECTURE §1](../ARCHITECTURE.md)).
+- **Running a script:** send `local ARGS = {…}` and then the file's text through `execute_luau` in Edit mode ([scripts/studio/README.md](../../scripts/studio/README.md)). Each migration stamps a `Migration` attribute (`"kit-v1"`) on the root it builds and returns early if the stamp is already there. A rebuild deletes and recreates only its own root.
+- **Export:** Luau cannot list an instance's properties, so `ui-json.luau` keeps a property list per class and writes only values that differ from a fresh instance. A class missing from the list fails the export loudly, so nothing is dropped without notice.
+- Controllers and modules are written in `src/` and pushed into Studio, with checksums before and after ([ARCHITECTURE §1](../ARCHITECTURE.md)). New modules in steps 2–8 are new files in `src/`.
 
 ## 4. Steps
 
 Each step ends with its own check. Steps run in this order because each one uses the step before it.
 
-### Step 1 — Pipeline
+### Step 1 — Pipeline (done 2026-10-29)
 
-Write `scripts/studio/README.md`, `export-ui.luau` and the two check scripts.
+Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-ui.luau`. The plan first named separate export, touch and phone-frame scripts; they share one codec and one device harness, so they became one file each.
 
 - **Touch-target check:** lists every visible `GuiButton` under 80 px at the reference size, which is 44 pt on a phone.
 - **Phone-frame check:** clones the chosen layers into a temporary ScreenGui at each device size, applies that device's scale and insets, and reports any element that overlaps another or sits off screen.
@@ -84,6 +85,16 @@ Write `scripts/studio/README.md`, `export-ui.luau` and the two check scripts.
 | Desktop | 1280 × 720 and 1920 × 1080 |
 
 **Check:** an export of today's `MatchmakingUI` round-trips. Rebuilding it from the JSON in a scratch folder gives the same tree. The scratch folder is deleted afterwards.
+
+**Result:**
+- **Round trip:** `verify` passed for all 12 StarterGui ScreenGuis (264 instances counting the roots, 14 of them scripts and skipped). Their baselines are in `ui/`; each file's size matches the size `verify` reported, and all 12 parse as JSON.
+- **Edit mode:** layout, `UIScale`, `AbsoluteSize` and `TextFits` all compute, so `check-ui` reads real layout without Play.
+- **Tool limits:** `execute_luau` truncates results near 100,000 characters, which found the need for chunked export. A large result is saved to a file, either as plain text or JSON-wrapped; `split-export.ps1` takes both.
+- **Baseline check** over the six world panels and the HUD: 9 touch, 4 text, 2 overlap, 0 offscreen.
+  - Four close buttons are 42 pt.
+  - The three Card Library filter buttons are 28 pt tall.
+  - Everything else comes from the Matchmaking and Profile shells, which code sizes at runtime ([README](../../scripts/studio/README.md)).
+- **Not covered:** scripts up to about 16 KB of code were sent without trouble, but `execute_luau`'s limit on input size is still unknown.
 
 ### Step 2 — Kit (`kit-v1`)
 

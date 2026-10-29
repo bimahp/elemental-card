@@ -1,0 +1,254 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.PackOpenUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "PackOpenUI",
+    "props": {"DisplayOrder": 100, "Enabled": false, "IgnoreGuiInset": true, "ResetOnSpawn": false, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "Root",
+        "props": {
+          "Active": true,
+          "BackgroundColor3": {"t": "Color3", "v": "000000"},
+          "BackgroundTransparency": 0.12,
+          "BorderSizePixel": 0,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "BurstLayer",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+              "ZIndex": 10
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "CardStack",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0.5, 0, 0.43, 0]},
+              "Size": {"t": "UDim2", "v": [0, 180, 0, 230]},
+              "Visible": false,
+              "ZIndex": 20
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "Controls",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0.5, 0, 0.77, 0]},
+              "Size": {"t": "UDim2", "v": [0, 360, 0, 52]},
+              "Visible": false,
+              "ZIndex": 60
+            },
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "PrimaryBtn",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [1, 0]},
+                  "BackgroundColor3": {"t": "Color3", "v": "369A6C"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [1, 0, 0, 0]},
+                  "Size": {"t": "UDim2", "v": [0, 168, 0, 50]},
+                  "Text": "Reveal",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 21,
+                  "ZIndex": 61
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 10]}
+                    }
+                  },
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {
+                      "Color": {"t": "Color3", "v": [0.1164706, 0.3321569, 0.2329412]},
+                      "Thickness": 2
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "TextButton",
+                "name": "SkipBtn",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "4D5870"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Size": {"t": "UDim2", "v": [0, 168, 0, 50]},
+                  "Text": "Skip",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 21,
+                  "ZIndex": 61
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 10]}
+                    }
+                  },
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {
+                      "Color": {"t": "Color3", "v": [0.1660784, 0.1898039, 0.2415686]},
+                      "Thickness": 2
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "class": "TextLabel",
+            "name": "HintText",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+              "Position": {"t": "UDim2", "v": [0.5, 0, 0.69, 0]},
+              "Size": {"t": "UDim2", "v": [0, 420, 0, 34]},
+              "Text": "",
+              "TextColor3": {"t": "Color3", "v": "E6F0FF"},
+              "TextSize": 18,
+              "ZIndex": 60
+            }
+          },
+          {
+            "class": "TextButton",
+            "name": "InputBlocker",
+            "props": {
+              "AutoButtonColor": false,
+              "BackgroundTransparency": 1,
+              "Modal": true,
+              "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+              "Text": "",
+              "ZIndex": 2
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "Summary",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+              "Size": {"t": "UDim2", "v": [0.96, 0, 0.92, 0]},
+              "Visible": false,
+              "ZIndex": 70
+            },
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "ClaimBtn",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundColor3": {"t": "Color3", "v": "369A6C"},
+                  "BorderSizePixel": 0,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, -12]},
+                  "Size": {"t": "UDim2", "v": [0, 230, 0, 52]},
+                  "Text": "Claim",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 21,
+                  "ZIndex": 73
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 10]}
+                    }
+                  },
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {
+                      "Color": {"t": "Color3", "v": [0.1164706, 0.3321569, 0.2329412]},
+                      "Thickness": 2
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "TextLabel",
+                "name": "DustLabel",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.12, 256]},
+                  "Size": {"t": "UDim2", "v": [0.9, 0, 0, 34]},
+                  "Text": "",
+                  "TextColor3": {"t": "Color3", "v": "8CDCFF"},
+                  "TextSize": 18,
+                  "ZIndex": 73
+                }
+              },
+              {
+                "class": "ScrollingFrame",
+                "name": "Results",
+                "props": {
+                  "Active": true,
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0]},
+                  "BackgroundColor3": {"t": "Color3", "v": "090D16"},
+                  "BackgroundTransparency": 0.35,
+                  "BorderSizePixel": 0,
+                  "CanvasSize": {"t": "UDim2", "v": [0, 0, 0, 0]},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.12, 0]},
+                  "ScrollBarImageColor3": {"t": "Color3", "v": "78CDFF"},
+                  "ScrollBarThickness": 6,
+                  "ScrollingDirection": {"t": "Enum", "v": "ScrollingDirection.X"},
+                  "Size": {"t": "UDim2", "v": [0.96, 0, 0, 244]},
+                  "ZIndex": 72
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 12]}
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "TextLabel",
+                "name": "Title",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.01, 0]},
+                  "Size": {"t": "UDim2", "v": [0.9, 0, 0, 46]},
+                  "Text": "Your Cards",
+                  "TextColor3": {"t": "Color3", "v": "FFEB96"},
+                  "TextSize": 32,
+                  "ZIndex": 71
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

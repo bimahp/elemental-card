@@ -2,6 +2,10 @@
 
 Owner decisions for every agent (Claude and Codex), newest first. Instructions are in [CLAUDE.md](CLAUDE.md); status is in [docs/HANDOFF.md](docs/HANDOFF.md). Record a decision here when the owner makes one that a future session could otherwise re-open.
 
+## Game code in the repo — user decision, 2026-10-29
+
+Same concept as ant-verse: `src/` at the repo root mirrors every script in the place and is the source of truth. Code is changed in `src/`, pushed into Studio through the MCP, and checked by checksum on both sides. This replaces "all game code lives only in Studio". Still no Rojo.
+
 ## UI/UX infrastructure from ant-verse — user decision, 2026-10-29
 
 From [docs/research/ANTVERSE_UI_INFRASTRUCTURE.md](docs/research/ANTVERSE_UI_INFRASTRUCTURE.md) §7:

@@ -1,0 +1,185 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.MulliganUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "MulliganUI",
+    "props": {"DisplayOrder": 60, "Enabled": false, "IgnoreGuiInset": true, "ResetOnSpawn": false, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "Dialog",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+          "BackgroundColor3": {"t": "Color3", "v": "181824"},
+          "BorderSizePixel": 0,
+          "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+          "Size": {"t": "UDim2", "v": [0, 720, 0, 350]},
+          "ZIndex": 2
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "CardRow",
+            "props": {
+              "BackgroundTransparency": 1,
+              "Position": {"t": "UDim2", "v": [0, 10, 0, 92]},
+              "Size": {"t": "UDim2", "v": [1, -20, 0, 190]},
+              "ZIndex": 3
+            },
+            "children": [
+              {
+                "class": "UIListLayout",
+                "name": "UIListLayout",
+                "props": {
+                  "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+                  "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Center"},
+                  "Padding": {"t": "UDim", "v": [0, 10]},
+                  "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}
+                }
+              }
+            ]
+          },
+          {
+            "class": "TextButton",
+            "name": "ConfirmBtn",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+              "BackgroundColor3": {"t": "Color3", "v": "145A28"},
+              "BorderSizePixel": 0,
+              "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+              "Position": {"t": "UDim2", "v": [0.5, 0, 1, -14]},
+              "Size": {"t": "UDim2", "v": [0, 220, 0, 46]},
+              "Text": "Battle",
+              "TextColor3": {"t": "Color3", "v": "E6FFE6"},
+              "TextSize": 20,
+              "ZIndex": 3
+            },
+            "children": [
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 10]}
+                }
+              }
+            ]
+          },
+          {
+            "class": "TextLabel",
+            "name": "Subtitle",
+            "props": {
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+              "Position": {"t": "UDim2", "v": [0, 10, 0, 60]},
+              "Size": {"t": "UDim2", "v": [1, -20, 0, 24]},
+              "Text": "Tap Re-draw on one card to swap it, then tap Battle.",
+              "TextColor3": {"t": "Color3", "v": "C8C8DC"},
+              "TextSize": 15,
+              "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+              "ZIndex": 3
+            }
+          },
+          {
+            "class": "TextLabel",
+            "name": "TimerLabel",
+            "props": {
+              "AnchorPoint": {"t": "Vector2", "v": [1, 0]},
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+              "Position": {"t": "UDim2", "v": [1, -14, 0, 60]},
+              "Size": {"t": "UDim2", "v": [0, 70, 0, 24]},
+              "Text": "0:30",
+              "TextColor3": {"t": "Color3", "v": "D2DCEB"},
+              "TextSize": 15,
+              "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Right"},
+              "ZIndex": 3
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "TitleBar",
+            "props": {
+              "BackgroundColor3": {"t": "Color3", "v": "2D375F"},
+              "BorderSizePixel": 0,
+              "Size": {"t": "UDim2", "v": [1, 0, 0, 54]},
+              "ZIndex": 3
+            },
+            "children": [
+              {
+                "class": "Frame",
+                "name": "Frame",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "2D375F"},
+                  "BorderSizePixel": 0,
+                  "Position": {"t": "UDim2", "v": [0, 0, 1, -16]},
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 16]},
+                  "ZIndex": 3
+                }
+              },
+              {
+                "class": "TextLabel",
+                "name": "Title",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0, 10, 0, 0]},
+                  "Size": {"t": "UDim2", "v": [1, -20, 1, 0]},
+                  "Text": "First Draw",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 26,
+                  "ZIndex": 4
+                }
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 16]}
+                }
+              }
+            ]
+          },
+          {
+            "class": "UICorner",
+            "name": "UICorner",
+            "props": {
+              "CornerRadius": {"t": "UDim", "v": [0, 16]}
+            }
+          },
+          {
+            "class": "UIStroke",
+            "name": "UIStroke",
+            "props": {"Color": {"t": "Color3", "v": "0A0A14"}, "Thickness": 4}
+          },
+          {
+            "class": "TextLabel",
+            "name": "WaitingLabel",
+            "props": {
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+              "Position": {"t": "UDim2", "v": [0, 10, 0, 92]},
+              "Size": {"t": "UDim2", "v": [1, -20, 0, 190]},
+              "Text": "Waiting for opponent...",
+              "TextColor3": {"t": "Color3", "v": "C8CDDC"},
+              "TextSize": 22,
+              "Visible": false,
+              "ZIndex": 3
+            }
+          }
+        ]
+      },
+      {
+        "class": "Frame",
+        "name": "Scrim",
+        "props": {
+          "Active": true,
+          "BackgroundColor3": {"t": "Color3", "v": "000000"},
+          "BackgroundTransparency": 0.45,
+          "BorderSizePixel": 0,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+        }
+      }
+    ]
+  }
+}

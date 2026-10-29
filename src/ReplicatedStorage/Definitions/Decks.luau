@@ -1,0 +1,39 @@
+-- Starter decks. Mirrors deck_starter.json. 30 cards each (15 unique x2).
+local raw = {
+	mighty = { name="Ruby Bear Starter", battleType="MIGHTY", cards={
+		{id="bristlecub",count=2},{id="sparkhide",count=2},{id="vangorn",count=2},
+		{id="thickpelt_guard",count=2},{id="redpelt_elder",count=2},{id="broadback_shieldbear",count=2},
+		{id="rubyhide",count=2},{id="clan_sentinel",count=2},
+		{id="bristleplate",count=2},{id="vangorn_slam",count=2},{id="thickpelt_oath",count=2},
+		{id="bristle_banner",count=2},
+		{id="rootling",count=2},{id="quartzkin",count=2},{id="crystal_growth",count=2},
+	}},
+	swift = { name="Emerald Cat Starter", battleType="SWIFT", cards={
+		{id="fleetpaw",count=2},{id="jadeblink",count=2},{id="verdant_prowler",count=2},
+		{id="mosswhisker",count=2},{id="kessara",count=2},{id="vineleap",count=2},
+		{id="silent_pouncer",count=2},{id="canopy_sprinter",count=2},
+		{id="whisker_reflex",count=2},{id="fleetpaw_strike",count=2},{id="greenveil_ambush",count=2},
+		{id="sudden_death",count=2},
+		{id="shardleaf",count=2},{id="stonebark_pack",count=2},{id="crystal_growth",count=2},
+	}},
+	vital = { name="Sapphire Frog Starter", battleType="VITAL", cards={
+		{id="dewtongue",count=2},{id="moonbelly",count=2},{id="dewcaller",count=2},
+		{id="pondwatch",count=2},{id="spiritpond",count=2},{id="sapphire_guard",count=2},
+		{id="soulcroak",count=2},{id="mistpool",count=2},
+		{id="mistmend",count=2},{id="sapphire_leech",count=2},{id="renew",count=2},
+		{id="rebirth_charm",count=2},
+		{id="sapkeeper",count=2},{id="quartz_guardian",count=2},{id="crystal_growth",count=2},
+	}},
+}
+
+local function expand(list)
+	local out = {}
+	for _, e in ipairs(list) do for _ = 1, e.count do table.insert(out, e.id) end end
+	return out
+end
+
+local Decks = {}
+for key, d in pairs(raw) do
+	Decks[key] = { name = d.name, battleType = d.battleType, cards = expand(d.cards) }
+end
+return Decks

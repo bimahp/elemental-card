@@ -1,0 +1,50 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.PlayerStatusUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "PlayerStatusUI",
+    "props": {"DisplayOrder": 13, "Enabled": false, "ResetOnSpawn": false, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "Dialog",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+          "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+          "Size": {"t": "UDim2", "v": [0.66, 0, 0.72, 0]},
+          "ZIndex": 2
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "Body"
+          },
+          {
+            "class": "Frame",
+            "name": "TitleBar",
+            "children": [
+              {
+                "class": "TextButton",
+                "name": "CloseButton"
+              },
+              {
+                "class": "TextLabel",
+                "name": "Title",
+                "props": {"Text": "Player Status"}
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "class": "TextButton",
+        "name": "Scrim",
+        "props": {
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+          "Text": ""
+        }
+      }
+    ]
+  }
+}

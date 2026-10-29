@@ -1,0 +1,103 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.DialogueUI",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "DialogueUI",
+    "props": {"Enabled": false, "IgnoreGuiInset": true, "ResetOnSpawn": false, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "TextButton",
+        "name": "ClickCapture",
+        "props": {
+          "BackgroundTransparency": 1,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+          "Text": "",
+          "ZIndex": 2
+        }
+      },
+      {
+        "class": "Frame",
+        "name": "DialoguePanel",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+          "AutomaticSize": {"t": "Enum", "v": "AutomaticSize.Y"},
+          "BackgroundColor3": {"t": "Color3", "v": "0C0C10"},
+          "BackgroundTransparency": 0.12,
+          "BorderSizePixel": 0,
+          "Position": {"t": "UDim2", "v": [0.5, 0, 1, -24]},
+          "Size": {"t": "UDim2", "v": [0.62, 0, 0, 0]},
+          "ZIndex": 3
+        },
+        "children": [
+          {
+            "class": "TextLabel",
+            "name": "DialogueText",
+            "props": {
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Medium"},
+              "LayoutOrder": 1,
+              "Size": {"t": "UDim2", "v": [1, 0, 0, 80]},
+              "Text": "",
+              "TextColor3": {"t": "Color3", "v": "E6E6E6"},
+              "TextSize": 18,
+              "TextWrapped": true,
+              "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+              "TextYAlignment": {"t": "Enum", "v": "TextYAlignment.Top"},
+              "ZIndex": 4
+            }
+          },
+          {
+            "class": "Frame",
+            "name": "OptionsContainer",
+            "props": {
+              "AutomaticSize": {"t": "Enum", "v": "AutomaticSize.Y"},
+              "BackgroundTransparency": 1,
+              "LayoutOrder": 2,
+              "Size": {"t": "UDim2", "v": [1, 0, 0, 0]},
+              "Visible": false,
+              "ZIndex": 3
+            },
+            "children": [
+              {
+                "class": "UIListLayout",
+                "name": "UIListLayout",
+                "props": {
+                  "Padding": {"t": "UDim", "v": [0, 4]},
+                  "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}
+                }
+              }
+            ]
+          },
+          {
+            "class": "UICorner",
+            "name": "UICorner",
+            "props": {
+              "CornerRadius": {"t": "UDim", "v": [0, 10]}
+            }
+          },
+          {
+            "class": "UIListLayout",
+            "name": "UIListLayout",
+            "props": {"SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}}
+          },
+          {
+            "class": "UIPadding",
+            "name": "UIPadding",
+            "props": {
+              "PaddingBottom": {"t": "UDim", "v": [0, 12]},
+              "PaddingLeft": {"t": "UDim", "v": [0, 14]},
+              "PaddingRight": {"t": "UDim", "v": [0, 14]},
+              "PaddingTop": {"t": "UDim", "v": [0, 14]}
+            }
+          },
+          {
+            "class": "UIStroke",
+            "name": "UIStroke",
+            "props": {"Color": {"t": "Color3", "v": "46465A"}}
+          }
+        ]
+      }
+    ]
+  }
+}

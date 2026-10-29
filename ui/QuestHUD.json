@@ -1,0 +1,52 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.QuestHUD",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "QuestHUD",
+    "props": {"IgnoreGuiInset": true, "ResetOnSpawn": false, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "QuestArrow",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+          "BackgroundColor3": {"t": "Color3", "v": "FFD700"},
+          "BackgroundTransparency": 0.08,
+          "BorderSizePixel": 0,
+          "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+          "Size": {"t": "UDim2", "v": [0, 52, 0, 52]},
+          "Visible": false,
+          "ZIndex": 10
+        },
+        "children": [
+          {
+            "class": "TextLabel",
+            "name": "TextLabel",
+            "props": {
+              "BackgroundTransparency": 1,
+              "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+              "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+              "Text": "▲",
+              "TextColor3": {"t": "Color3", "v": "140F05"},
+              "TextSize": 30,
+              "ZIndex": 11
+            }
+          },
+          {
+            "class": "UICorner",
+            "name": "UICorner",
+            "props": {
+              "CornerRadius": {"t": "UDim", "v": [0, 6]}
+            }
+          },
+          {
+            "class": "UIStroke",
+            "name": "UIStroke",
+            "props": {"Color": {"t": "Color3", "v": "B48C00"}, "Thickness": 2}
+          }
+        ]
+      }
+    ]
+  }
+}

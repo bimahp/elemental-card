@@ -1,0 +1,354 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.Hud",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "Hud",
+    "props": {"IgnoreGuiInset": true, "ResetOnSpawn": false, "SafeAreaCompatibility": {"t": "Enum", "v": "SafeAreaCompatibility.None"}, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.DeviceSafeInsets"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "CurrencyBar",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [1, 0]},
+          "BackgroundTransparency": 1,
+          "Position": {"t": "UDim2", "v": [1, -12, 0, 12]},
+          "Size": {"t": "UDim2", "v": [0, 300, 0, 42]}
+        },
+        "children": [
+          {
+            "class": "Frame",
+            "name": "FragmentsBadge",
+            "props": {
+              "BackgroundColor3": {"t": "Color3", "v": "0D121F"},
+              "BackgroundTransparency": 0.08,
+              "BorderSizePixel": 0,
+              "LayoutOrder": 1,
+              "Size": {"t": "UDim2", "v": [0, 142, 0, 42]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "Count",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 46, 0, 0]},
+                  "Size": {"t": "UDim2", "v": [1, -52, 1, 0]},
+                  "Text": "0",
+                  "TextColor3": {"t": "Color3", "v": "C5D3EE"},
+                  "TextSize": 14,
+                  "TextTruncate": {"t": "Enum", "v": "TextTruncate.AtEnd"},
+                  "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"}
+                }
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://118745543637085",
+                  "Position": {"t": "UDim2", "v": [0, 8, 0, 5]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [0, 32, 0, 32]}
+                }
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 18]}
+                }
+              },
+              {
+                "class": "UIStroke",
+                "name": "UIStroke",
+                "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "8D5DFF"}, "Thickness": 2, "Transparency": 0.15}
+              }
+            ]
+          },
+          {
+            "class": "Frame",
+            "name": "ShardsBadge",
+            "props": {
+              "BackgroundColor3": {"t": "Color3", "v": "0D121F"},
+              "BackgroundTransparency": 0.08,
+              "BorderSizePixel": 0,
+              "Size": {"t": "UDim2", "v": [0, 142, 0, 42]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "Count",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                  "Position": {"t": "UDim2", "v": [0, 46, 0, 0]},
+                  "Size": {"t": "UDim2", "v": [1, -52, 1, 0]},
+                  "Text": "0",
+                  "TextColor3": {"t": "Color3", "v": "C5D3EE"},
+                  "TextSize": 14,
+                  "TextTruncate": {"t": "Enum", "v": "TextTruncate.AtEnd"},
+                  "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"}
+                }
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://103621750170047",
+                  "Position": {"t": "UDim2", "v": [0, 8, 0, 5]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [0, 32, 0, 32]}
+                }
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 18]}
+                }
+              },
+              {
+                "class": "UIStroke",
+                "name": "UIStroke",
+                "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "2ABAFF"}, "Thickness": 2, "Transparency": 0.15}
+              }
+            ]
+          },
+          {
+            "class": "UIListLayout",
+            "name": "UIListLayout",
+            "props": {
+              "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+              "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Right"},
+              "Padding": {"t": "UDim", "v": [0, 8]},
+              "VerticalAlignment": {"t": "Enum", "v": "VerticalAlignment.Center"}
+            }
+          }
+        ]
+      },
+      {
+        "class": "LocalScript",
+        "name": "CurrencyBarController",
+        "skipped": "code"
+      },
+      {
+        "class": "LocalScript",
+        "name": "HudController",
+        "skipped": "code"
+      },
+      {
+        "class": "Frame",
+        "name": "TopRightAnchor",
+        "props": {
+          "AnchorPoint": {"t": "Vector2", "v": [1, 0]},
+          "AutomaticSize": {"t": "Enum", "v": "AutomaticSize.X"},
+          "BackgroundTransparency": 1,
+          "Position": {"t": "UDim2", "v": [1, -12, 0, 68]},
+          "Size": {"t": "UDim2", "v": [0, 152, 0, 72]}
+        },
+        "children": [
+          {
+            "class": "ImageButton",
+            "name": "InventoryButton",
+            "props": {
+              "AutoButtonColor": false,
+              "BackgroundTransparency": 1,
+              "LayoutOrder": 2,
+              "Size": {"t": "UDim2", "v": [0, 72, 0, 72]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "FloatingLabel",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, -2]},
+                  "Size": {"t": "UDim2", "v": [1.2, 0, 0, 24]},
+                  "Text": "Deck",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 14,
+                  "ZIndex": 4
+                },
+                "children": [
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2, "Transparency": 0.05}
+                  }
+                ]
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://116636880497611",
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+                  "ZIndex": 2
+                }
+              }
+            ]
+          },
+          {
+            "class": "ImageButton",
+            "name": "ItemMallButton",
+            "props": {
+              "AutoButtonColor": false,
+              "BackgroundTransparency": 1,
+              "LayoutOrder": 1,
+              "Size": {"t": "UDim2", "v": [0, 72, 0, 72]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "FloatingLabel",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, -2]},
+                  "Size": {"t": "UDim2", "v": [1.2, 0, 0, 24]},
+                  "Text": "Market",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 14,
+                  "ZIndex": 4
+                },
+                "children": [
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2, "Transparency": 0.05}
+                  }
+                ]
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://120259957052835",
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+                  "ZIndex": 2
+                }
+              }
+            ]
+          },
+          {
+            "class": "ImageButton",
+            "name": "MatchmakingButton",
+            "props": {
+              "AutoButtonColor": false,
+              "BackgroundTransparency": 1,
+              "LayoutOrder": 3,
+              "Size": {"t": "UDim2", "v": [0, 72, 0, 72]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "FloatingLabel",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, -2]},
+                  "Size": {"t": "UDim2", "v": [1.2, 0, 0, 24]},
+                  "Text": "Matchmaking",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 14,
+                  "ZIndex": 4
+                },
+                "children": [
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2, "Transparency": 0.05}
+                  }
+                ]
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://105294857091338",
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+                  "ZIndex": 2
+                }
+              }
+            ]
+          },
+          {
+            "class": "ImageButton",
+            "name": "ProfileButton",
+            "props": {
+              "AutoButtonColor": false,
+              "BackgroundTransparency": 1,
+              "Size": {"t": "UDim2", "v": [0, 72, 0, 72]}
+            },
+            "children": [
+              {
+                "class": "TextLabel",
+                "name": "FloatingLabel",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                  "BackgroundTransparency": 1,
+                  "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 1, -2]},
+                  "Size": {"t": "UDim2", "v": [1.2, 0, 0, 24]},
+                  "Text": "Profile",
+                  "TextColor3": {"t": "Color3", "v": "FFFFFF"},
+                  "TextSize": 14,
+                  "ZIndex": 4
+                },
+                "children": [
+                  {
+                    "class": "UIStroke",
+                    "name": "UIStroke",
+                    "props": {"Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2, "Transparency": 0.05}
+                  }
+                ]
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Icon",
+                "props": {
+                  "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://134348501295873",
+                  "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+                  "ZIndex": 2
+                }
+              }
+            ]
+          },
+          {
+            "class": "UIListLayout",
+            "name": "UIListLayout",
+            "props": {
+              "FillDirection": {"t": "Enum", "v": "FillDirection.Horizontal"},
+              "HorizontalAlignment": {"t": "Enum", "v": "HorizontalAlignment.Right"},
+              "Padding": {"t": "UDim", "v": [0, 8]},
+              "SortOrder": {"t": "Enum", "v": "SortOrder.LayoutOrder"}
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

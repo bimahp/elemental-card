@@ -1,6 +1,6 @@
 # Elemental TCG — instructions for Claude
 
-A Roblox digital card battle game set in a 3D TCG card shop (desktop and landscape mobile). **All game code lives in the Roblox Studio place**, reached through the Roblox Studio MCP; there is no Rojo. This repo holds the docs, the card data in `data/`, vendored ProfileStore in `vendor/`, the UI migration scripts and exports ([ARCHITECTURE §12.1](docs/ARCHITECTURE.md)), and gitignored art in `assets/`.
+A Roblox digital card battle game set in a 3D TCG card shop (desktop and landscape mobile). **The repo is the source of truth for game code:** `src/` mirrors every script in the Studio place, and changes are pushed into Studio through the Roblox Studio MCP; there is no Rojo ([ARCHITECTURE §1](docs/ARCHITECTURE.md)). This repo also holds the docs, the card data in `data/`, the Studio tooling and UI exports in `scripts/` and `ui/`, and gitignored art in `assets/`.
 
 **Start every session with [`docs/HANDOFF.md`](docs/HANDOFF.md):** current status, what is next, what to check, how work is done. Update it when status changes. Owner decisions and project memory are in [`AGENTS.md`](AGENTS.md).
 
