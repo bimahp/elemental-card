@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1–4 done on 2026-10-29; steps 5–9 not started.
+**Status:** Steps 1–5 done on 2026-10-29; steps 6–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -182,7 +182,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - No errors or warnings.
 - **Not covered:** the touch case in the Studio device emulator. The MCP cannot switch the emulator. `UIScaleRulesSpec` covers `PreferredInput.Touch → Mobile`, but a real Play run on an emulated phone is still to do.
 
-### Step 5 — PanelCoordinator
+### Step 5 — PanelCoordinator (done 2026-10-29)
 
 - `PanelCoordinator` is a client module with `register(id, {close, back})`, `claim(id)`, `release(id)`, `back()` and `debugInfo()`.
 - **Back input:** Escape and gamepad B go through `UserInputService`. Escape needs a Play test first, because Roblox may use Escape for its own menu and swallow it. If it is swallowed, gamepad B stays, Escape is dropped, and [UI §10.1](../UI.md) is updated.
@@ -197,6 +197,27 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - In Play:
   - opening the Card Library while the Item Mall is open closes the Item Mall;
   - Escape or B closes the top panel.
+
+**Result:**
+- **Code:**
+  - `PanelCoordinator` and `PanelCoordinatorSpec` are new.
+  - All six world panels got adapters, Matchmaking included, so the rule holds before step 8 converts it.
+  - The edits were pushed with `multi_edit`, without `replace_all`. Checksums show 94 of 94 matching.
+  - The spec passes against a fresh module copy, which avoids the require cache. It covers claim, release by a panel without the claim, back through pages, back on root, refusal, `closeAll` and an unregistered claim.
+- **Closing refused while busy:** the Vending Machine refuses to close while purchasing or revealing. Without that, a claim during a reveal would have left two panels open. UI §10.1 now says so.
+- **Bug fixed:** Back on the Card Library's root page used to set `gui.Enabled = false` without `close()`. That left `isOpen` true, so the HUD button could not reopen the panel. Back now calls `close()`.
+- **Play (real clicks and keys):**
+  - Profile opened through its Studio test hook.
+  - **Escape opened the Roblox menu, and Profile stayed open.** Escape was dropped as planned. UI §10.1 and AGENTS are updated, and the keyboard Back key is UI §11 item 4.
+  - Gamepad B closed Profile.
+  - A click on the HUD Card Library button opened it. Opening Profile then closed the Card Library.
+  - B on the Card Library's root page closed it, and a click reopened it, which confirms the bug fix.
+  - No errors.
+- **Not covered:**
+  - A real gamepad; B was simulated as a `KeyCode` through the MCP.
+  - A world prompt opening one panel over another, for example the Vending Machine prompt while the Card Library is open.
+  - While a panel's backdrop is up it catches HUD taps and closes that panel instead. HUD buttons therefore never open a second panel directly.
+- **Seen once:** in 1 of 4 Play runs, `UXMode` logged `initial mode: Mobile` on the 2171 × 922 window, then corrected itself. The next three runs logged `Desktop`. `UXMode` now prints the viewport and input behind each decision so the next occurrence shows its cause (HANDOFF §4).
 
 ### Step 6 — MovementLock
 

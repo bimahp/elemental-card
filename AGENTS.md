@@ -12,7 +12,7 @@ From [docs/research/ANTVERSE_UI_INFRASTRUCTURE.md](docs/research/ANTVERSE_UI_INF
 
 - **Editor-first stays the rule, and the code is migrated to meet it.** Screen by screen into authored kit templates; the battle goes last, with its own plan. Code only clones, fills, positions and animates.
 - **Scale decides size, mode decides layout.** Every layer is authored at 1280 × 720 with one `UIScale` and the 80 px tap / 26 px text floors. The battle keeps its separate mobile grid, chosen by `PreferredInput` and screen size, never by last input.
-- **Layers:** HUD, Panels and Popups. The world panels (Card Library, Vending Machine, Card Vendor, Item Mall, Matchmaking, Profile, and the new Settings) move into Panels under one `PanelCoordinator` (one panel open; Escape goes back). BattleUI, PackOpen and Mulligan stay their own ScreenGuis.
+- **Layers:** HUD, Panels and Popups. The world panels (Card Library, Vending Machine, Card Vendor, Item Mall, Matchmaking, Profile, and the new Settings) move into Panels under one `PanelCoordinator` (one panel open; Escape goes back). Built: Escape turned out to belong to the Roblox menu, so gamepad B goes back and a keyboard key is open ([UI §11](docs/UI.md)). BattleUI, PackOpen and Mulligan stay their own ScreenGuis.
 - **Versioning:** every UI change is an idempotent Studio migration script kept in this repo, plus a JSON export of each changed root.
 - **Settings:** Music and SFX volume, UI size (80–130%), faster battle animations. Nothing else until it does something.
 - **Saves:** settings ship with a **major** schema bump that wipes profiles. The owner approved the wipe ("this is unreleased game").

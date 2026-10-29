@@ -13,6 +13,7 @@ local ChargeConfig = require(ReplicatedStorage:WaitForChild("Modules"):WaitForCh
 local CardTraits  = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("CardTraits"))
 local AssetIds = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("AssetIds"))
 local UI = require(pg:WaitForChild("SharedUI"):WaitForChild("UIComponents"))
+local PanelCoordinator = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("PanelCoordinator"))
 local Theme = UI.Theme
 local VendorConfig = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("VendorConfig"))
 
@@ -242,8 +243,9 @@ local function show(page, arg, push)
 	clearBody()
 	pages[page](arg)
 end
+local close -- assigned below; Back from the root page closes the panel
 local function goBack()
-	if #pageStack <= 1 then gui.Enabled = false; return end
+	if #pageStack <= 1 then close(); return end
 	table.remove(pageStack)
 	local top = pageStack[#pageStack]
 	show(top.page, top.arg, false)
@@ -489,21 +491,23 @@ end
 
 local isOpen = false
 local function open()
-	if isOpen then return end
+	if isOpen or not PanelCoordinator.claim("CardLibrary") then return end
 	isOpen = true
 	gui.Enabled = true
 	refreshData()
 	pageStack = {}
 	show("Home")
 end
-local function close()
+function close()
 	isOpen = false
 	local popup = gui:FindFirstChild("UsedOnDeckPopup")
 	if popup then popup:Destroy() end
 	gui.Enabled = false
 	pageStack = {}
 	clearBody()
+	PanelCoordinator.release("CardLibrary")
 end
+PanelCoordinator.register("CardLibrary", { close = close, back = goBack })
 
 backBtn.Activated:Connect(goBack)
 scrim.Activated:Connect(close)

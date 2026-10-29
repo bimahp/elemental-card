@@ -21,6 +21,7 @@ local equipTitle = remotes:WaitForChild("EquipTitle")
 local UI = require(playerGui:WaitForChild("SharedUI"):WaitForChild("UIComponents"))
 local Theme = UI.Theme
 local TitleConfig = require(ReplicatedStorage.Modules.TitleConfig)
+local PanelCoordinator = require(ReplicatedStorage.Modules.PanelCoordinator)
 
 local dialog = gui:WaitForChild("Dialog")
 local scrim = gui:WaitForChild("Scrim")
@@ -496,9 +497,12 @@ local function close()
 	requestSerial += 1
 	gui.Enabled = false
 	feedbackText = ""
+	PanelCoordinator.release("Profile")
 end
+PanelCoordinator.register("Profile", { close = close })
 
 local function open()
+	if not PanelCoordinator.claim("Profile") then return end
 	activeTab = "Overview"
 	updateTabs()
 	gui.Enabled = true

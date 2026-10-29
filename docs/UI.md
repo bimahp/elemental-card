@@ -316,7 +316,8 @@ One ScreenGui per job, not one per screen:
   - `Popups`: DisplayOrder 30.
   - Panels and Popups each hold an `AutoScale` `Root` frame with a `UIScale`.
 - **Not built:** the HUD layer. Today's `Hud` ScreenGui stays until its own plan. Today's panels sit at DisplayOrder 10–13, under the new layers.
-- **Only one panel is open at a time.** Opening a panel closes the open one. Escape or gamepad B goes back a page, then closes the panel from its root page.
+- **Only one panel is open at a time.** Opening a panel closes the open one. A panel busy with a purchase or reveal refuses to close, and the new one then does not open. Gamepad B goes back a page, then closes the panel from its root page. Escape cannot do this: Roblox opens its own menu on Escape and the game never sees the key (tested 2026-10-29). A keyboard Back key is open (§11).
+- **Built 2026-10-29:** `PanelCoordinator` covers all six world panels: Card Library, Vending Machine, Card Vendor, Item Mall, Profile and Matchmaking.
 - **BattleUI, PackOpenUI and MulliganUI stay their own ScreenGuis**, because of the battle's insets and clipping (§5.1) and their DisplayOrder above everything else. They do not join the panel rule.
 
 ### 10.2 Size and layout
@@ -376,3 +377,4 @@ A Settings panel in the Panels layer, opened from a HUD icon:
 1. The faster-animation multiplier, and whether the turn banner and cast reveal shorten with it (§10.5).
 2. Where the Settings icon sits among the HUD icons (§3.1, §10.5).
 3. Music and SFX volume: the game has no music or sound effects yet (checked 2026-10-29), so under §10.5 these two settings wait until audio exists. Either add audio first, or ship Settings with UI size and faster animations only.
+4. A keyboard key for Back. Escape belongs to the Roblox menu (§10.1), so the choice is Backspace or no key at all, since every panel already has Back and X buttons.

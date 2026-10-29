@@ -15,6 +15,7 @@ local BuyCard = remotes:WaitForChild("BuyCard")
 local DialogueController = require(script.Parent.DialogueController)
 local CardData = require(ReplicatedStorage.Modules.CardData)
 local AssetIds = require(ReplicatedStorage.Modules.AssetIds)
+local PanelCoordinator = require(ReplicatedStorage.Modules.PanelCoordinator)
 local modules = playerGui:WaitForChild("BattleUI"):WaitForChild("Modules")
 local CardVisuals = require(modules:WaitForChild("CardVisuals"))
 local UI = require(playerGui:WaitForChild("SharedUI"):WaitForChild("UIComponents"))
@@ -76,6 +77,7 @@ local function close()
 	gui.Enabled = false
 	pageStack = {}
 	clearBody()
+	PanelCoordinator.release("CardVendor")
 end
 
 local function goBack()
@@ -84,6 +86,7 @@ local function goBack()
 	local previous = pageStack[#pageStack]
 	show(previous.page, previous.arg, false)
 end
+PanelCoordinator.register("CardVendor", { close = close, back = goBack })
 
 local function makeCard(parent, cardId, w, h)
 	local card = CardData.Cards[cardId]
@@ -300,6 +303,7 @@ local SHOP_DIALOGUE = {
 }
 
 local function openShop()
+	if not PanelCoordinator.claim("CardVendor") then return end
 	gui.Enabled = true
 	pageStack = {}
 	show("Stock")

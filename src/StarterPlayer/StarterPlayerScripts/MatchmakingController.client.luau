@@ -17,6 +17,7 @@ local remotes = ReplicatedStorage:WaitForChild("Remotes")
 local UI = require(playerGui:WaitForChild("SharedUI"):WaitForChild("UIComponents"))
 local Theme = UI.Theme
 local AssetIds = require(ReplicatedStorage.Modules.AssetIds)
+local PanelCoordinator = require(ReplicatedStorage.Modules.PanelCoordinator)
 
 local dialog = gui:WaitForChild("Dialog")
 local scrim = gui:WaitForChild("Scrim")
@@ -137,6 +138,7 @@ local function renderPanel()
 end
 
 local function open()
+	if not PanelCoordinator.claim("Matchmaking") then return end
 	gui.Enabled = true
 	renderPanel()
 end
@@ -144,7 +146,9 @@ end
 local function close()
 	gui.Enabled = false
 	clearBody()
+	PanelCoordinator.release("Matchmaking")
 end
+PanelCoordinator.register("Matchmaking", { close = close })
 
 -- Clicking the icon opens the panel whether idle ("Find Opponent") or already
 -- queued (ticking -- reopens showing the live timer + "Cancel Matchmaking"),

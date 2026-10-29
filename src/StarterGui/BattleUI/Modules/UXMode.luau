@@ -15,20 +15,24 @@ local function currentInput(): string
 	return Rules.inputKind(ok and preferred or nil, UserInputService.TouchEnabled, UserInputService.MouseEnabled)
 end
 
-local function computeMode(): string
+local function computeMode(): (string, string)
 	local camera = workspace.CurrentCamera
-	local width = camera and camera.ViewportSize.X or 1280
-	return Rules.layoutMode(width, currentInput())
+	local viewport = camera and camera.ViewportSize or Vector2.new(1280, 720)
+	local input = currentInput()
+	return Rules.layoutMode(viewport.X, input), string.format("viewport %dx%d, %s", viewport.X, viewport.Y, input)
 end
 
 local changedEvent = Instance.new("BindableEvent")
 UXMode.Changed = changedEvent.Event
-UXMode.Current = computeMode()
+local reason
+UXMode.Current, reason = computeMode()
+print("[UXMode] " .. UXMode.Current .. " (" .. reason .. ")")
 
 local function recompute()
-	local newMode = computeMode()
+	local newMode, why = computeMode()
 	if newMode ~= UXMode.Current then
 		UXMode.Current = newMode
+		print("[UXMode] changed to " .. newMode .. " (" .. why .. ")")
 		changedEvent:Fire(newMode)
 	end
 end

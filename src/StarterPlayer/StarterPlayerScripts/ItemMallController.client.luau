@@ -13,6 +13,7 @@ local policyRemote = remotes:WaitForChild("GetMonetizationPolicy")
 local QuestStateChanged = remotes:WaitForChild("QuestStateChanged")
 local ShopConfig = require(ReplicatedStorage.Modules.ShopConfig)
 local AssetIds = require(ReplicatedStorage.Modules.AssetIds)
+local PanelCoordinator = require(ReplicatedStorage.Modules.PanelCoordinator)
 local UI = require(playerGui:WaitForChild("SharedUI"):WaitForChild("UIComponents"))
 local Theme = UI.Theme
 
@@ -79,6 +80,7 @@ local function close()
 	gui.Enabled = false
 	pageStack = {}
 	clearBody()
+	PanelCoordinator.release("ItemMall")
 end
 
 local function goBack()
@@ -87,6 +89,7 @@ local function goBack()
 	local previous = pageStack[#pageStack]
 	show(previous.page, previous.arg, false)
 end
+PanelCoordinator.register("ItemMall", { close = close, back = goBack })
 
 function pages.Home()
 	setTitle("Item Mall")
@@ -197,7 +200,7 @@ end
 -- Runtime policy is authoritative, so hide it until the server confirms access.
 mallButton.Visible = false
 mallButton.Activated:Connect(function()
-	if not allowed or gui.Enabled then return end
+	if not allowed or gui.Enabled or not PanelCoordinator.claim("ItemMall") then return end
 	gui.Enabled = true
 	pageStack = {}
 	show("Home")

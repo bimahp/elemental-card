@@ -16,6 +16,7 @@ local AssetIds = require(ReplicatedStorage.Modules.AssetIds)
 local CardData = require(ReplicatedStorage.Modules.CardData)
 local CardTraits = require(ReplicatedStorage.Modules.CardTraits)
 local ChargeConfig = require(ReplicatedStorage.Modules.ChargeConfig)
+local PanelCoordinator = require(ReplicatedStorage.Modules.PanelCoordinator)
 local battleModules = playerGui:WaitForChild("BattleUI"):WaitForChild("Modules")
 local CardVisuals = require(battleModules:WaitForChild("CardVisuals"))
 local CardPreviewController = require(battleModules:WaitForChild("CardPreviewController"))
@@ -119,6 +120,7 @@ local function setMode(nextMode)
 	if nextMode ~= "vending" then oddsPreview:hide() end
 	gui.Enabled = nextMode == "vending" or nextMode == "purchasing"
 	prompt.Enabled = nextMode == "idle"
+	if nextMode == "idle" then PanelCoordinator.release("VendingMachine") end
 	closeButton.Active = nextMode == "vending"
 	closeButton.AutoButtonColor = nextMode == "vending"
 	backButton.Active = nextMode == "vending"
@@ -678,8 +680,17 @@ function pages.PackContents(packId)
 end
 
 QuestStateChanged.OnClientEvent:Connect(applyBalance)
+-- A purchase or reveal in progress refuses to close, so no other panel opens over it.
+PanelCoordinator.register("VendingMachine", {
+	close = function()
+		if mode == "purchasing" or mode == "reveal" then return false end
+		close()
+	end,
+	back = goBack,
+})
+
 prompt.Triggered:Connect(function()
-	if mode ~= "idle" then return end
+	if mode ~= "idle" or not PanelCoordinator.claim("VendingMachine") then return end
 	setMode("vending")
 	pageStack = {}
 	show("PackSelect")
