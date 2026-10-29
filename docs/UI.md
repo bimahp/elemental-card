@@ -5,7 +5,7 @@
 **Owns:** the UI visual standard, every screen's layout and behaviour, card display, input, and battle animation timing.
 **Does not own:** rules ([GAME_DESIGN.md](GAME_DESIGN.md)); labels and amounts for currencies and rewards, which always come from the server and [MONETIZATION.md](MONETIZATION.md); art direction ([ART.md](ART.md)).
 
-All UI is authored as real instances in Studio (editor-first, [ARCHITECTURE.md](ARCHITECTURE.md) §1).
+Every UI element is authored as a real instance in Studio (editor-first, [ARCHITECTURE.md](ARCHITECTURE.md) §1). **Not built:** most of today's UI is still built in code; it moves to authored kit templates screen by screen, battle last (§10).
 
 ---
 
@@ -60,7 +60,7 @@ Non-battle panels use a **hybrid game UI**: playful and chunky like a Roblox gam
 
 - **Mobile is landscape-only:** `StarterGui.ScreenOrientation = LandscapeSensor`.
 - Panels respect device safe areas. The world HUD uses `DeviceSafeInsets`: currency aligns with the Roblox top-bar row and the menu buttons sit directly beneath it.
-- **Modals use two ScreenGuis:** a full-viewport backdrop button (`ScreenInsets = None`, `InputSink = All`, closes on click, renders the only dim) and the panel plus a transparent click-to-close scrim (`CoreUISafeInsets`). Never stack two dims. Headers must not overlap Roblox CoreGui.
+- **Modals use two ScreenGuis:** a full-viewport backdrop button (`ScreenInsets = None`, `InputSink = All`, closes on click, renders the only dim) and the panel plus a transparent click-to-close scrim (`CoreUISafeInsets`). Never stack two dims. Headers must not overlap Roblox CoreGui. The backdrop becomes an authored ScreenGui under the Panels layer (§10.1); **Not built:** code creates it today.
 - Do not rely on `FullscreenExtension`; set insets explicitly on every loading, modal and battle overlay.
 - Dense panels: two columns on desktop, stacked below the mobile threshold.
 - Nothing overlaps during hover, selection, loading, price lookup or balance updates.
@@ -103,7 +103,7 @@ A panel with the player's level, Find Opponent / Cancel Matchmaking and a tickin
 
 ### 3.7 Dialogue and quest guidance
 
-The shared dialogue: typewriter text, a camera tween, movement lock and option buttons. Quest guidance: `!` marks on NPC nameplates (three rows: `!`, title, name; the `!` row is 36% of the plate with a 48 px mark) and a screen-space arrow.
+The shared dialogue: typewriter text, a camera tween, movement lock and option buttons. Speakers, conversation ids and the queue are in §10.6. Quest guidance: `!` marks on NPC nameplates (three rows: `!`, title, name; the `!` row is 36% of the plate with a 48 px mark) and a screen-space arrow.
 
 ## 4. Before the battle
 
@@ -153,7 +153,7 @@ At the start of every turn, a full-width **YOUR TURN** / **ENEMY TURN** banner f
 
 ### 5.3 Mobile layout
 
-Mobile mode starts when the viewport is narrower than 800 px or input is Touch (`UXMode`). The desktop frame hides and `mobileRoot` shows a four-row grid:
+Mobile mode starts when the viewport is narrower than 800 px or `UserInputService.PreferredInput` is Touch (`UXMode`, §10.2). It never follows the last input, so a key press or chat on a PC never flips the layout. **Not built:** `UXMode` today says Mobile whenever the last input was not a mouse. The desktop frame hides and `mobileRoot` shows a four-row grid:
 
 | Row | Height | Contents |
 |---|---|---|
@@ -294,3 +294,75 @@ The Result panel uses the shared modal shell, tinted for victory or defeat, with
 │        [Continue]          │
 └────────────────────────────┘
 ```
+
+## 10. UI infrastructure
+
+**Not built** as a whole: decided 2026-10-29 from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md). The code side (kit runtime, controllers, versioning) is in [ARCHITECTURE §12](ARCHITECTURE.md).
+
+### 10.1 Layers
+
+One ScreenGui per job, not one per screen:
+
+| Layer | Insets | Holds |
+|---|---|---|
+| HUD | `DeviceSafeInsets` | world icons, currency bar, quest arrow and marks |
+| Panels | `CoreUISafeInsets` | Card Library, Vending Machine, Card Vendor, Item Mall, Matchmaking, Profile, Settings |
+| Popups | `CoreUISafeInsets` | dialogue box, confirm popups, the toast |
+
+- Popups sit above Panels, Panels above HUD. The full-viewport backdrop (§2.6) is its own authored ScreenGui directly under Panels.
+- **Only one panel is open at a time.** Opening a panel closes the open one. Escape or gamepad B goes back a page, then closes the panel from its root page.
+- **BattleUI, PackOpenUI and MulliganUI stay their own ScreenGuis**, because of the battle's insets and clipping (§5.1) and their DisplayOrder above everything else. They do not join the panel rule.
+
+### 10.2 Size and layout
+
+**Scale decides size; mode decides layout.**
+
+- Every layer is authored on a **1280 × 720 reference canvas** and holds one `UIScale`. The scale is `clamp(shortSide / ref, 0.55, 1.5) × UI size`, with `ref` 720 for touch and 1000 for a pointer. The layer's root is sized `1 / scale`, so children always see about 1280 × 720. Starting values; they live in `UIScaleConfig`.
+- **Authoring floors** at the reference: every tap target is at least 80 px and body text at least 26 px. On a phone these come out at about 44 pt and 14 pt.
+- A layer is either fully on the scale rule or not on it. No layer mixes scaled and raw-pixel children.
+- **Mode** (desktop or mobile layout) is only for screens whose arrangement changes, today only the battle (§5.3). It comes from `PreferredInput` and screen size, never from the last input.
+- Each layer publishes its applied scale and input mode as attributes for other code.
+
+### 10.3 Kit
+
+One folder of authored, hidden templates (`ReplicatedStorage.Kit`) that every screen clones: primary and secondary buttons, icon button, panel frame, popup, toast, backdrop, currency pill, progress bar, tab, toggle, slider row, empty state and the card (§6). Colours and sizes are attributes on the folder (tokens), taken from today's `UITheme`.
+
+- Templates keep the crystal-navy look of §2; only the mechanism comes from ant-verse.
+- **Buttons:** a press lock ignores taps within 0.4 s of a state change, so a double tap on End Turn, Forfeit, Buy, Craft or Recycle cannot fire twice. A disabled button still takes taps and says why instead of doing nothing.
+- **Icon buttons** have a fixed invisible hit area and a short pop on press. Outlines stay the layered dark copy of §2.4.
+- **Progress bars** keep the fill's full rounded shape and hide the empty part with a gradient, so a nearly empty bar never squashes into a blob.
+- A missing image upload shows a placeholder colour, never an empty hole.
+
+### 10.4 Feedback
+
+Every refusal and notice uses one toast template with an icon. Each server reason maps to one sentence in one table (`UIFeedback`), so the same refusal always reads the same way. The battle's red toast (§7) becomes this toast.
+
+### 10.5 Settings
+
+A Settings panel in the Panels layer, opened from a HUD icon:
+
+| Setting | Kind | Range | Default |
+|---|---|---|---|
+| Music volume | slider | 0–100% | 100% |
+| SFX volume | slider | 0–100% | 100% |
+| UI size | slider | 80–130%, 10% steps | 100% |
+| Faster battle animations | toggle | on / off | off |
+
+- Changes apply at once and revert if the server refuses them. They are saved in the profile.
+- Faster battle animations shorten `BattleDirector` phase timings (§8) by one multiplier. It never skips a phase, so every card move stays visible. The multiplier is open (§11).
+- Only settings that do something are offered. Graphics and master volume stay in Roblox's own menu.
+- Ranges and defaults are starting values in `SettingsConfig`.
+
+### 10.6 Dialogue
+
+- **Speakers** have a name tag and a portrait, shown in the dialogue box beside the line.
+- Conversations are written once in `DialogueConfig` by id, not inline in controllers. The server sends ids, never text.
+- Conversations **queue**: a second one waits until the first closes.
+- Each line is at most 96 characters so it fits the box.
+- The typewriter, camera tween and focus mode (§3.7) stay. Option buttons are a kit template.
+
+## 11. Open decisions
+
+1. The faster-animation multiplier, and whether the turn banner and cast reveal shorten with it (§10.5).
+2. Where the Settings icon sits among the HUD icons (§3.1, §10.5).
+3. Music and SFX volume: the game has no music or sound effects yet (checked 2026-10-29), so under §10.5 these two settings wait until audio exists. Either add audio first, or ship Settings with UI size and faster animations only.

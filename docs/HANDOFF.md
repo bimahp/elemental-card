@@ -25,11 +25,13 @@ Alpha, playable in Studio, not public. SaveService schema **v5.4**.
 | Daily quests and quest refresh | **Not built** | [MONETIZATION §4](MONETIZATION.md) |
 | Core Mighty/Swift/Vital pack products | **Not built** | [MONETIZATION §5](MONETIZATION.md) |
 | Archetype-aware AI, Noob/Pro tiers | **Not built** (planning) | [plans/PLAN_AI_ARCHETYPE.md](plans/PLAN_AI_ARCHETYPE.md) |
+| UI infrastructure: layers, scaling, kit, coordinator, movement lock, feedback, settings, dialogue ids | **Not built** | [UI §10](UI.md), [ARCHITECTURE §12](ARCHITECTURE.md) |
 | Abuse monitoring, spectating, mastery, trading, ranked | **Not built** | — |
 
 ## 2. Next
 
 1. **The owner is revisiting the project with a new inspiration.** Settle the new direction in the docs of record first, then plan.
+   - UI/UX infrastructure: designed in [UI §10](UI.md) and [ARCHITECTURE §12](ARCHITECTURE.md) (from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md)). Next: build [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) (foundations plus the Matchmaking panel). Settings ship with a profile wipe (approved). Open: [UI §11](UI.md).
 2. Work through the open decisions: [GAME_DESIGN §9](GAME_DESIGN.md) and [MONETIZATION §10](MONETIZATION.md).
 3. Then the queued work from before the pause: daily quests, then [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md).
 
@@ -44,6 +46,10 @@ On 2026-10-29 the docs were checked against the place ("Crystal Element Battle C
 
 | Issue | Priority |
 |---|---|
+| The editor-first rule is not met: client code builds most UI (about 364 GUI `Instance.new` call sites; [research §3.2](research/ANTVERSE_UI_INFRASTRUCTURE.md)) | High |
+| `UXMode` treats any non-mouse input as Mobile: a PC battle starts in the mobile layout and flips on any key press ([research §3.4](research/ANTVERSE_UI_INFRASTRUCTURE.md)) | Medium |
+| Three movement locks (`DialogueController`, `BattleUIController`, server `TableManager`) each stop the player their own way; the last two restore hard-coded 16/50 | Low |
+| The game has no music or sound effects ([UI §11](UI.md)) | Medium |
 | A card named "Stonebark Pack" (swapped with the set name) ships in the SWIFT starter; renaming needs a save migration ([CARDS §6](CARDS.md)) | Medium |
 | One pack can give a third copy: duplicate protection reads ownership once per pack ([MONETIZATION §5.2](MONETIZATION.md)) | Low |
 | Cross-server matchmaking and reconnect never tested in a published place (Studio cannot teleport between instances) | Medium |
@@ -62,7 +68,7 @@ On 2026-10-29 the docs were checked against the place ("Crystal Element Battle C
 ## 5. How work is done
 
 - **Code lives only in Studio**, reached through the Roblox Studio MCP ([ARCHITECTURE §1](ARCHITECTURE.md)). Confirm the right place is open (`list_roblox_studios`) before any edit; another project's place may be the one connected.
-- **Editor-first UI:** build UI as real instances in Studio, never `Instance.new` in code.
+- **Editor-first UI:** build UI as real instances in Studio, never `Instance.new` in code. Every UI change is a migration script in the repo plus an export ([ARCHITECTURE §12.1](ARCHITECTURE.md)).
 - **Before building:** the design is settled in the doc of record; large work gets a plan in [plans/](plans/).
 - **After building:** test pure modules headless and player-facing paths in Studio Play through real remotes; know the tooling limits in [ARCHITECTURE §10](ARCHITECTURE.md); update the doc of record and this file in the same session; remind the owner to save the place.
 - **Saves:** a schema minor bump needs a migration; a major bump wipes profiles and needs the owner's explicit yes.
@@ -88,5 +94,6 @@ Plans are build records: how something was built and verified, with its decision
 | [PLAN_CARD_VENDOR](plans/PLAN_CARD_VENDOR.md) | Card Vendor, Craft/Buy, Recycle | Done |
 | [PLAN_PLAYER_STATUS](plans/PLAN_PLAYER_STATUS.md) | Profile panel, titles, nameplates | Done |
 | [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md) | Archetype AI, Noob/Pro, trainer dialogue | Planning |
+| [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) | UI pipeline, kit, layers, scale, coordinator, movement lock, feedback; Matchmaking panel | Planning |
 
 [archive/](archive/) holds the pre-2026-10-28 design docs, `DEV_STATUS` and `FOUND_BUGS`, kept only until the merge is reviewed. Do not use them.

@@ -9,9 +9,9 @@
 
 ## 1. Where the code is
 
-- **All game code lives in the Roblox Studio place.** There is no Rojo and no code in this repo; it is read and changed through the Roblox Studio MCP.
-- This repo holds the docs, the card data ([data/](../data/)), the vendored ProfileStore source ([vendor/](../vendor/)) and, outside git, the art in `assets/`.
-- **Editor-first UI.** Every UI element is a real instance authored in Studio under `StarterGui`. Code clones, fills and switches state; it does not build GUI with `Instance.new`.
+- **All game code lives in the Roblox Studio place.** There is no Rojo; game code is read and changed through the Roblox Studio MCP.
+- This repo holds the docs, the card data ([data/](../data/)), the vendored ProfileStore source ([vendor/](../vendor/)), the UI migration scripts and exports (§12.1) and, outside git, the art in `assets/`.
+- **Editor-first UI.** Every UI element is a real instance authored in Studio. Code clones, fills, positions, animates and switches state; it does not build GUI with `Instance.new`. **Not built:** client code still creates GUI at about 364 places; it is migrated screen by screen, battle last (§12).
 
 ## 2. Principles
 
@@ -186,7 +186,7 @@ Each side also holds the Charge state (`chargeSlots`, `currentChargeSlot`, `char
 | `JoinMatchmaking`, `CancelMatchmaking` | C→S | none |
 | `MatchmakingUpdate` | S→C | `queued`, `cancelled`, `matched` |
 | `BattleReconnected` | S→C | full view, resumes an active matchmaking battle |
-| `Notify` | S→C | free-roam toast |
+| `Notify` | S→C | free-roam toast; free text today. **Not built:** `{ code, values }` resolved by `UIFeedback` (§12.3); plain text still shows as it is |
 | `GetInventory` | RF | the player's collection |
 | `GetDecks`, `CreateDeck`, `SaveDeckCards`, `RenameDeck`, `DeleteDeck`, `SetActiveDeck` | RF | deck management |
 | `OpenCardPack` | RF | pack purchase |
@@ -197,6 +197,8 @@ Each side also holds the Charge state (`chargeSlots`, `currentChargeSlot`, `char
 | `GetPackOdds` | RF | live per-card odds for the Vending Machine |
 | `GetMonetizationPolicy` | RF | `{ itemMallAllowed, arePaidRandomItemsRestricted }` from `PolicyService` |
 | `GetPlayerStatus`, `EquipTitle` | RF | Profile panel; equipped title replicates as the Player attribute `EquippedTitleId` |
+| `PlayDialogue` | S→C | **Not built.** A conversation id from `DialogueConfig` (§12.4); replaces `ShowNoobDialogue` |
+| `SetSetting` | RF | **Not built.** `key, value` → the stored value or a reason; rate-limited (§12.5) |
 
 **Orphaned, no handler:** `StartDuel`, `UseSkill`, `UsePlayerSkill`, `UseCore`. Delete in a cleanup pass.
 
@@ -219,6 +221,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 - **Saving:** a dirty flag pools saves every 60 seconds; ProfileStore's own autosave (about 300 seconds) is the backstop. Pack purchases, rewards and the start of a PvP match force a save.
 - **Abandon detection:** `beginMatch` (PvP and matchmaking battles, at mulligan start) flags the players with `battleId`, `jobId`, `mode` and `startedAt`, and force-saves. On the next login a still-set flag first tries to reconnect (§8); otherwise it records a PvP loss (no penalty for an NPC fallback). Flags older than an hour skip the reconnect attempt. Exactly one loss either way.
 - **Daily counters** (`dailyRewards`) use a UTC day bucket and reset lazily on the next read.
+- **Schema v6.0 (Not built)** adds `settings` (§12.5). It ships as a **major** bump that wipes every profile; the owner approved the wipe on 2026-10-29 ([AGENTS.md](../AGENTS.md)).
 - **New players** start empty; onboarding grants the chosen starter collection and active deck. A profile that finished onboarding but has no deck gets the Mighty starter back.
 
 ## 10. Testing and tooling
@@ -229,6 +232,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 - **`screen_capture` may not show `PlayerGui` UI.** Verify UI through instance properties (`Visible`, `AbsolutePosition`, `AbsoluteSize`, `Text`).
 - **Luau has a 200-local limit per function.** `BattleUIController` hit it; group new references into tables and scope one-time setup in `do … end`.
 - Cross-server teleport and reconnect cannot be exercised in Studio; they need a published-place test.
+- **UI checks (Not built):** a touch-target audit (every visible interactive element under 44 pt at phone scale), a phone-frame harness (clones the layers into simulated landscape devices and reads `AbsolutePosition` and `AbsoluteSize` for overlaps and off-screen elements), a `debugInfo()` on each UI controller for MCP inspection, and Studio-only debug attributes (for example `DebugDialogue`).
 
 ## 11. Legacy
 
@@ -241,3 +245,51 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 | `corrupted` trait, `CardTraits` | Kept for schema compatibility; no current card uses it |
 | `Gacha*` names | The pack system; "gacha" names are historical, nothing is paid-random |
 | Removed for good | Invoker, Crystal Core hero power, the old 32-card `CardData`, Equipment, `combo_extra_attack`, Crystal Dust |
+
+## 12. UI infrastructure
+
+**Not built** as a whole: decided 2026-10-29 from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md). What the player sees is in [UI §10](UI.md).
+
+### 12.1 Versioning
+
+- Every UI change is an **idempotent migration script** in `scripts/studio/` (`<area>-v<n>.luau`), run once in Studio through the MCP. Running it again changes nothing.
+- After a migration, an export script writes each changed root to `ui/<Root>.json`, so git shows what changed in the tree. Only changed roots are exported, never the whole place.
+- Controllers stay in Studio like all other code (§1).
+
+### 12.2 Kit runtime
+
+- Templates live in `ReplicatedStorage.Kit`, with tokens as attributes on the folder ([UI §10.3](UI.md)). The tokens replace `UITheme`.
+- `ReplicatedStorage.Modules.UIKit` is the only runtime helper: `clone`, `setVariant`, `setEnabled`, `bindPress` (press lock), `setIcon`, `setShare` (bars). It switches states and never builds a visual tree.
+- `setVariant` repaints from the tokens on every state change. Colours baked into a template at authoring still need a recolour migration when a token changes.
+- `UIComponents` is retired screen by screen as each screen moves to the kit.
+
+### 12.3 Client controllers
+
+| Module | Job |
+|---|---|
+| `UIScaleController` | sets each layer's `UIScale` from `UIScaleRules` (pure, with a spec) and the `UISize` setting; publishes `AppliedScale` and `AppliedInput` attributes |
+| `UXMode` | rewritten on `PreferredInput` and screen size ([UI §5.3](UI.md)); never reads the last input |
+| `PanelCoordinator` | `register(id, close, back)`, `claim(id)`, `release(id)`, `back()`; one panel open; Escape and gamepad B call `back` |
+| `MovementLock` | the only code that stops the player. Callers `hold(reason)` and `release(reason)`; while any reason is held, movement and jump are off. No caller saves or restores `WalkSpeed` or `JumpPower`. Replaces the separate locks in `DialogueController` and `BattleUIController`. The server's seated lock in `TableManager` stays, but restores the `StarterPlayer` defaults instead of fixed numbers |
+| `UIFeedback` | one table from server reason to sentence and icon; shows the kit toast |
+
+### 12.4 Dialogue
+
+| Piece | Job |
+|---|---|
+| `ReplicatedStorage.Modules.DialogueConfig` | `Speakers` (name, portrait) and `Conversations` by id |
+| `DialogueRules` | pure: turns an id into a speaker and lines; fills placeholders; checks the 96-character limit (spec) |
+| `DialogueController` | display only: typewriter, camera tween, focus mode, the queue; holds `MovementLock("Dialogue")` |
+
+The server sends ids through `PlayDialogue` (§7); the same rules resolve them on both sides. The inline lines in `TrainerInteraction`, `QuestHUDController` and `VendorUIController` move into `DialogueConfig`.
+
+### 12.5 Settings
+
+| Piece | Job |
+|---|---|
+| `SettingsConfig` | order, kind (slider or toggle), default, range, step and published attribute per key |
+| `SettingsRules` | pure `coerce` (snap and clamp, or nil for a bad key or type) and `sanitize` (spec) |
+| `SettingsService` | validates `SetSetting` (§7), writes the profile's `settings` through `SaveService`; rate-limited |
+| `SettingsController` | binds one authored row per key; applies at once, reverts on refusal; publishes values as `LocalPlayer` attributes that other controllers watch |
+
+The profile field ships in schema v6.0 (§9).

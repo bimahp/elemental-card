@@ -2,6 +2,19 @@
 
 Owner decisions for every agent (Claude and Codex), newest first. Instructions are in [CLAUDE.md](CLAUDE.md); status is in [docs/HANDOFF.md](docs/HANDOFF.md). Record a decision here when the owner makes one that a future session could otherwise re-open.
 
+## UI/UX infrastructure from ant-verse — user decision, 2026-10-29
+
+From [docs/research/ANTVERSE_UI_INFRASTRUCTURE.md](docs/research/ANTVERSE_UI_INFRASTRUCTURE.md) §7:
+
+- **Editor-first stays the rule, and the code is migrated to meet it.** Screen by screen into authored kit templates; the battle goes last, with its own plan. Code only clones, fills, positions and animates.
+- **Scale decides size, mode decides layout.** Every layer is authored at 1280 × 720 with one `UIScale` and the 80 px tap / 26 px text floors. The battle keeps its separate mobile grid, chosen by `PreferredInput` and screen size, never by last input.
+- **Layers:** HUD, Panels and Popups. The world panels (Card Library, Vending Machine, Card Vendor, Item Mall, Matchmaking, Profile, and the new Settings) move into Panels under one `PanelCoordinator` (one panel open; Escape goes back). BattleUI, PackOpen and Mulligan stay their own ScreenGuis.
+- **Versioning:** every UI change is an idempotent Studio migration script kept in this repo, plus a JSON export of each changed root.
+- **Settings:** Music and SFX volume, UI size (80–130%), faster battle animations. Nothing else until it does something.
+- **Saves:** settings ship with a **major** schema bump that wipes profiles. The owner approved the wipe ("this is unreleased game").
+- **Dialogue:** one dialogue config with speakers (name tag, portrait) and conversations by id; the server sends ids; conversations queue. Keep the typewriter, camera tween and focus mode. Option buttons become a kit template.
+- **Order:** foundations first (kit folder, scale controller, input detection, coordinator, movement lock, feedback toast), then one small panel converted end to end to prove the pipeline, then the larger screens, battle last.
+
 ## Docs of record — user decision, 2026-10-28
 
 The docs follow the ant-verse pattern, with every doc in `docs/`: six docs of record (`GAME_DESIGN`, `CARDS`, `MONETIZATION`, `ARCHITECTURE`, `UI`, `ART`), a lean `HANDOFF`, build records in `plans/`. Only `README`, `CLAUDE` and `AGENTS` stay at the root, where GitHub, Claude Code and Codex look for them. The old `DESIGN_*`, `IDEA_*`, `DEV_STATUS` and `FOUND_BUGS` were merged and moved to `docs/archive/`. Card data moved to `data/`. `assets/` (card images and other art) is gitignored. The owner is revisiting the project with a new inspiration; the merged docs are the baseline for it.
