@@ -1,0 +1,27 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.PanelBackdrop",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "PanelBackdrop",
+    "props": {"ClipToDeviceSafeArea": false, "DisplayOrder": 19, "Enabled": false, "IgnoreGuiInset": true, "ResetOnSpawn": false, "SafeAreaCompatibility": {"t": "Enum", "v": "SafeAreaCompatibility.None"}, "ScreenInsets": {"t": "Enum", "v": "ScreenInsets.None"}, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "attrs": {"Migration": "layers-v1"},
+    "children": [
+      {
+        "class": "TextButton",
+        "name": "Backdrop",
+        "props": {
+          "AutoButtonColor": false,
+          "BackgroundColor3": {"t": "Color3", "v": "000000"},
+          "BackgroundTransparency": 0.34,
+          "BorderSizePixel": 0,
+          "InputSink": {"t": "Enum", "v": "InputSink.All"},
+          "Modal": true,
+          "Selectable": false,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+          "Text": ""
+        }
+      }
+    ]
+  }
+}

@@ -20,6 +20,7 @@ Authoring scripts here may call `Instance.new` for GUI: they are the editor that
 | `split-export.ps1` | splits a saved export into `ui/<Root>.json` | no |
 | `check-ui.luau` | touch-target and phone-frame checks | no |
 | `kit-v1.luau` | builds `ReplicatedStorage.Kit` (tokens and templates); `rebuild = true` replaces a kit-v1 Kit | yes |
+| `layers-v1.luau` | builds the `PanelBackdrop`, `Panels` and `Popups` ScreenGuis (needs kit-v1) | yes |
 | `<area>-v<n>.luau` | migrations, one per UI change | yes |
 
 ## ui-json.luau

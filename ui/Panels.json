@@ -1,0 +1,25 @@
+{
+  "format": "elemental-ui/1",
+  "root": "StarterGui.Panels",
+  "tree": {
+    "class": "ScreenGui",
+    "name": "Panels",
+    "props": {"DisplayOrder": 20, "ResetOnSpawn": false, "ZIndexBehavior": {"t": "Enum", "v": "ZIndexBehavior.Sibling"}},
+    "attrs": {"AutoScale": true, "Migration": "layers-v1"},
+    "children": [
+      {
+        "class": "Frame",
+        "name": "Root",
+        "props": {
+          "BackgroundTransparency": 1,
+          "BorderSizePixel": 0,
+          "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
+        },
+        "children": [{
+            "class": "UIScale",
+            "name": "UIScale"
+          }]
+      }
+    ]
+  }
+}

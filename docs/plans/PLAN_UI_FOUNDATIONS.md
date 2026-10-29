@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1 and 2 done on 2026-10-29; steps 3–9 not started.
+**Status:** Steps 1–3 done on 2026-10-29; steps 4–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -134,7 +134,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - **After the change:** the panel fits all eight devices, and its close button is at least 44 pt on every touch device.
 - **Also changed:** `split-export.ps1` and the export now use an `#end` marker and padding, so even a small export is saved to a file.
 
-### Step 3 — Layers (`layers-v1`)
+### Step 3 — Layers (`layers-v1`, done 2026-10-29)
 
 | ScreenGui | Insets | DisplayOrder | `AutoScale` |
 |---|---|---|---|
@@ -150,6 +150,11 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 **Check:**
 - Export the three layers.
 - The phone-frame check passes on the empty layers.
+
+**Result:**
+- **Build:** `layers-v1` built the three ScreenGuis as in the table. Reading them back confirmed insets, order, enabled state, `AutoScale` and children.
+- **Stronger check than planned:** `check-ui` ran on all three layers with probes placed in them for the run: a `PanelFrame` holding a bottom-right `Button` in Panels, and a `Toast` in Popups. Across all eight devices it found 0 touch, 0 offscreen, 0 text and 0 overlap. This is also the first real use of the check's `AutoScale` path. The probes were removed in the same call.
+- **Exports:** `ui/PanelBackdrop.json`, `ui/Panels.json` and `ui/Popups.json` are written.
 
 ### Step 4 — Scale and input
 

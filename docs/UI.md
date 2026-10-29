@@ -310,6 +310,12 @@ One ScreenGui per job, not one per screen:
 | Popups | `CoreUISafeInsets` | dialogue box, confirm popups, the toast |
 
 - Popups sit above Panels, Panels above HUD. The full-viewport backdrop (§2.6) is its own authored ScreenGui directly under Panels.
+- **Built 2026-10-29** by `scripts/studio/layers-v1.luau`:
+  - `PanelBackdrop`: DisplayOrder 19, no insets, off until a panel opens, holding `Kit.Backdrop`.
+  - `Panels`: DisplayOrder 20.
+  - `Popups`: DisplayOrder 30.
+  - Panels and Popups each hold an `AutoScale` `Root` frame with a `UIScale`.
+- **Not built:** the HUD layer. Today's `Hud` ScreenGui stays until its own plan. Today's panels sit at DisplayOrder 10–13, under the new layers.
 - **Only one panel is open at a time.** Opening a panel closes the open one. Escape or gamepad B goes back a page, then closes the panel from its root page.
 - **BattleUI, PackOpenUI and MulliganUI stay their own ScreenGuis**, because of the battle's insets and clipping (§5.1) and their DisplayOrder above everything else. They do not join the panel rule.
 
