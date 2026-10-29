@@ -1,5 +1,6 @@
 local WS = game:GetService("Workspace")
 local RS = game:GetService("RunService")
+local StarterPlayer = game:GetService("StarterPlayer")
 local TableManager = {}
 
 local FREE="FREE"; local RESERVED="RESERVED"; local OCCUPIED="OCCUPIED"
@@ -23,8 +24,9 @@ local function lockMovement(hum)
 	hum.WalkSpeed=0; hum.JumpPower=0; hum.JumpHeight=0
 	hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,false)
 end
+-- Restores the place's character defaults, never fixed numbers.
 local function unlockMovement(hum)
-	hum.WalkSpeed=16; hum.JumpPower=50; hum.JumpHeight=7.2
+	hum.WalkSpeed=StarterPlayer.CharacterWalkSpeed; hum.JumpPower=StarterPlayer.CharacterJumpPower; hum.JumpHeight=StarterPlayer.CharacterJumpHeight
 	hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,true)
 end
 

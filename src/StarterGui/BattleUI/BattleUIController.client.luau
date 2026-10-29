@@ -2170,27 +2170,12 @@ render = function(state)
 end
 
 -- ── Remote listeners ──────────────────────────────────────────────────────────
--- Movement lock: hide the mobile thumbstick + jump button (and block jump,
--- which would otherwise eject the player from the duel seat) for the duration
--- of a battle. ControlModule:Disable() is the supported way to fully remove the
--- on-screen touch controls; WalkSpeed=0 alone leaves them visible/usable.
-local battleControls
-do
-	local ok, pm = pcall(function()
-		return require(player.PlayerScripts:WaitForChild("PlayerModule"))
-	end)
-	if ok and pm then battleControls = pm:GetControls() end
-end
-local controlsLocked = false
+-- Movement lock: hold the shared MovementLock for the duration of a battle. It
+-- disables the ControlModule (hiding the mobile thumbstick and jump button) and
+-- blocks jump, which would otherwise eject the player from the duel seat.
+local MovementLock = require(RS:WaitForChild("Modules"):WaitForChild("MovementLock"))
 local function setBattleControlsLocked(locked)
-	if locked == controlsLocked then return end
-	controlsLocked = locked
-	if battleControls then
-		if locked then battleControls:Disable() else battleControls:Enable() end
-	end
-	local c = player.Character
-	local h = c and c:FindFirstChildOfClass("Humanoid")
-	if h then h:SetStateEnabled(Enum.HumanoidStateType.Jumping, not locked) end
+	if locked then MovementLock.hold("Battle") else MovementLock.release("Battle") end
 end
 
 local tablePromptsSuppressed = false
@@ -2313,7 +2298,7 @@ local function dismissPostBattle()
 	clearHand(); setBattleSurfaceBlocked(false); stopCam(); hideBattleLoading(); clearTurnTimer(); setTablePromptsSuppressed(false)
 	local c=player.Character; if not c then return end
 	local h=c:FindFirstChildOfClass("Humanoid"); if not h then return end
-	h.WalkSpeed=16; h.JumpPower=50; h.Sit=false
+	h.Sit=false
 	setBattleControlsLocked(false)
 end
 Post:connectDismiss(dismissPostBattle)

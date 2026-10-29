@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1–5 done on 2026-10-29; steps 6–9 not started.
+**Status:** Steps 1–6 done on 2026-10-29; steps 7–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -219,7 +219,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - While a panel's backdrop is up it catches HUD taps and closes that panel instead. HUD buttons therefore never open a second panel directly.
 - **Seen once:** in 1 of 4 Play runs, `UXMode` logged `initial mode: Mobile` on the 2171 × 922 window, then corrected itself. The next three runs logged `Desktop`. `UXMode` now prints the viewport and input behind each decision so the next occurrence shows its cause (HANDOFF §4).
 
-### Step 6 — MovementLock
+### Step 6 — MovementLock (done 2026-10-29)
 
 - `MovementLock` is a client module with `hold(reason)`, `release(reason)`, `isHeld()` and `debugInfo()`.
 - While any reason is held, it disables the `ControlModule` and turns jumping off. When the last reason is released, it turns them back on.
@@ -233,6 +233,27 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - In Play: talk to the Noob, then leave the dialogue. The character moves at normal speed.
 - Then run an NPC battle start and an exit. Movement comes back once and the speed is the default.
 - Last, open a dialogue while another hold is active. Closing it does not free the player early.
+
+**Result:**
+- **A fourth lock:** `PackRevealController` had its own movement lock, which the research (§3.7) missed. It disabled the ControlModule, sank the movement actions and turned off jumping, and its `Enable()` on release could undo a battle lock. It now holds `"PackReveal"`, and its prompt suppression stays its own.
+- **Code:**
+  - `MovementLock` and `MovementLockSpec` are new.
+  - `DialogueController`, `BattleUIController`, `PackRevealController` and `TableManager` were edited with `multi_edit`.
+  - The client `WalkSpeed = 16, JumpPower = 50` after battle is removed. `TableManager.unlockMovement` reads the `StarterPlayer` defaults: 16, 50 and 7.2 in this place.
+  - Checksums show 96 of 96 matching.
+- **Spec:** `MovementLockSpec` passes. It covers first hold locks, extra and repeated holds, partial release, release of an unheld reason, unlock on the last release, relock, and a blank reason.
+- **Play, dialogue:**
+  - Talking to the Card Merchant opened the dialogue.
+  - Holding W for 1.5 s moved the character **0.00 studs**. Jumping was off and `WalkSpeed` stayed 16, untouched.
+  - After "Not right now." jumping came back and S moved the character 9.90 studs.
+- **Play, seat:**
+  - `[E] Sit` at table 8 seated the player. W and Space left them seated. `WalkSpeed` read 0 from the server lock, jumping was off, and prompts were hidden.
+  - After **Leave Seat**, `WalkSpeed` read 16 and `JumpHeight` 7.2, from the `StarterPlayer` defaults. Jumping and prompts were back, and S moved 13.89 studs.
+  - No errors.
+- **Not covered:**
+  - The NPC-battle start and exit. The Noob's `TalkPrompt` did not trigger in this session, either with E or with `InputHoldBegin`, although it was enabled, 5 studs away and prompts were on. That is unexplained and untouched by this step, so a manual Noob talk is worth one check.
+  - The battle-end restore therefore goes untested. Seating covered the same `setBattleControlsLocked` calls and the server restore.
+  - The overlapping-holds case is covered only by the spec.
 
 ### Step 7 — UIFeedback
 

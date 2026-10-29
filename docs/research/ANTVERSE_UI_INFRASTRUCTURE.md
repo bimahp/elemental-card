@@ -227,7 +227,7 @@ Three places stop the player, each its own way:
 | `ChairInteraction` | `WalkSpeed = 0`, `JumpPower = 0` | hard-codes `16` and `50` |
 | `BattleUIController` | `ControlModule:Disable()` | `16` and `50` again, plus `Enable()` |
 
-A hard-coded restore overwrites whatever another lock saved. **Correction (2026-10-29):** `ChairInteraction` is disabled; the live third lock is the server's `TableManager` (0 while seated, restores 16 / 50 / 7.2). `ControlModule:Disable` does exist in this place's PlayerModule (checked in Play; ant-verse's note that Roblox removed it does not apply here).
+A hard-coded restore overwrites whatever another lock saved. **Correction (2026-10-29):** `ChairInteraction` is disabled; the live third lock is the server's `TableManager` (0 while seated, restores 16 / 50 / 7.2). A fourth, `PackRevealController` (ControlModule, `ContextActionService` sink, jump), was found while building PLAN_UI_FOUNDATIONS step 6. `ControlModule:Disable` does exist in this place's PlayerModule (checked in Play; ant-verse's note that Roblox removed it does not apply here).
 
 ### 3.8 Settings and feedback
 

@@ -51,6 +51,8 @@ ReplicatedStorage/
     UITheme            shared UI theme values (being replaced by the Kit tokens, §12.2)
     UIKit              Kit runtime: clone, tokens, variants, press lock (§12.2)
     UIScaleConfig, UIScaleRules   UI scale, input kind and battle layout rules (§12.3)
+    PanelCoordinator   one open world panel; gamepad B back (§12.3)
+    MovementLock       the one client movement lock, by reason (§12.3)
   Kit/                 authored UI templates and tokens (kit-v1, §12.2)
   Remotes/             (§7)
 
@@ -116,7 +118,7 @@ Workspace/
   Noob, Trainers/ (Trainer Mighty / Swift / Vital), Card Merchant (the Card Vendor), Card Vending Machine
 
 TestService/           GachaOddsSpec, GachaAcquisitionSpec, ShopTransactionSpec, PlayerStatusSpec,
-                       UIKitSpec, UIScaleRulesSpec
+                       UIKitSpec, UIScaleRulesSpec, PanelCoordinatorSpec, MovementLockSpec
 ```
 
 ## 4. The battle engine
@@ -279,7 +281,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 | `UIScaleController` | **Built 2026-10-29.** A StarterPlayerScripts LocalScript. It sets each `AutoScale` layer's `Root` size and `UIScale` from `UIScaleRules.scaleFor` (pure, `UIScaleRulesSpec`, values in `UIScaleConfig`) and the player's `UISize` attribute, and publishes `AppliedScale` and `AppliedInput` on the layer. It reapplies on viewport, camera, `PreferredInput`, `UISize` and new layers |
 | `UXMode` | **Built 2026-10-29.** Keeps its `Current` and `Changed` API, and decides with `UIScaleRules.layoutMode` from `PreferredInput` and viewport width ([UI §5.3](UI.md)). It never reads the last input |
 | `PanelCoordinator` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `PanelCoordinatorSpec`. API: `register(id, { close, back? })`, `claim(id)`, `release(id)`, `back()`, `closeAll()`, `current()`, `debugInfo()`. `claim` closes the open panel first; if that panel's `close` returns `false`, the claim fails and the caller does not open. Gamepad B calls `back`. `BattleLoading`, `BattleSeated` and `UpdateBattleState` call `closeAll`. Input and remote hooks start with the first `register` in a running game |
-| `MovementLock` | the only code that stops the player. Callers `hold(reason)` and `release(reason)`; while any reason is held, movement and jump are off. No caller saves or restores `WalkSpeed` or `JumpPower`. Replaces the separate locks in `DialogueController` and `BattleUIController`. The server's seated lock in `TableManager` stays, but restores the `StarterPlayer` defaults instead of fixed numbers |
+| `MovementLock` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `MovementLockSpec`. It is the only client code that stops the player. Callers `hold(reason)` and `release(reason)`: `"Dialogue"` (`DialogueController`), `"Battle"` (`BattleUIController.setBattleControlsLocked`) and `"PackReveal"` (`PackRevealController`, which still suppresses prompts itself). While any reason is held, the ControlModule is disabled, movement keys are sunk through `ContextActionService`, and jumping is off, respawns included. No client code saves or restores `WalkSpeed` or `JumpPower`. The server's seated lock in `TableManager` stays, and restores the `StarterPlayer` defaults (`CharacterWalkSpeed`, `CharacterJumpPower`, `CharacterJumpHeight`) instead of fixed numbers |
 | `UIFeedback` | one table from server reason to sentence and icon; shows the kit toast |
 
 ### 12.4 Dialogue

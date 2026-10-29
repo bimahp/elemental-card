@@ -1,6 +1,5 @@
 -- PackRevealController: modal purchase-result flow backed by rigid camera-space 3D cards.
 local TweenService = game:GetService("TweenService")
-local ContextActionService = game:GetService("ContextActionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
 
@@ -12,6 +11,7 @@ local AssetIds = require(ReplicatedStorage.Modules.AssetIds)
 local AssetPreloader = require(ReplicatedStorage.Modules.AssetPreloader)
 local Config = require(ReplicatedStorage.Modules.GachaConfig)
 local CameraCardStage = require(script.Parent:WaitForChild("CameraCardStage"))
+local MovementLock = require(ReplicatedStorage.Modules.MovementLock)
 
 local PackRevealController = {}
 PackRevealController.__index = PackRevealController
@@ -23,14 +23,6 @@ local SUMMARY_HOLDER_H = 236
 local SUMMARY_TOP_PAD = 16
 local SUMMARY_GAP = 8
 local SUMMARY_BACKGROUND_TRANSPARENCY = 0.12
-local MOVEMENT_ACTIONS = {
-	Enum.PlayerActions.CharacterForward,
-	Enum.PlayerActions.CharacterBackward,
-	Enum.PlayerActions.CharacterLeft,
-	Enum.PlayerActions.CharacterRight,
-	Enum.PlayerActions.CharacterJump,
-}
-local modalLockSerial = 0
 
 local function getStroke(frame)
 	local stroke = frame:FindFirstChildOfClass("UIStroke")
@@ -152,29 +144,19 @@ function PackRevealController:_releaseGameplayLock()
 	lock.active = false
 
 	if lock.descendantConnection then lock.descendantConnection:Disconnect() end
-	if lock.characterConnection then lock.characterConnection:Disconnect() end
-	if lock.actionName then ContextActionService:UnbindAction(lock.actionName) end
 
 	for prompt, record in pairs(lock.prompts) do
 		if record.connection then record.connection:Disconnect() end
 		if prompt.Parent then prompt.Enabled = record.enabled end
 	end
-	for humanoid, jumpEnabled in pairs(lock.humanoids) do
-		if humanoid.Parent then
-			humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, jumpEnabled)
-		end
-	end
-	if lock.controls then lock.controls:Enable() end
+	MovementLock.release("PackReveal")
 end
 
 function PackRevealController:_acquireGameplayLock()
 	self:_releaseGameplayLock()
-	modalLockSerial += 1
 	local lock = {
 		active = true,
-		actionName = "PackRevealMovementLock_" .. modalLockSerial,
 		prompts = {},
-		humanoids = {},
 	}
 	self.gameplayLock = lock
 
@@ -196,32 +178,7 @@ function PackRevealController:_acquireGameplayLock()
 	for _, descendant in ipairs(workspace:GetDescendants()) do suppressPrompt(descendant) end
 	lock.descendantConnection = workspace.DescendantAdded:Connect(suppressPrompt)
 
-	local function lockCharacter(character)
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-		if not humanoid or lock.humanoids[humanoid] ~= nil then return end
-		lock.humanoids[humanoid] = humanoid:GetStateEnabled(Enum.HumanoidStateType.Jumping)
-		humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
-	end
-	lockCharacter(player.Character)
-	lock.characterConnection = player.CharacterAdded:Connect(function(character)
-		local humanoid = character:WaitForChild("Humanoid", 5)
-		if humanoid and lock.active then lockCharacter(character) end
-	end)
-
-	local ok, playerModule = pcall(function()
-		return require(player.PlayerScripts:WaitForChild("PlayerModule"))
-	end)
-	if ok and playerModule then
-		lock.controls = playerModule:GetControls()
-		lock.controls:Disable()
-	end
-	ContextActionService:BindActionAtPriority(
-		lock.actionName,
-		function() return Enum.ContextActionResult.Sink end,
-		false,
-		Enum.ContextActionPriority.High.Value + 100,
-		table.unpack(MOVEMENT_ACTIONS)
-	)
+	MovementLock.hold("PackReveal")
 end
 
 function PackRevealController:_playBurst()

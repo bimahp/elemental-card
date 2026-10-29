@@ -3,6 +3,7 @@ local TweenService     = game:GetService("TweenService")
 local Players          = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local Lighting         = game:GetService("Lighting")
+local MovementLock     = require(game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("MovementLock"))
 
 local LOCAL_PLAYER    = Players.LocalPlayer
 local TYPEWRITE_SPEED = 0.04
@@ -16,7 +17,6 @@ local _state = "CLOSED"
 local _segmentIdx, _dialogue, _typeThread, _onAction
 local _origCamCFrame, _origCamType
 local _camTween, _cameraToken = nil, 0
-local _origHumanoid, _origWalkSpeed, _origJumpPower, _origJumpHeight, _origJumpEnabled
 local _focusState
 
 local function resolveUI()
@@ -143,21 +143,11 @@ local function restoreCamera()
 end
 
 local function freezePlayer()
-	local char=LOCAL_PLAYER.Character;if not char then return end
-	local hum=char:FindFirstChildOfClass("Humanoid");if not hum then return end
-	_origHumanoid=hum
-	_origWalkSpeed,_origJumpPower,_origJumpHeight=hum.WalkSpeed,hum.JumpPower,hum.JumpHeight
-	_origJumpEnabled=hum:GetStateEnabled(Enum.HumanoidStateType.Jumping)
-	hum.WalkSpeed=0;hum.JumpPower=0;hum.JumpHeight=0;hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,false)
+	MovementLock.hold("Dialogue")
 end
 
 local function unfreezePlayer()
-	local hum=_origHumanoid
-	if hum and hum.Parent then
-		hum.WalkSpeed=_origWalkSpeed or hum.WalkSpeed;hum.JumpPower=_origJumpPower or hum.JumpPower;hum.JumpHeight=_origJumpHeight or hum.JumpHeight
-		hum:SetStateEnabled(Enum.HumanoidStateType.Jumping,_origJumpEnabled~=false)
-	end
-	_origHumanoid,_origWalkSpeed,_origJumpPower,_origJumpHeight,_origJumpEnabled=nil,nil,nil,nil,nil
+	MovementLock.release("Dialogue")
 end
 
 local function stopTypeThread()
