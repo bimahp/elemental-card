@@ -1,29 +1,24 @@
--- UXMode: Desktop/Mobile classification based on viewport width and input type.
--- Keyboard input is excluded from the "mouse" set so that WASD in Studio
--- device emulator does not incorrectly switch the mode to Desktop.
-local UserInput = game:GetService("UserInputService")
-local camera = workspace.CurrentCamera
+-- UXMode: Desktop/Mobile battle layout from PreferredInput and viewport width (UI §5.3).
+-- It never follows the last input, so a key press or chat on a PC cannot flip the layout.
+-- The rule itself is UIScaleRules.layoutMode.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local Rules = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("UIScaleRules"))
 
 local UXMode = {}
 
-local SMALL_SCREEN_WIDTH = 800
+local function currentInput(): string
+	local ok, preferred = pcall(function()
+		return UserInputService.PreferredInput
+	end)
+	return Rules.inputKind(ok and preferred or nil, UserInputService.TouchEnabled, UserInputService.MouseEnabled)
+end
 
-local MOUSE_INPUT_TYPES = {
-	[Enum.UserInputType.MouseMovement] = true,
-	[Enum.UserInputType.MouseButton1]  = true,
-	[Enum.UserInputType.MouseButton2]  = true,
-	[Enum.UserInputType.MouseButton3]  = true,
-	[Enum.UserInputType.MouseWheel]    = true,
-}
-
-local function computeMode()
-	if camera.ViewportSize.X < SMALL_SCREEN_WIDTH then
-		return "Mobile"
-	end
-	if MOUSE_INPUT_TYPES[UserInput:GetLastInputType()] then
-		return "Desktop"
-	end
-	return "Mobile"
+local function computeMode(): string
+	local camera = workspace.CurrentCamera
+	local width = camera and camera.ViewportSize.X or 1280
+	return Rules.layoutMode(width, currentInput())
 end
 
 local changedEvent = Instance.new("BindableEvent")
@@ -38,7 +33,22 @@ local function recompute()
 	end
 end
 
-camera:GetPropertyChangedSignal("ViewportSize"):Connect(recompute)
-UserInput.LastInputTypeChanged:Connect(recompute)
+local cameraConnection: RBXScriptConnection? = nil
+local function watchCamera()
+	if cameraConnection then
+		cameraConnection:Disconnect()
+	end
+	local camera = workspace.CurrentCamera
+	if camera then
+		cameraConnection = camera:GetPropertyChangedSignal("ViewportSize"):Connect(recompute)
+	end
+	recompute()
+end
+
+workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(watchCamera)
+pcall(function()
+	UserInputService:GetPropertyChangedSignal("PreferredInput"):Connect(recompute)
+end)
+watchCamera()
 
 return UXMode

@@ -48,7 +48,10 @@ ReplicatedStorage/
     TitleConfig        title catalog and milestone requirements
     AssetIds           image manifest: startup list, exact-five reveal list, audit list
     AssetPreloader     dense-array preload with per-id retries
-    UITheme            shared UI theme values
+    UITheme            shared UI theme values (being replaced by the Kit tokens, §12.2)
+    UIKit              Kit runtime: clone, tokens, variants, press lock (§12.2)
+    UIScaleConfig, UIScaleRules   UI scale, input kind and battle layout rules (§12.3)
+  Kit/                 authored UI templates and tokens (kit-v1, §12.2)
   Remotes/             (§7)
 
 ReplicatedFirst/
@@ -97,6 +100,7 @@ StarterPlayer/StarterPlayerScripts/
   VendorUIController   Card Vendor dialogue and shop
   MatchmakingController, MulliganController, ItemMallController
   PlayerStatusUIController, NameplateController
+  UIScaleController    scales the AutoScale layers (§12.3)
 
 StarterGui/
   BattleUI/            BattleUIController + Modules: CardVisuals, BattleDirector, PhaseRegistry,
@@ -111,7 +115,8 @@ Workspace/
   Battle Stations/     1–9: the tables (Chair 1, Chair 2, Table); TableManager adds a TablePrompt
   Noob, Trainers/ (Trainer Mighty / Swift / Vital), Card Merchant (the Card Vendor), Card Vending Machine
 
-TestService/           GachaOddsSpec, GachaAcquisitionSpec, ShopTransactionSpec, PlayerStatusSpec
+TestService/           GachaOddsSpec, GachaAcquisitionSpec, ShopTransactionSpec, PlayerStatusSpec,
+                       UIKitSpec, UIScaleRulesSpec
 ```
 
 ## 4. The battle engine
@@ -271,8 +276,8 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 
 | Module | Job |
 |---|---|
-| `UIScaleController` | sets each layer's `UIScale` from `UIScaleRules` (pure, with a spec) and the `UISize` setting; publishes `AppliedScale` and `AppliedInput` attributes |
-| `UXMode` | rewritten on `PreferredInput` and screen size ([UI §5.3](UI.md)); never reads the last input |
+| `UIScaleController` | **Built 2026-10-29.** A StarterPlayerScripts LocalScript. It sets each `AutoScale` layer's `Root` size and `UIScale` from `UIScaleRules.scaleFor` (pure, `UIScaleRulesSpec`, values in `UIScaleConfig`) and the player's `UISize` attribute, and publishes `AppliedScale` and `AppliedInput` on the layer. It reapplies on viewport, camera, `PreferredInput`, `UISize` and new layers |
+| `UXMode` | **Built 2026-10-29.** Keeps its `Current` and `Changed` API, and decides with `UIScaleRules.layoutMode` from `PreferredInput` and viewport width ([UI §5.3](UI.md)). It never reads the last input |
 | `PanelCoordinator` | `register(id, close, back)`, `claim(id)`, `release(id)`, `back()`; one panel open; Escape and gamepad B call `back` |
 | `MovementLock` | the only code that stops the player. Callers `hold(reason)` and `release(reason)`; while any reason is held, movement and jump are off. No caller saves or restores `WalkSpeed` or `JumpPower`. Replaces the separate locks in `DialogueController` and `BattleUIController`. The server's seated lock in `TableManager` stays, but restores the `StarterPlayer` defaults instead of fixed numbers |
 | `UIFeedback` | one table from server reason to sentence and icon; shows the kit toast |

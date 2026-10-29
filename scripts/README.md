@@ -31,7 +31,7 @@ Check that Studio still matches the repo:
 ## Changing code
 
 1. Edit the file in `src/`.
-2. Apply the same change in Studio with `multi_edit`. A new script is created at the matching path with its class and enabled state.
+2. Apply the same change in Studio. Use `multi_edit` for an edit, or set `Source` to the whole file through `execute_luau` (a `[==[ … ]==]` string) for a new script or a full replacement. A new script is created at the matching path with its class and enabled state.
 3. Run the checksum comparison again; it must say `differences: 0`.
 4. Remind the owner to save the place.
 

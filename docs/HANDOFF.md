@@ -31,7 +31,7 @@ Alpha, playable in Studio, not public. SaveService schema **v5.4**.
 ## 2. Next
 
 1. **The owner is revisiting the project with a new inspiration.** Settle the new direction in the docs of record first, then plan.
-   - UI/UX infrastructure: designed in [UI §10](UI.md) and [ARCHITECTURE §12](ARCHITECTURE.md) (from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md)). Building [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md): steps 1–3 are done (export and checks, `ReplicatedStorage.Kit` and `UIKit`, the Panels/Popups/PanelBackdrop layers); next is step 4, scale and input. Settings ship with a profile wipe (approved). Open: [UI §11](UI.md).
+   - UI/UX infrastructure: designed in [UI §10](UI.md) and [ARCHITECTURE §12](ARCHITECTURE.md) (from [research/ANTVERSE_UI_INFRASTRUCTURE.md](research/ANTVERSE_UI_INFRASTRUCTURE.md)). Building [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md): steps 1–4 are done (export and checks, `ReplicatedStorage.Kit` and `UIKit`, the Panels/Popups/PanelBackdrop layers, UI scaling and the `UXMode` fix); next is step 5, the panel coordinator. Settings ship with a profile wipe (approved). Open: [UI §11](UI.md).
 2. Work through the open decisions: [GAME_DESIGN §9](GAME_DESIGN.md) and [MONETIZATION §10](MONETIZATION.md).
 3. Then the queued work from before the pause: daily quests, then [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md).
 
@@ -47,7 +47,6 @@ On 2026-10-29 the docs were checked against the place ("Crystal Element Battle C
 | Issue | Priority |
 |---|---|
 | The editor-first rule is not met: client code builds most UI (about 364 GUI `Instance.new` call sites; [research §3.2](research/ANTVERSE_UI_INFRASTRUCTURE.md)) | High |
-| `UXMode` treats any non-mouse input as Mobile: a PC battle starts in the mobile layout and flips on any key press ([research §3.4](research/ANTVERSE_UI_INFRASTRUCTURE.md)) | Medium |
 | Three movement locks (`DialogueController`, `BattleUIController`, server `TableManager`) each stop the player their own way; the last two restore hard-coded 16/50 | Low |
 | The game has no music or sound effects ([UI §11](UI.md)) | Medium |
 | A card named "Stonebark Pack" (swapped with the set name) ships in the SWIFT starter; renaming needs a save migration ([CARDS §6](CARDS.md)) | Medium |
@@ -94,6 +93,6 @@ Plans are build records: how something was built and verified, with its decision
 | [PLAN_CARD_VENDOR](plans/PLAN_CARD_VENDOR.md) | Card Vendor, Craft/Buy, Recycle | Done |
 | [PLAN_PLAYER_STATUS](plans/PLAN_PLAYER_STATUS.md) | Profile panel, titles, nameplates | Done |
 | [PLAN_AI_ARCHETYPE](plans/PLAN_AI_ARCHETYPE.md) | Archetype AI, Noob/Pro, trainer dialogue | Planning |
-| [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) | UI pipeline, kit, layers, scale, coordinator, movement lock, feedback; Matchmaking panel | Steps 1–3 of 9 done |
+| [PLAN_UI_FOUNDATIONS](plans/PLAN_UI_FOUNDATIONS.md) | UI pipeline, kit, layers, scale, coordinator, movement lock, feedback; Matchmaking panel | Steps 1–4 of 9 done |
 
 [archive/](archive/) holds the pre-2026-10-28 design docs, `DEV_STATUS` and `FOUND_BUGS`, kept only until the merge is reviewed. Do not use them.

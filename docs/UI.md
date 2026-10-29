@@ -153,7 +153,7 @@ At the start of every turn, a full-width **YOUR TURN** / **ENEMY TURN** banner f
 
 ### 5.3 Mobile layout
 
-Mobile mode starts when the viewport is narrower than 800 px or `UserInputService.PreferredInput` is Touch (`UXMode`, §10.2). It never follows the last input, so a key press or chat on a PC never flips the layout. **Not built:** `UXMode` today says Mobile whenever the last input was not a mouse. The desktop frame hides and `mobileRoot` shows a four-row grid:
+Mobile mode starts when the viewport is narrower than 800 px or `UserInputService.PreferredInput` is Touch (`UXMode`, §10.2). It never follows the last input, so a key press or chat on a PC never flips the layout. The desktop frame hides and `mobileRoot` shows a four-row grid:
 
 | Row | Height | Contents |
 |---|---|---|
@@ -329,6 +329,7 @@ One ScreenGui per job, not one per screen:
 - A layer is either fully on the scale rule or not on it. No layer mixes scaled and raw-pixel children.
 - **Mode** (desktop or mobile layout) is only for screens whose arrangement changes, today only the battle (§5.3). It comes from `PreferredInput` and screen size, never from the last input.
 - Each layer publishes its applied scale and input mode as attributes for other code.
+- **Built 2026-10-29:** scaling for Panels and Popups, and the `UXMode` rule. A `UISize` attribute on the player multiplies the scale; the Settings plan will set it.
 
 ### 10.3 Kit
 

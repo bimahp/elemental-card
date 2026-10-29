@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1–3 done on 2026-10-29; steps 4–9 not started.
+**Status:** Steps 1–4 done on 2026-10-29; steps 5–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -156,7 +156,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - **Stronger check than planned:** `check-ui` ran on all three layers with probes placed in them for the run: a `PanelFrame` holding a bottom-right `Button` in Panels, and a `Toast` in Popups. Across all eight devices it found 0 touch, 0 offscreen, 0 text and 0 overlap. This is also the first real use of the check's `AutoScale` path. The probes were removed in the same call.
 - **Exports:** `ui/PanelBackdrop.json`, `ui/Panels.json` and `ui/Popups.json` are written.
 
-### Step 4 — Scale and input
+### Step 4 — Scale and input (done 2026-10-29)
 
 - `ReplicatedStorage.Modules.UIScaleRules` is pure. `scaleFor(width, height, input, uiSize)` returns `clamp(min(height / refHeight, width / refWidth), 0.55, 1.5) × uiSize`, with the reference 1280 × 720 for touch and 1777 × 1000 for pointer (corrected in step 2). The starting values live in `UIScaleConfig`.
 - `UIScaleController` is a client script. On every viewport or input change it does four things:
@@ -170,6 +170,17 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - `UIScaleRulesSpec` covers three cases: a phone at the floor, a desktop at 1, and the clamp at both ends.
 - In Play on a PC, `UXMode` starts as Desktop and stays Desktop after key presses and chat.
 - With the Studio device emulator set to a touch phone, it says Mobile.
+
+**Result:**
+- **New code:** `UIScaleConfig`, `UIScaleRules`, `UIScaleRulesSpec` and `UIScaleController` are new in `src/`, and `UXMode` was replaced whole. Checksums show 92 of 92 matching.
+- **Spec:** `UIScaleRulesSpec` passes. It covers phone floor, Pro Max, 4:3 tablet, 720p, 1080p, the 4K ceiling, UI size, input fallbacks and layout.
+- **Play, 2171 × 922 keyboard-and-mouse window:**
+  - The log reads `[UXMode] initial mode: Desktop`; the research run logged `Mobile` here.
+  - After W, Space, A, D and Shift, the last input is Keyboard and `BattleUI.Main` stays visible with `MobileRoot` hidden.
+  - Panels and Popups report scale 0.922 (`min(922/1000, 2171/1777)`), `AppliedInput` pointer, and a `Root` of 2171 × 864 points.
+  - Setting `UISize = 1.3` rescaled them live to 1.1986, and clearing it restored 0.922.
+  - No errors or warnings.
+- **Not covered:** the touch case in the Studio device emulator. The MCP cannot switch the emulator. `UIScaleRulesSpec` covers `PreferredInput.Touch → Mobile`, but a real Play run on an emulated phone is still to do.
 
 ### Step 5 — PanelCoordinator
 
