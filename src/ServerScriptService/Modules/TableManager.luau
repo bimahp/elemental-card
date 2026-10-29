@@ -182,14 +182,14 @@ function TableManager.handleTalkToNpc(player, npcDeckKey, trainerName)
 	local tbl=TableManager.findFreeTable()
 	if not tbl then
 		Remotes.BattleUnseated:FireClient(player)
-		notify(player,"All tables are busy right now -- please wait for one to free up.")
+		notify(player,{ code = "TablesBusy" })
 		return false
 	end
 	Remotes.BattleLoading:FireClient(player)
 	local ok=TableManager.seatPlayerAt(player,tbl,1)
 	if not ok or not playerTable[player.UserId] then
 		Remotes.BattleUnseated:FireClient(player)
-		notify(player,"Could not seat you at the table -- please try again.")
+		notify(player,{ code = "SeatFailed" })
 		return false
 	end
 	tbl._npcDeckKey=npcDeckKey

@@ -2319,47 +2319,7 @@ end)
 -- has started yet (PVP: waiting for the opponent + ReadyUp handshake).
 -- PvE skips this state entirely (battle auto-starts immediately).
 -- ── Free-roam notifications (server -> client toast) ──────────────────────
--- Lives in its own ScreenGui (not inside BattleUI, which is disabled in free
--- roam) so messages like "all tables busy" show even when no battle is running.
-local notifyOverlay = Instance.new("ScreenGui")
-notifyOverlay.Name = "NotifyOverlay"
-notifyOverlay.ResetOnSpawn = false
-notifyOverlay.IgnoreGuiInset = true
-notifyOverlay.DisplayOrder = 1500
-notifyOverlay.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-notifyOverlay.Parent = player.PlayerGui
-
-local function showNotify(msg)
-	local lbl = Instance.new("TextLabel")
-	lbl.AnchorPoint = Vector2.new(0.5, 0)
-	lbl.Position = UDim2.new(0.5, 0, 0.12, 0)
-	lbl.Size = UDim2.new(0, 400, 0, 46)
-	lbl.BackgroundColor3 = Color3.fromRGB(28, 16, 16)
-	lbl.BackgroundTransparency = 0.1
-	lbl.BorderSizePixel = 0
-	lbl.Font = Enum.Font.GothamBold
-	lbl.TextSize = 15
-	lbl.TextColor3 = Color3.fromRGB(255, 140, 110)
-	lbl.Text = tostring(msg)
-	lbl.TextWrapped = true
-	lbl.ZIndex = 10
-	lbl.Parent = notifyOverlay
-	Instance.new("UICorner", lbl).CornerRadius = UDim.new(0, 8)
-	local stroke = Instance.new("UIStroke", lbl)
-	stroke.Color = Color3.fromRGB(180, 60, 40); stroke.Thickness = 1.5
-	TweenService:Create(lbl, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-		Position = UDim2.new(0.5, 0, 0.1, 0),
-	}):Play()
-	task.delay(2.6, function()
-		TweenService:Create(lbl, TweenInfo.new(0.4), { BackgroundTransparency = 1, TextTransparency = 1 }):Play()
-		task.wait(0.45); lbl:Destroy()
-	end)
-end
-
-do
-	local notifyRemote = Remotes:FindFirstChild("Notify") or Remotes:WaitForChild("Notify", 10)
-	if notifyRemote then notifyRemote.OnClientEvent:Connect(showNotify) end
-end
+-- Shown by UIFeedbackController in the Kit toast (UI §10.4).
 
 local SeatedOverlay = require(script.Parent.Modules.SeatedOverlayController).new({
 	player = player,

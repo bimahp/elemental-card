@@ -53,6 +53,7 @@ ReplicatedStorage/
     UIScaleConfig, UIScaleRules   UI scale, input kind and battle layout rules (§12.3)
     PanelCoordinator   one open world panel; gamepad B back (§12.3)
     MovementLock       the one client movement lock, by reason (§12.3)
+    UIFeedback         server reason codes to toast text and icon (§12.3)
   Kit/                 authored UI templates and tokens (kit-v1, §12.2)
   Remotes/             (§7)
 
@@ -103,6 +104,7 @@ StarterPlayer/StarterPlayerScripts/
   MatchmakingController, MulliganController, ItemMallController
   PlayerStatusUIController, NameplateController
   UIScaleController    scales the AutoScale layers (§12.3)
+  UIFeedbackController shows Notify in the Kit toast (§12.3)
 
 StarterGui/
   BattleUI/            BattleUIController + Modules: CardVisuals, BattleDirector, PhaseRegistry,
@@ -118,7 +120,7 @@ Workspace/
   Noob, Trainers/ (Trainer Mighty / Swift / Vital), Card Merchant (the Card Vendor), Card Vending Machine
 
 TestService/           GachaOddsSpec, GachaAcquisitionSpec, ShopTransactionSpec, PlayerStatusSpec,
-                       UIKitSpec, UIScaleRulesSpec, PanelCoordinatorSpec, MovementLockSpec
+                       UIKitSpec, UIScaleRulesSpec, PanelCoordinatorSpec, MovementLockSpec, UIFeedbackSpec
 ```
 
 ## 4. The battle engine
@@ -195,7 +197,7 @@ Each side also holds the Charge state (`chargeSlots`, `currentChargeSlot`, `char
 | `JoinMatchmaking`, `CancelMatchmaking` | C→S | none |
 | `MatchmakingUpdate` | S→C | `queued`, `cancelled`, `matched` |
 | `BattleReconnected` | S→C | full view, resumes an active matchmaking battle |
-| `Notify` | S→C | free-roam toast; free text today. **Not built:** `{ code, values }` resolved by `UIFeedback` (§12.3); plain text still shows as it is |
+| `Notify` | S→C | free-roam toast: `{ code, values }` resolved by `UIFeedback` (§12.3). Every sender uses a code since 2026-10-29; plain text still shows as it is |
 | `GetInventory` | RF | the player's collection |
 | `GetDecks`, `CreateDeck`, `SaveDeckCards`, `RenameDeck`, `DeleteDeck`, `SetActiveDeck` | RF | deck management |
 | `OpenCardPack` | RF | pack purchase |
@@ -282,7 +284,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 | `UXMode` | **Built 2026-10-29.** Keeps its `Current` and `Changed` API, and decides with `UIScaleRules.layoutMode` from `PreferredInput` and viewport width ([UI §5.3](UI.md)). It never reads the last input |
 | `PanelCoordinator` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `PanelCoordinatorSpec`. API: `register(id, { close, back? })`, `claim(id)`, `release(id)`, `back()`, `closeAll()`, `current()`, `debugInfo()`. `claim` closes the open panel first; if that panel's `close` returns `false`, the claim fails and the caller does not open. Gamepad B calls `back`. `BattleLoading`, `BattleSeated` and `UpdateBattleState` call `closeAll`. Input and remote hooks start with the first `register` in a running game |
 | `MovementLock` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `MovementLockSpec`. It is the only client code that stops the player. Callers `hold(reason)` and `release(reason)`: `"Dialogue"` (`DialogueController`), `"Battle"` (`BattleUIController.setBattleControlsLocked`) and `"PackReveal"` (`PackRevealController`, which still suppresses prompts itself). While any reason is held, the ControlModule is disabled, movement keys are sunk through `ContextActionService`, and jumping is off, respawns included. No client code saves or restores `WalkSpeed` or `JumpPower`. The server's seated lock in `TableManager` stays, and restores the `StarterPlayer` defaults (`CharacterWalkSpeed`, `CharacterJumpPower`, `CharacterJumpHeight`) instead of fixed numbers |
-| `UIFeedback` | one table from server reason to sentence and icon; shows the kit toast |
+| `UIFeedback` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `UIFeedbackSpec`. `MESSAGES` maps each code to text (a string or a function of the values), an `AssetIds.Icons` key and a tone. `resolve(payload)` is pure and never errors; `show(payload)` puts one `Kit.Toast` in `Popups.Root`, replacing the one on screen. The `UIFeedbackController` LocalScript connects `Notify` to it. Codes today: `MatchmakingCooldown` (`seconds`), `TablesBusy`, `SeatFailed` |
 
 ### 12.4 Dialogue
 

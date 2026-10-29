@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1–6 done on 2026-10-29; steps 7–9 not started.
+**Status:** Steps 1–7 done on 2026-10-29; steps 8–9 not started.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -255,7 +255,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - The battle-end restore therefore goes untested. Seating covered the same `setBattleControlsLocked` calls and the server restore.
   - The overlapping-holds case is covered only by the spec.
 
-### Step 7 — UIFeedback
+### Step 7 — UIFeedback (done 2026-10-29)
 
 - `ReplicatedStorage.Modules.UIFeedback` is one table from reason code to message, with an icon per code. `show(code, values)` clones `Kit.Toast` into `Popups`. A string that is not a code shows as it is, so old `Notify` text keeps working during the migration.
 - `Notify` gains a code form: `Notify:FireClient(player, { code = "MatchmakingCooldown", values = { seconds = n } })`. `BattleController`'s cooldown message moves to this code. Other `Notify` senders keep plain text until their screen is converted.
@@ -267,6 +267,22 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - a plain string passes through;
   - missing values never error.
 - In Play: queuing while on cooldown shows the coded toast.
+
+**Result:**
+- **Code:**
+  - `UIFeedback`, `UIFeedbackController` and `UIFeedbackSpec` are new.
+  - The plan said "other `Notify` senders keep plain text". There were only three senders, so all three use codes now: `BattleController`'s `MatchmakingCooldown` and `TableManager`'s `TablesBusy` and `SeatFailed`.
+  - The `NotifyOverlay` ScreenGui and `showNotify` are gone from `BattleUIController`.
+  - Pushed with `multi_edit`; checksums show 99 of 99 matching.
+- **Spec:** `UIFeedbackSpec` passes. It covers every code having text and an existing icon with no values, value formatting (125 s reads "2m 5s"), a bad value, plain text, an unknown code and a non-string.
+- **Play:** the test fired `Notify` from the server side to the real client.
+  - `{ code = "MatchmakingCooldown", values = { seconds = 125 } }` showed the right sentence with `TextFits` true, the Matchmaking icon and the red rim (`CD4248`). The toast was 664 × 89 points at scale 0.922.
+  - A plain string showed as it is, with the tinted placeholder icon (`354674`) and the normal rim.
+  - Each toast left the screen on its own.
+  - No errors.
+- **Not covered:**
+  - Real cooldown, busy and seat-failure situations; the server lines were only changed, not hit.
+  - A delayed second send from the same server test call never arrived. The MCP probably ends the call's VM before its 1.5 s delay. The first send had already shown plain text works.
 
 ### Step 8 — Matchmaking panel (`matchmaking-ui-v1`)
 

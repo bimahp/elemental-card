@@ -539,9 +539,7 @@ Remotes.JoinMatchmaking.OnServerEvent:Connect(function(player)
 	if Registry.getForPlayer(player) or TblMgr.getTableForPlayer(player) then return end
 	local cooldownRemaining = Save.getMatchmakingCooldownRemaining(player)
 	if cooldownRemaining > 0 then
-		Remotes.Notify:FireClient(player, string.format(
-			"Matchmaking cooldown: %dm %ds remaining (too many early forfeits today).",
-			math.floor(cooldownRemaining / 60), math.floor(cooldownRemaining % 60)))
+		Remotes.Notify:FireClient(player, { code = "MatchmakingCooldown", values = { seconds = math.floor(cooldownRemaining) } })
 		return
 	end
 	if Matchmaker.isQueued(player) then

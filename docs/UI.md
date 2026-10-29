@@ -348,6 +348,9 @@ One folder of authored, hidden templates (`ReplicatedStorage.Kit`) that every sc
 
 Every refusal and notice uses one toast template with an icon. Each server reason maps to one sentence in one table (`UIFeedback`), so the same refusal always reads the same way. The battle's red toast (§7) becomes this toast.
 
+- **Built 2026-10-29** for the free-roam toast. One toast is on screen at a time, top centre of Popups, for 2.6 s before it fades. A refusal has a red rim. A code without an icon shows a tinted square.
+- **Not built:** the battle's red toast (§7) still uses its own code until the battle plan.
+
 ### 10.5 Settings
 
 A Settings panel in the Panels layer, opened from a HUD icon:
