@@ -13,7 +13,7 @@
 - **Change code in `src/` first**, then push the same change into Studio through the Roblox Studio MCP (`multi_edit`). Before editing, compare checksums; a Studio-only edit is pulled back into `src/` first. After pushing, the checksums must match again ([scripts/README.md](../scripts/README.md)).
 - `src/` covers every script outside Workspace: 86 scripts, first pulled on 2026-10-29 with all checksums matching. Workspace holds only free-model leftovers (§11).
 - This repo also holds the docs, the card data ([data/](../data/)), the Studio tooling ([scripts/](../scripts/)), the UI exports ([ui/](../ui/), §12.1) and, outside git, the art in `assets/`.
-- **Editor-first UI.** Every UI element is a real instance authored in Studio. Code clones, fills, positions, animates and switches state; it does not build GUI with `Instance.new`. **Not built:** client code still creates GUI at about 364 places; it is migrated screen by screen, battle last (§12).
+- **Editor-first UI.** Every UI element is a real instance authored in Studio. Code clones, fills, positions, animates and switches state; it does not build GUI with `Instance.new`. **Not built:** client code still creates GUI at 353 places (literal GUI classes passed to `Instance.new` in `src/`, 359 at the first pull); it is migrated screen by screen, battle last (§12). Matchmaking is the first screen converted.
 
 ## 2. Principles
 
@@ -111,7 +111,8 @@ StarterGui/
                        EffectVisuals, TargetingSystem, CardPreviewController, GraveLogPanel, UXMode,
                        SeatedOverlayController, PostBattleController
   SharedUI/            UIComponents (shared widgets built on UITheme)
-  MulliganUI, MatchmakingUI, PlayerStatusUI, InventoryUI (Card Library + Recycle),
+  Panels (Root.Matchmaking), Popups, PanelBackdrop   the kit layers (§12, UI §10.1)
+  MulliganUI, PlayerStatusUI, InventoryUI (Card Library + Recycle),
   VendingMachineUI, PackOpenUI, VendorUI, ItemMallUI, DialogueUI, QuestHUD,
   Hud (HudController, CurrencyBarController)
 
@@ -271,7 +272,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 ### 12.2 Kit runtime
 
 - Templates live in `ReplicatedStorage.Kit`, with tokens as attributes on the folder ([UI §10.3](UI.md)), built by `scripts/studio/kit-v1.luau`. The tokens replace `UITheme`; `UITheme` stays until its last user is converted.
-- `ReplicatedStorage.Modules.UIKit` is the only runtime helper. It switches states and never builds a visual tree. **Built 2026-10-29:** `kit`, `token`, `clone`, `setVariant`, `setEnabled`, `isEnabled`, `press` and `bindPress`, covered by `TestService.UIKitSpec`. **Not built:** `setIcon` and `setShare` (bars).
+- `ReplicatedStorage.Modules.UIKit` is the only runtime helper. It switches states and never builds a visual tree. **Built 2026-10-29:** `kit`, `token`, `clone`, `setVariant`, `setEnabled`, `isEnabled`, `press`, `bindPress` and `entrance` (the panel open tween, [UI §2.1](UI.md)), covered by `TestService.UIKitSpec` except `entrance`. **Not built:** `setIcon` and `setShare` (bars).
 - `press` is the one tap path. It ignores taps within `PressLockSeconds` (0.4) of a state change or of an accepted tap, and it calls the why handler instead of the action on a disabled button. `bindPress` runs it on `Activated` and adds the press scale.
 - `setVariant` repaints from the tokens on every state change. Colours baked into a template at authoring still need a recolour migration when a token changes.
 - `UIComponents` is retired screen by screen as each screen moves to the kit.
@@ -282,7 +283,7 @@ Battle remotes are lightly rate-limited and derive the seat server-side. Shop re
 |---|---|
 | `UIScaleController` | **Built 2026-10-29.** A StarterPlayerScripts LocalScript. It sets each `AutoScale` layer's `Root` size and `UIScale` from `UIScaleRules.scaleFor` (pure, `UIScaleRulesSpec`, values in `UIScaleConfig`) and the player's `UISize` attribute, and publishes `AppliedScale` and `AppliedInput` on the layer. It reapplies on viewport, camera, `PreferredInput`, `UISize` and new layers |
 | `UXMode` | **Built 2026-10-29.** Keeps its `Current` and `Changed` API, and decides with `UIScaleRules.layoutMode` from `PreferredInput` and viewport width ([UI §5.3](UI.md)). It never reads the last input |
-| `PanelCoordinator` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `PanelCoordinatorSpec`. API: `register(id, { close, back? })`, `claim(id)`, `release(id)`, `back()`, `closeAll()`, `current()`, `debugInfo()`. `claim` closes the open panel first; if that panel's `close` returns `false`, the claim fails and the caller does not open. Gamepad B calls `back`. `BattleLoading`, `BattleSeated` and `UpdateBattleState` call `closeAll`. Input and remote hooks start with the first `register` in a running game |
+| `PanelCoordinator` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `PanelCoordinatorSpec`. API: `register(id, { close, back?, backdrop? })`, `claim(id)`, `release(id)`, `back()`, `closeAll()`, `current()`, `debugInfo()`. `claim` closes the open panel first; if that panel's `close` returns `false`, the claim fails and the caller does not open. Gamepad B calls `back`. `BattleLoading`, `BattleSeated` and `UpdateBattleState` call `closeAll`. A panel registered with `backdrop = true` switches `PanelBackdrop` on while it holds the claim, and a backdrop tap closes it. Input and remote hooks start with the first `register` in a running game |
 | `MovementLock` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `MovementLockSpec`. It is the only client code that stops the player. Callers `hold(reason)` and `release(reason)`: `"Dialogue"` (`DialogueController`), `"Battle"` (`BattleUIController.setBattleControlsLocked`) and `"PackReveal"` (`PackRevealController`, which still suppresses prompts itself). While any reason is held, the ControlModule is disabled, movement keys are sunk through `ContextActionService`, and jumping is off, respawns included. No client code saves or restores `WalkSpeed` or `JumpPower`. The server's seated lock in `TableManager` stays, and restores the `StarterPlayer` defaults (`CharacterWalkSpeed`, `CharacterJumpPower`, `CharacterJumpHeight`) instead of fixed numbers |
 | `UIFeedback` | **Built 2026-10-29** in `ReplicatedStorage.Modules`, covered by `UIFeedbackSpec`. `MESSAGES` maps each code to text (a string or a function of the values), an `AssetIds.Icons` key and a tone. `resolve(payload)` is pure and never errors; `show(payload)` puts one `Kit.Toast` in `Popups.Root`, replacing the one on screen. The `UIFeedbackController` LocalScript connects `Notify` to it. Codes today: `MatchmakingCooldown` (`seconds`), `TablesBusy`, `SeatFailed` |
 

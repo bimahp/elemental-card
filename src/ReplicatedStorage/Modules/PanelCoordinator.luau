@@ -1,12 +1,15 @@
 -- PanelCoordinator: one world panel open at a time; Escape or gamepad B goes back
 -- (UI §10.1, ARCHITECTURE §12.3). Client only.
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 
 local PanelCoordinator = {}
 
-type Handlers = { close: () -> boolean?, back: (() -> ())? }
+-- backdrop = true: the PanelBackdrop layer dims behind this panel, and a tap on it
+-- closes the panel (UI §2.6). Panels not yet converted keep their own backdrops.
+type Handlers = { close: () -> boolean?, back: (() -> ())?, backdrop: boolean? }
 
 local panels: { [string]: Handlers } = {}
 local current: string? = nil
@@ -19,8 +22,23 @@ local BACK_KEYS = {
 -- Battle states close every panel (UI §4.1).
 local BATTLE_REMOTES = { "BattleLoading", "BattleSeated", "UpdateBattleState" }
 
--- Input and battle hooks start with the first panel in a running game, so specs
--- can use the module in Edit mode without them.
+-- The real backdrop switch; specs replace PanelCoordinator._setBackdrop to record calls.
+function PanelCoordinator._setBackdrop(on: boolean)
+	local player = Players.LocalPlayer
+	local playerGui = player and player:FindFirstChild("PlayerGui")
+	local layer = playerGui and playerGui:FindFirstChild("PanelBackdrop")
+	if layer then
+		layer.Enabled = on
+	end
+end
+
+local function syncBackdrop()
+	local handlers = current and panels[current]
+	PanelCoordinator._setBackdrop(handlers ~= nil and handlers.backdrop == true)
+end
+
+-- Input, backdrop and battle hooks start with the first panel in a running game, so
+-- specs can use the module in Edit mode without them.
 local function start()
 	if started or not RunService:IsRunning() then
 		return
@@ -36,6 +54,15 @@ local function start()
 		for _, name in ipairs(BATTLE_REMOTES) do
 			remotes:WaitForChild(name).OnClientEvent:Connect(PanelCoordinator.closeAll)
 		end
+	end)
+	task.spawn(function()
+		local layer = Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PanelBackdrop")
+		layer:WaitForChild("Backdrop").Activated:Connect(function()
+			local handlers = current and panels[current]
+			if handlers and handlers.backdrop then
+				handlers.close()
+			end
+		end)
 	end)
 end
 
@@ -61,6 +88,7 @@ function PanelCoordinator.claim(id: string): boolean
 		end
 	end
 	current = id
+	syncBackdrop()
 	return true
 end
 
@@ -68,6 +96,7 @@ end
 function PanelCoordinator.release(id: string)
 	if current == id then
 		current = nil
+		syncBackdrop()
 	end
 end
 
@@ -89,6 +118,7 @@ function PanelCoordinator.closeAll()
 	if current then
 		panels[current].close()
 		current = nil
+		syncBackdrop()
 	end
 end
 

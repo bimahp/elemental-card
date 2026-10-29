@@ -1,6 +1,6 @@
 # PLAN_UI_FOUNDATIONS — UI groundwork and the first panel
 
-**Status:** Steps 1–7 done on 2026-10-29; steps 8–9 not started.
+**Status:** Steps 1–8 done on 2026-10-29; step 9 (recording) is done as each step landed, apart from the close-out below.
 
 Builds the foundations of [UI §10](../UI.md) and [ARCHITECTURE §12](../ARCHITECTURE.md), then converts the Matchmaking panel end to end to prove the method. The design is in those docs; this plan records only how it is built and checked.
 
@@ -284,7 +284,7 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
   - Real cooldown, busy and seat-failure situations; the server lines were only changed, not hit.
   - A delayed second send from the same server test call never arrived. The MCP probably ends the call's VM before its 1.5 s delay. The first send had already shown plain text works.
 
-### Step 8 — Matchmaking panel (`matchmaking-ui-v1`)
+### Step 8 — Matchmaking panel (`matchmaking-ui-v1`, done 2026-10-29)
 
 - Build `Panels.Root.Matchmaking` from `Kit.PanelFrame`, authored at 1280 × 720:
   - a level label;
@@ -303,6 +303,36 @@ Write `scripts/studio/README.md`, `ui-json.luau`, `split-export.ps1` and `check-
 - The phone-frame check is clean on every device in step 1.
 - `script_grep` finds no GUI `Instance.new` left in `MatchmakingController`.
 - Export `Panels`, `PanelBackdrop` and `Hud`.
+
+**Result:**
+- **No `Hud` change needed.** The elapsed time already used the authored `MatchmakingButton.FloatingLabel`; the code-built labels were the panel's level and status lines.
+- **The migration:** `matchmaking-ui-v1` built `Panels.Root.Matchmaking` from `Kit.PanelFrame` and deleted `StarterGui.MatchmakingUI`.
+  - The panel is 640 × 400.
+  - It has a Matchmaking accent and icon, `LevelLabel` and `StatusLabel` at 26 px, and `FindButton` / `CancelButton` at 360 × 80. `CancelButton` is the danger variant.
+- **`MatchmakingController` was rewritten.** It has no `Instance.new` and no `UIComponents`. It fills the labels, switches the buttons, and wires them with `UIKit.bindPress`, the X included.
+- **Two shared pieces were added on the way:**
+  - `PanelCoordinator` takes `backdrop = true`, switches `PanelBackdrop` and closes the panel on a backdrop tap. The spec covers it.
+  - `UIKit.entrance` is the open tween the old shell had.
+- **Push:** checksums show 99 of 99 matching. `PanelCoordinatorSpec` and `UIKitSpec` still pass.
+- **Device check:** `check-ui` (sent unchanged) over `PanelBackdrop` and `Panels`, with the panel, `StatusLabel` and `CancelButton` forced visible, found 0 touch, 0 offscreen and 0 text findings on all eight devices. The one overlap is Find with Cancel, which is never visible at once. The old shell's baseline had a 0 × 0 close button and title.
+- **Play (real clicks), all as expected, no errors:**
+  - The HUD icon opens the panel with the backdrop on. It shows "Level 12", the entrance settles at rest, and the buttons and X are 74 pt at scale 0.922.
+  - A double click on Find Opponent, 0.1 s apart, queued the player. The panel and backdrop closed, and the HUD label ticked "0:02", "0:03".
+  - Reopening showed the Cancel button and the status line. Cancel reset the HUD to "Matchmaking".
+  - The X, a backdrop tap and gamepad B each closed the panel. A tap on the panel's interior did not.
+- **Not covered:**
+  - The server count of `JoinMatchmaking` for the double click. The press lock is covered by `UIKitSpec`, and the server de-duplicates with `isQueued` and its rate limit.
+  - Waiting in the queue for an NPC-fallback match. The queue was cancelled within seconds so no match started on the owner's test profile; a match left running would have needed a forfeit or an abandon.
+- **Exports:** `ui/Panels.json` is updated. `ui/MatchmakingUI.json` is deleted with its root.
+
+### Close-out
+
+- **Proven:** the method works end to end on one screen. A migration in the repo builds an authored panel from the kit, a controller in `src/` only fills and switches it, checksums prove Studio matches, the device check passes on eight devices, and Play confirms the flow.
+- **Still open from this plan:**
+  - the Noob prompt issue and the occasional Mobile start of `UXMode` (HANDOFF §4);
+  - a real gamepad;
+  - a phone in the Studio device emulator.
+- **Next plans** (§6): Settings, dialogue config, then one plan per screen.
 
 ### Step 9 — Record
 

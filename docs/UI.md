@@ -101,6 +101,10 @@ Talking to the Vendor opens the shared dialogue, then a Stock → Detail shop wi
 
 A panel with the player's level, Find Opponent / Cancel Matchmaking and a ticking elapsed-time label on the HUD icon while queued.
 
+- **The first panel on the kit (built 2026-10-29).** It is `Panels.Root.Matchmaking`, 640 × 400 at the reference, built by `matchmaking-ui-v1` from `Kit.PanelFrame`.
+- **Contents:** a level line, a "Searching for an opponent..." line shown while queued, and one 360 × 80 button at the bottom. It reads Find Opponent (primary) or, while queued, Cancel Matchmaking (danger).
+- **Behaviour:** it uses the shared backdrop, the press lock and the entrance (§10.1, §10.3). The elapsed time stays on the HUD icon's label.
+
 ### 3.7 Dialogue and quest guidance
 
 The shared dialogue: typewriter text, a camera tween, movement lock and option buttons. Speakers, conversation ids and the queue are in §10.6. Quest guidance: `!` marks on NPC nameplates (three rows: `!`, title, name; the `!` row is 36% of the plate with a 48 px mark) and a screen-space arrow.
@@ -318,6 +322,7 @@ One ScreenGui per job, not one per screen:
 - **Not built:** the HUD layer. Today's `Hud` ScreenGui stays until its own plan. Today's panels sit at DisplayOrder 10–13, under the new layers.
 - **Only one panel is open at a time.** Opening a panel closes the open one. A panel busy with a purchase or reveal refuses to close, and the new one then does not open. Gamepad B goes back a page, then closes the panel from its root page. Escape cannot do this: Roblox opens its own menu on Escape and the game never sees the key (tested 2026-10-29). A keyboard Back key is open (§11).
 - **Built 2026-10-29:** `PanelCoordinator` covers all six world panels: Card Library, Vending Machine, Card Vendor, Item Mall, Profile and Matchmaking.
+- **Backdrop:** a panel on the kit shows the shared `PanelBackdrop` while it is open, and a tap on the backdrop closes it. A tap inside the panel never does. Panels not yet converted keep their own code-built backdrop.
 - **BattleUI, PackOpenUI and MulliganUI stay their own ScreenGuis**, because of the battle's insets and clipping (§5.1) and their DisplayOrder above everything else. They do not join the panel rule.
 
 ### 10.2 Size and layout

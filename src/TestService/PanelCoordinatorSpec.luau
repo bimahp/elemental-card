@@ -24,7 +24,7 @@ local function panel(id: string, opts)
 		end
 		return p.open
 	end
-	local handlers: any = { close = p.close }
+	local handlers: any = { close = p.close, backdrop = opts.backdrop }
 	if opts.pages then
 		function handlers.back()
 			p.backs += 1
@@ -72,6 +72,20 @@ function Spec.run()
 	Coordinator.closeAll()
 	assert(not mall.open and Coordinator.current() == nil, "closeAll closes the open panel")
 	assert(not pcall(Coordinator.claim, "Unknown"), "claiming an unregistered panel errors")
+
+	-- The shared backdrop follows the open panel.
+	local realSetBackdrop = Coordinator._setBackdrop
+	local backdrop = false
+	Coordinator._setBackdrop = function(on)
+		backdrop = on
+	end
+	local matchmaking = panel("Matchmaking", { backdrop = true })
+	assert(matchmaking.show() and backdrop, "a backdrop panel turns the backdrop on")
+	assert(mall.show() and not backdrop, "switching to a panel without one turns it off")
+	assert(matchmaking.show() and backdrop, "and back on")
+	matchmaking.close()
+	assert(not backdrop and Coordinator.current() == nil, "closing the panel turns the backdrop off")
+	Coordinator._setBackdrop = realSetBackdrop
 
 	Coordinator._reset()
 	return "PanelCoordinatorSpec: all checks passed"

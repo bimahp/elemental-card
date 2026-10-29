@@ -15,10 +15,339 @@
           "BorderSizePixel": 0,
           "Size": {"t": "UDim2", "v": [1, 0, 1, 0]}
         },
-        "children": [{
+        "children": [
+          {
+            "class": "Frame",
+            "name": "Matchmaking",
+            "props": {
+              "Active": true,
+              "AnchorPoint": {"t": "Vector2", "v": [0.5, 0.5]},
+              "BackgroundColor3": {"t": "Color3", "v": "181B2C"},
+              "BorderSizePixel": 0,
+              "Position": {"t": "UDim2", "v": [0.5, 0, 0.5, 0]},
+              "Size": {"t": "UDim2", "v": [0, 640, 0, 400]},
+              "Visible": false
+            },
+            "attrs": {"Migration": "matchmaking-ui-v1"},
+            "children": [
+              {
+                "class": "Frame",
+                "name": "Body",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "Position": {"t": "UDim2", "v": [0, 24, 0, 120]},
+                  "Size": {"t": "UDim2", "v": [1, -48, 1, -144]},
+                  "ZIndex": 5
+                },
+                "children": [
+                  {
+                    "class": "TextButton",
+                    "name": "CancelButton",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                      "AutoButtonColor": false,
+                      "BackgroundColor3": {"t": "Color3", "v": "CD4248"},
+                      "BorderSizePixel": 0,
+                      "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                      "Position": {"t": "UDim2", "v": [0.5, 0, 1, 0]},
+                      "Size": {"t": "UDim2", "v": [0, 360, 0, 80]},
+                      "Text": "Cancel Matchmaking",
+                      "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                      "TextSize": 28,
+                      "TextWrapped": true,
+                      "Visible": false,
+                      "ZIndex": 6
+                    },
+                    "attrs": {"Variant": "danger"},
+                    "children": [
+                      {
+                        "class": "UIScale",
+                        "name": "PressScale"
+                      },
+                      {
+                        "class": "UICorner",
+                        "name": "UICorner",
+                        "props": {
+                          "CornerRadius": {"t": "UDim", "v": [0, 14]}
+                        }
+                      },
+                      {
+                        "class": "UIStroke",
+                        "name": "UIStroke",
+                        "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2}
+                      }
+                    ]
+                  },
+                  {
+                    "class": "TextButton",
+                    "name": "FindButton",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0.5, 1]},
+                      "AutoButtonColor": false,
+                      "BackgroundColor3": {"t": "Color3", "v": "40B268"},
+                      "BorderSizePixel": 0,
+                      "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                      "Position": {"t": "UDim2", "v": [0.5, 0, 1, 0]},
+                      "Size": {"t": "UDim2", "v": [0, 360, 0, 80]},
+                      "Text": "Find Opponent",
+                      "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                      "TextSize": 28,
+                      "TextWrapped": true,
+                      "ZIndex": 6
+                    },
+                    "attrs": {"Variant": "primary"},
+                    "children": [
+                      {
+                        "class": "UIScale",
+                        "name": "PressScale"
+                      },
+                      {
+                        "class": "UICorner",
+                        "name": "UICorner",
+                        "props": {
+                          "CornerRadius": {"t": "UDim", "v": [0, 14]}
+                        }
+                      },
+                      {
+                        "class": "UIStroke",
+                        "name": "UIStroke",
+                        "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2}
+                      }
+                    ]
+                  },
+                  {
+                    "class": "TextLabel",
+                    "name": "LevelLabel",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Bold"},
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 40]},
+                      "Text": "Level 1",
+                      "TextColor3": {"t": "Color3", "v": "C5D3EE"},
+                      "TextSize": 26,
+                      "TextTruncate": {"t": "Enum", "v": "TextTruncate.AtEnd"},
+                      "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+                      "ZIndex": 6
+                    }
+                  },
+                  {
+                    "class": "TextLabel",
+                    "name": "StatusLabel",
+                    "props": {
+                      "BackgroundTransparency": 1,
+                      "FontFace": {"family": "rbxasset://fonts/families/GothamSSm.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                      "Position": {"t": "UDim2", "v": [0, 0, 0, 48]},
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 40]},
+                      "Text": "Searching for an opponent...",
+                      "TextColor3": {"t": "Color3", "v": "93A0BE"},
+                      "TextSize": 26,
+                      "TextTruncate": {"t": "Enum", "v": "TextTruncate.AtEnd"},
+                      "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+                      "Visible": false,
+                      "ZIndex": 6
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "TextButton",
+                "name": "InputBlocker",
+                "props": {
+                  "AutoButtonColor": false,
+                  "BackgroundTransparency": 1,
+                  "Selectable": false,
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, 0]},
+                  "Text": ""
+                }
+              },
+              {
+                "class": "ImageLabel",
+                "name": "Texture",
+                "props": {
+                  "BackgroundTransparency": 1,
+                  "Image": "rbxassetid://115366182634060",
+                  "ImageTransparency": 0.08,
+                  "Position": {"t": "UDim2", "v": [0, 0, 0, 96]},
+                  "ScaleType": {"t": "Enum", "v": "ScaleType.Tile"},
+                  "Size": {"t": "UDim2", "v": [1, 0, 1, -96]},
+                  "TileSize": {"t": "UDim2", "v": [0, 640, 0, 640]},
+                  "ZIndex": 2
+                },
+                "children": [
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 0]}
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "Frame",
+                "name": "TitleBar",
+                "props": {
+                  "BackgroundColor3": {"t": "Color3", "v": "D67A2C"},
+                  "BorderSizePixel": 0,
+                  "ClipsDescendants": true,
+                  "Size": {"t": "UDim2", "v": [1, 0, 0, 96]},
+                  "ZIndex": 3
+                },
+                "children": [
+                  {
+                    "class": "TextButton",
+                    "name": "BackButton",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0, 0.5]},
+                      "AutoButtonColor": false,
+                      "BackgroundColor3": {"t": "Color3", "v": "1C263C"},
+                      "BorderSizePixel": 0,
+                      "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                      "Position": {"t": "UDim2", "v": [0, 8, 0.5, 0]},
+                      "Size": {"t": "UDim2", "v": [0, 80, 0, 80]},
+                      "Text": "<",
+                      "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                      "TextSize": 36,
+                      "Visible": false,
+                      "ZIndex": 5
+                    },
+                    "children": [
+                      {
+                        "class": "UIScale",
+                        "name": "PressScale"
+                      },
+                      {
+                        "class": "UICorner",
+                        "name": "UICorner",
+                        "props": {
+                          "CornerRadius": {"t": "UDim", "v": [0, 12]}
+                        }
+                      },
+                      {
+                        "class": "UIStroke",
+                        "name": "UIStroke",
+                        "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2}
+                      }
+                    ]
+                  },
+                  {
+                    "class": "TextButton",
+                    "name": "CloseButton",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [1, 0.5]},
+                      "AutoButtonColor": false,
+                      "BackgroundColor3": {"t": "Color3", "v": "1C263C"},
+                      "BorderSizePixel": 0,
+                      "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                      "Position": {"t": "UDim2", "v": [1, -8, 0.5, 0]},
+                      "Size": {"t": "UDim2", "v": [0, 80, 0, 80]},
+                      "Text": "X",
+                      "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                      "TextSize": 36,
+                      "ZIndex": 5
+                    },
+                    "children": [
+                      {
+                        "class": "UIScale",
+                        "name": "PressScale"
+                      },
+                      {
+                        "class": "UICorner",
+                        "name": "UICorner",
+                        "props": {
+                          "CornerRadius": {"t": "UDim", "v": [0, 12]}
+                        }
+                      },
+                      {
+                        "class": "UIStroke",
+                        "name": "UIStroke",
+                        "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 2}
+                      }
+                    ]
+                  },
+                  {
+                    "class": "Frame",
+                    "name": "Divider",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0, 1]},
+                      "BackgroundColor3": {"t": "Color3", "v": "070A1C"},
+                      "BorderSizePixel": 0,
+                      "Position": {"t": "UDim2", "v": [0, 0, 1, 0]},
+                      "Size": {"t": "UDim2", "v": [1, 0, 0, 4]},
+                      "ZIndex": 4
+                    }
+                  },
+                  {
+                    "class": "ImageLabel",
+                    "name": "Icon",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0, 0.5]},
+                      "BackgroundTransparency": 1,
+                      "Image": "rbxassetid://105294857091338",
+                      "Position": {"t": "UDim2", "v": [0, 8, 0.5, 0]},
+                      "ScaleType": {"t": "Enum", "v": "ScaleType.Fit"},
+                      "Size": {"t": "UDim2", "v": [0, 80, 0, 80]},
+                      "ZIndex": 5
+                    }
+                  },
+                  {
+                    "class": "TextLabel",
+                    "name": "Title",
+                    "props": {
+                      "AnchorPoint": {"t": "Vector2", "v": [0, 0.5]},
+                      "BackgroundTransparency": 1,
+                      "FontFace": {"family": "rbxasset://fonts/families/FredokaOne.json", "style": "Normal", "t": "Font", "weight": "Regular"},
+                      "Position": {"t": "UDim2", "v": [0, 104, 0.5, 0]},
+                      "Size": {"t": "UDim2", "v": [1, -208, 1, 0]},
+                      "Text": "Matchmaking",
+                      "TextColor3": {"t": "Color3", "v": "F8FAFF"},
+                      "TextSize": 40,
+                      "TextStrokeColor3": {"t": "Color3", "v": "070A1C"},
+                      "TextStrokeTransparency": 0.35,
+                      "TextTruncate": {"t": "Enum", "v": "TextTruncate.AtEnd"},
+                      "TextXAlignment": {"t": "Enum", "v": "TextXAlignment.Left"},
+                      "ZIndex": 5
+                    }
+                  },
+                  {
+                    "class": "UICorner",
+                    "name": "UICorner",
+                    "props": {
+                      "CornerRadius": {"t": "UDim", "v": [0, 20]}
+                    }
+                  }
+                ]
+              },
+              {
+                "class": "UICorner",
+                "name": "UICorner",
+                "props": {
+                  "CornerRadius": {"t": "UDim", "v": [0, 20]}
+                }
+              },
+              {
+                "class": "UIShadow",
+                "name": "UIShadow",
+                "props": {
+                  "BlurRadius": {"t": "UDim", "v": [0, 18]},
+                  "Color": {"t": "Color3", "v": "070A1C"},
+                  "Offset": {"t": "UDim2", "v": [0, 0, 0, 8]},
+                  "Spread": {"t": "UDim2", "v": [0, 6, 0, 6]},
+                  "Transparency": 0.42
+                }
+              },
+              {
+                "class": "UIStroke",
+                "name": "UIStroke",
+                "props": {"ApplyStrokeMode": {"t": "Enum", "v": "ApplyStrokeMode.Border"}, "Color": {"t": "Color3", "v": "070A1C"}, "Thickness": 4}
+              }
+            ]
+          },
+          {
             "class": "UIScale",
             "name": "UIScale"
-          }]
+          }
+        ]
       }
     ]
   }

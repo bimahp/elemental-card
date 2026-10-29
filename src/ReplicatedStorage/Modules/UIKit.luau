@@ -1,6 +1,7 @@
 -- UIKit: the runtime half of ReplicatedStorage.Kit (UI §10.3, ARCHITECTURE §12.2).
 -- It clones authored templates and switches their state. It never builds a visual tree.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
 
 local UIKit = {}
 
@@ -135,6 +136,16 @@ function UIKit.bindPress(button: GuiButton, onPress: (GuiButton) -> (), onWhy: (
 			pressScale.Scale = 1
 		end
 	end
+end
+
+-- The panel entrance (UI §2.1): start 30 px below rest, overshoot up and settle in
+-- 0.44 s. The rest position is remembered, so reopening mid-tween never drifts.
+local restPositions = setmetatable({}, { __mode = "k" })
+function UIKit.entrance(frame: GuiObject)
+	local rest = restPositions[frame] or frame.Position
+	restPositions[frame] = rest
+	frame.Position = rest + UDim2.fromOffset(0, 30)
+	TweenService:Create(frame, TweenInfo.new(0.44, Enum.EasingStyle.Back, Enum.EasingDirection.Out), { Position = rest }):Play()
 end
 
 return UIKit
